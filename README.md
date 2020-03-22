@@ -1,6 +1,10 @@
 # doom-eternal
 Doom eternal livesplit repository
 
+## Unlocking console : 
+To unlock the console, search for an "Array of byte" in Cheat engine with the following value : **4C8B0EBA01000000488BCE448BF041FF51??8D** and change the 5th byte from 1 to 0
+
+
 ## Autosplitting : 
 *Micrologist*
 
@@ -23,3 +27,6 @@ Cheat engine, look for 4byte int value that keeps track of map ids this is how i
 17- map game/sp/e3m4_boss/e3m4_boss
 ```
 Value is named levelID in the ASL file 
+
+You can go to any map by typing the "map game...." command above in the console but you need to unlock your console first 
+
