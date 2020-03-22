@@ -17,8 +17,7 @@ state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 startup
 {
 	vars.startAfterNextLoad = false;
-//	version = modules.First().FileVersionInfo.FileVersion;
-//  print (version);
+	vars.highestLevelSplit = 4;
 }
 
 init
@@ -43,15 +42,16 @@ exit
 
 isLoading
 {
-	//print(current.isLoading.ToString());
     return current.isLoading;
 }
 
 split
 {
-	//print(Convert.ToString(current.levelID, 10));
-	if(current.levelID > old.levelID)
+	if(current.levelID > old.levelID && current.levelID > vars.highestLevelSplit)
+	{
+		vars.highestLevelSplit = current.levelID;
 		return true;
+	}
 }
 
 start
@@ -62,6 +62,7 @@ start
 	if(vars.startAfterNextLoad && current.isLoading == false && old.isLoading == true)
 	{
 		vars.startAfterNextLoad = false;
+		vars.highestLevelSplit = 4;
 		return true;
 	}
 }
