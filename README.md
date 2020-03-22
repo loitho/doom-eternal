@@ -37,7 +37,9 @@ You can go to any map by typing the "map game...." command above in the console 
 - You might find 3 static pointer that will behave similarly, however when you will look at them, if you load a level and got back to the main menu, one will switch to "1" quicker than the others, use this one.
 
 ## a
-	//version = modules.First().FileVersionInfo.FileVersion;
-  //print (version);
-	//print("ModuleMemorySize");
-	//print(Convert.ToString(modules.First().ModuleMemorySize, 16));
+```
+version = modules.First().FileVersionInfo.FileVersion;
+print (version);
+print("ModuleMemorySize");
+print(Convert.ToString(modules.First().ModuleMemorySize, 16));
+```
