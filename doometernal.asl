@@ -3,16 +3,16 @@
 //By Micrologist, Loitho
 // 
 
-state("DOOMEternalx64vk", "7.1.1 Steam")
+state("DOOMEternalx64vk", "v7.1.1 Steam")
 {
 	byte isLoading : 0x6051240;
 	byte levelID : 0x061D0868, 0x28;
 }
 
-state("DOOMEternalx64vk", "7.1.1 Bethesda")
+state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 {
-	byte isLoading : 0x000000;
-	byte levelID : 0x06192468, 0x28;
+	bool isLoading : 0x6012F40;
+	byte levelID : 0x06192468, 0x28; 
 }
 
 startup
