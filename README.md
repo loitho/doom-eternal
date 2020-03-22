@@ -2,7 +2,7 @@
 Doom eternal livesplit repository
 
 ## Unlocking console : 
-To unlock the console, search for an "Array of byte" in Cheat engine with the following value : **4C8B0EBA01000000488BCE448BF041FF51??8D** and change the 5th byte from 1 to 0
+To unlock the console, search for an "Array of byte" in Cheat engine with the following value : **4C8B0EBA01000000488BCE448BF041FF51** and change the 5th byte from 1 to 0
 
 
 ## Autosplitting : 
