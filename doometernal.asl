@@ -62,7 +62,7 @@ start
 	if(vars.startAfterNextLoad && current.isLoading == false && old.isLoading == true)
 	{
 		vars.startAfterNextLoad = false;
-		vars.highestLevelSplit = 4;
+		vars.highestLevelSplit = 5;
 		return true;
 	}
 }
