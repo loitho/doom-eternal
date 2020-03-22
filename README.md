@@ -3,6 +3,7 @@ Doom eternal livesplit repository
 
 ## Autosplitting : 
 *Micrologist*
+
 Cheat engine, look for 4byte int value that keeps track of map ids this is how it is mapped to the different maps:
 
 ```
