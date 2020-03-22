@@ -30,3 +30,8 @@ Value is named levelID in the ASL file
 
 You can go to any map by typing the "map game...." command above in the console but you need to unlock your console first 
 
+## Load removal 
+
+- Cheat engine, Look for 4byte value that is "1" when there is a loading screen
+- You should find a static pointer immediatly without the need for a pointer scan
+- You might find 3 static pointer that will behave similarly, however when you will look at them, if you load a level and got back to the main menu, one will switch to "1" quicker than the others, use this one.
