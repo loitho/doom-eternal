@@ -1,11 +1,10 @@
 //Doom Eternal Autosplitter
-//v0.1.6 (22/03/2020)
+//v0.1.7 (22/03/2020)
 //By Micrologist, Loitho
-// 
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
 {
-	byte isLoading : 0x6051240;
+	bool isLoading : 0x6051240;
 	byte levelID : 0x061D0868, 0x28;
 }
 
@@ -18,6 +17,8 @@ state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 startup
 {
 	vars.startAfterNextLoad = false;
+//	version = modules.First().FileVersionInfo.FileVersion;
+//  print (version);
 }
 
 init
@@ -42,11 +43,13 @@ exit
 
 isLoading
 {
-    return current.isLoading != 0;
+	//print(current.isLoading.ToString());
+    return current.isLoading;
 }
 
 split
 {
+	//print(Convert.ToString(current.levelID, 10));
 	if(current.levelID > old.levelID)
 		return true;
 }
@@ -56,10 +59,9 @@ start
 	if(current.levelID == 5 && old.levelID == 4)
 		vars.startAfterNextLoad = true;
 	
-	if(vars.startAfterNextLoad && current.isLoading == 0 && old.isLoading == 1)
+	if(vars.startAfterNextLoad && current.isLoading == false && old.isLoading == true)
 	{
 		vars.startAfterNextLoad = false;
 		return true;
 	}
 }
-
