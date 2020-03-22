@@ -1,5 +1,5 @@
 //Doom Eternal Autosplitter
-//v0.1.5 (22/03/2020)
+//v0.1.6 (22/03/2020)
 //By Micrologist, Loitho
 // 
 
