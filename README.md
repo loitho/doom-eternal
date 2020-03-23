@@ -36,6 +36,20 @@ You can go to any map by typing the "map game...." command above in the console 
 - You should find a static pointer immediatly without the need for a pointer scan
 - You might find 3 static pointer that will behave similarly, however when you will look at them, if you load a level and got back to the main menu, one will switch to "1" quicker than the others, use this one.
 
+## Cutscene ID : 
+
+Cutscene ID let us track where you are, Look for 4byte it can take the following values : 
+
+```
+Opening Cutscene: 3266 (start) then 3268, 3271 and 3285
+First Priest Death (End of the Intro Corridor): 3231
+Intro Final Boss: 3167
+Death Final Boss: 3162
+
+Ingame / No Cutscene playing: 1
+In Menu: 0
+```
+
 ## a
 ```
 version = modules.First().FileVersionInfo.FileVersion;
