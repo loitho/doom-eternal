@@ -1,5 +1,5 @@
 //Doom Eternal Autosplitter
-//v0.1.7 (22/03/2020)
+//v0.1.8 (22/03/2020)
 //By Micrologist, Loitho
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
@@ -7,26 +7,28 @@ state("DOOMEternalx64vk", "v7.1.1 Steam")
 	bool isLoading : 0x6051240;
 	bool isInGame : 0x612C1D8;
 	byte levelID : 0x061D0868, 0x28;
+	int cutsceneID: 0x4C7A084;
 }
 
 state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 {
 	bool isLoading : 0x6012F40;
 	bool isInGame : 0x60EDED8;
-	byte levelID : 0x06192468, 0x28; 
+	byte levelID : 0x06192468, 0x28;
+	byte cutsceneID: 0x000000; //TODO
 }
 
 startup
 {
 	vars.startAfterNextLoad = false;
-	vars.highestLevelSplit = 4;
+	vars.highestLevelSplit = 5;
 }
 
 init
 {
 	int moduleSize = modules.First().ModuleMemorySize;
-	
-	if (moduleSize == 507191296)
+	print(moduleSize.ToString());
+	if (moduleSize == 507191296 || moduleSize == 515133440)
 	{
 		version = "v7.1.1 Steam";
 	} 
@@ -45,7 +47,6 @@ exit
 isLoading
 {
 	return (current.isLoading || !current.isInGame);
-	//return current.isLoading;
 }
 
 split
@@ -55,10 +56,17 @@ split
 		vars.highestLevelSplit = current.levelID;
 		return true;
 	}
+	
+	//Uncomment once we have a Bethesda Cutscene Pointer
+	/*
+	if(current.levelID == 17 && current.cutsceneID == 3162)
+		return true;
+	*/
 }
 
 start
 {
+	//Comment out once we have a Bethesda Cutscene Pointer
 	if(current.levelID == 5 && old.levelID == 4)
 		vars.startAfterNextLoad = true;
 	
@@ -68,4 +76,13 @@ start
 		vars.highestLevelSplit = 5;
 		return true;
 	}
+	
+	//Uncomment once we have a Bethesda Cutscene Pointer
+	/*
+	if(current.levelID == 5 && old.cutsceneID == 3266 && current.cutsceneID == 1)
+	{
+		vars.highestLevelSplit = 5;
+		return true;
+	}
+	*/
 }
