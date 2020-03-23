@@ -1,5 +1,5 @@
 //Doom Eternal Autosplitter
-//v0.1.8 (22/03/2020)
+//v0.2 (23/03/2020)
 //By Micrologist, Loitho
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
@@ -15,14 +15,16 @@ state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 	bool isLoading : 0x6012F40;
 	bool isInGame : 0x60EDED8;
 	byte levelID : 0x06192468, 0x28;
-	byte cutsceneID: 0x4C3C684; //TODO
+	byte cutsceneID: 0x4C3C684;
 }
 
 startup
 {
-	vars.startAfterNextLoad = false;
+	vars.startAfterCutscene = false;
 	vars.highestLevelSplit = 5;
 	vars.openingCutsceneIDs = new List<int> { 3266, 3268, 3271, 3285 };
+	vars.timeToRemove = 0;
+	vars.setGameTime = false;
 }
 
 init
@@ -37,7 +39,6 @@ init
 	{
 		version = "v7.1.1 Bethesda";
 	}
-	
 }
 
 exit
@@ -58,32 +59,40 @@ split
 		return true;
 	}
 	
-	//Uncomment once we have a Bethesda Cutscene Pointer
-	/*
-	if(current.levelID == 17 && current.cutsceneID == 3162)
+	if(current.levelID == 17 && current.cutsceneID == 3162) //final boss killed
 		return true;
-	*/
+}
+
+gameTime
+{
+	if(vars.setGameTime)
+	{
+		vars.setGameTime = false;
+		return TimeSpan.FromSeconds(-vars.timeToRemove);
+	}
 }
 
 start
 {
-	//Comment out once we have a Bethesda Cutscene Pointer
-	if(current.levelID == 5 && old.levelID == 4)
-		vars.startAfterNextLoad = true;
+	if(current.cutsceneID == 0)
+		vars.startAfterCutscene = false;
 	
-	if(vars.startAfterNextLoad && current.isLoading == false && old.isLoading == true)
+	if(current.levelID == 5 && vars.openingCutsceneIDs.Contains(current.cutsceneID)) //opening cutscene is playing
 	{
-		vars.startAfterNextLoad = false;
-		vars.highestLevelSplit = 5;
-		return true;
+		vars.timeToRemove = 3;
+		vars.startAfterCutscene = true;
 	}
 	
-	//Uncomment once we have a Bethesda Cutscene Pointer
-	/*
-	if(current.levelID == 5 && vars.openingCutsceneIDs.Contains(old.cutsceneID) && current.cutsceneID == 1)
+	if(current.isLoading && vars.startAfterCutscene) //opening cutscene was skipped with reset mission
 	{
+		vars.timeToRemove = 1.5;
+	}
+	
+	if(current.cutsceneID == 1 && vars.startAfterCutscene)
+	{
+		vars.startAfterCutscene = false;
 		vars.highestLevelSplit = 5;
+		vars.setGameTime = true;
 		return true;
 	}
-	*/
 }
