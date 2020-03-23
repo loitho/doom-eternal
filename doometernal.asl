@@ -22,6 +22,7 @@ startup
 {
 	vars.startAfterNextLoad = false;
 	vars.highestLevelSplit = 5;
+	vars.openingCutsceneIDs = new List<int> { 3266, 3268, 3271, 3285 };
 }
 
 init
@@ -79,7 +80,7 @@ start
 	
 	//Uncomment once we have a Bethesda Cutscene Pointer
 	/*
-	if(current.levelID == 5 && old.cutsceneID == 3266 && current.cutsceneID == 1)
+	if(current.levelID == 5 && vars.openingCutsceneIDs.Contains(old.cutsceneID) && current.cutsceneID == 1)
 	{
 		vars.highestLevelSplit = 5;
 		return true;
