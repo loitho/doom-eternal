@@ -15,7 +15,7 @@ state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 	bool isLoading : 0x6012F40;
 	bool isInGame : 0x60EDED8;
 	byte levelID : 0x06192468, 0x28;
-	byte cutsceneID: 0x000000; //TODO
+	byte cutsceneID: 0x4C3C684; //TODO
 }
 
 startup
