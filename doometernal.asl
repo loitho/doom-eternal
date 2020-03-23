@@ -5,12 +5,14 @@
 state("DOOMEternalx64vk", "v7.1.1 Steam")
 {
 	bool isLoading : 0x6051240;
+	bool isInGame : 0x612C1D8;
 	byte levelID : 0x061D0868, 0x28;
 }
 
 state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 {
 	bool isLoading : 0x6012F40;
+	bool isInGame : 0x000000; // !!!
 	byte levelID : 0x06192468, 0x28; 
 }
 
@@ -37,12 +39,12 @@ init
 
 exit
 {
-    timer.IsGameTimePaused = true;
+	timer.IsGameTimePaused = true;
 }
 
 isLoading
 {
-    return current.isLoading;
+	return (current.isLoading || !current.isInGame);
 }
 
 split
