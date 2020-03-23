@@ -44,7 +44,8 @@ exit
 
 isLoading
 {
-	return (current.isLoading || !current.isInGame);
+	//return (current.isLoading || !current.isInGame);
+	return current.isLoading;
 }
 
 split
