@@ -30,12 +30,12 @@ startup
 init
 {
 	int moduleSize = modules.First().ModuleMemorySize;
-	print(moduleSize.ToString());
+	print("Main Module Size: "+moduleSize.ToString());
 	if (moduleSize == 507191296 || moduleSize == 515133440 || moduleSize == 510681088)
 	{
 		version = "v7.1.1 Steam";
 	} 
-	else if (moduleSize == 450445312) //TODO: new binary moduleSize (March 25 update)
+	else if (moduleSize == 450445312 || moduleSize == 444944384) //not tested
 	{
 		version = "v7.1.1 Bethesda";
 	}
