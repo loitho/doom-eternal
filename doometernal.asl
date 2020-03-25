@@ -31,7 +31,7 @@ init
 {
 	int moduleSize = modules.First().ModuleMemorySize;
 	print(moduleSize.ToString());
-	if (moduleSize == 507191296 || moduleSize == 515133440)
+	if (moduleSize == 507191296 || moduleSize == 515133440 || moduleSize = 510681088)
 	{
 		version = "v7.1.1 Steam";
 	} 
