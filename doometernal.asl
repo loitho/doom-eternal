@@ -35,7 +35,7 @@ init
 	{
 		version = "v7.1.1 Steam";
 	} 
-	else if (moduleSize == 450445312)
+	else if (moduleSize == 450445312) //TODO: new binary moduleSize (March 25 update)
 	{
 		version = "v7.1.1 Bethesda";
 	}
