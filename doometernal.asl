@@ -1,6 +1,7 @@
 //Doom Eternal Autosplitter
 //v0.2 (23/03/2020)
 //v0.3 (27/03/2020) // isloading changed to accomodate for low performing disks
+//v0.4 (27/03/2020) // Adding popup for incorrect versions
 //By Micrologist, Loitho
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
@@ -40,6 +41,38 @@ init
 	{
 		version = "v7.1.1 Bethesda";
 	}
+	else
+	{
+		version = "Unsupported: " + moduleSize.ToString();
+
+		// Display popup if version is incorrect
+		var result = MessageBox.Show(timer.Form,
+		"This autosplitter script is not supported\n"
+		+ "Contact Micrologist#2351 or Loitho#4546 on Doom discord \n"
+		+ "Include a screenshot of this message\n"
+		+ "And if you're on Steam or Bethesda\n\n"
+		+ "Your modulesize is: \n"
+		+ moduleSize.ToString() + "\n",
+		"Doom Eternal Autosplitter script",
+		MessageBoxButtons.OKCancel,
+		MessageBoxIcon.Information);
+
+		// Allow action to be run if you press OK
+		// if (result == DialogResult.OK)
+		// {
+		// 	Process.Start("https://yourwebsite.com/README.md");
+		// }
+	}
+}
+
+update
+{
+	// Disable the autosplitter if the version is incorrect
+	if (version.Contains("Unsupported"))
+	{
+		return false;
+	}
+	return true;
 }
 
 exit
