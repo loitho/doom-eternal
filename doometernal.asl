@@ -53,10 +53,7 @@ update
 {
 	// Disable the autosplitter if the version is incorrect
 	if (version.Contains("Unsupported"))
-	{
 		return false;
-	}
-	return true;
 }
 
 exit
