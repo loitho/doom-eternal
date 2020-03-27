@@ -12,7 +12,7 @@ state("DOOMEternalx64vk", "v7.1.1 Steam")
 
 state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 {
-	bool isLoading : 0x6012F40;
+	bool isLoading : 0x4CD40D8;
 	bool isInGame : 0x60EDED8;
 	byte levelID : 0x06192468, 0x28;
 	int cutsceneID: 0x4C3C684;
