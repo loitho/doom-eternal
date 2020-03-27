@@ -33,9 +33,12 @@ You can go to any map by typing the "map game...." command above in the console 
 
 ## Load removal 
 
-- Cheat engine, Look for 4byte value that is "1" when there is a loading screen
+- Cheat engine, Look for single byte value that is "1" when there is a loading screen
 - You should find a static pointer immediatly without the need for a pointer scan
-- You might find 3 static pointer that will behave similarly, however when you will look at them, if you load a level and got back to the main menu, one will switch to "1" quicker than the others, use this one.
+- You might find 8 static pointer that will behave similarly, however when you will look at them, the 4th and 5th ones should switch to 0 a bit later. this is even more flagrant when you're running on a low performing disk drive or artificially choking your drive
+- you should then use the one that switch to 0 the later
+
+if you load a level one and got back to the main menu, one will switch to "1" quicker than the others, use this one.
 
 ## Cutscene ID : 
 
