@@ -1,5 +1,6 @@
 //Doom Eternal Autosplitter
 //v0.2 (23/03/2020)
+//v0.3 (27/03/2020) // isloading changed to accomodate for low performing disks
 //By Micrologist, Loitho
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
