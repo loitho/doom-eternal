@@ -44,24 +44,8 @@ init
 	else
 	{
 		version = "Unsupported: " + moduleSize.ToString();
-
 		// Display popup if version is incorrect
-		var result = MessageBox.Show(timer.Form,
-		"This autosplitter script is not supported\n"
-		+ "Contact Micrologist#2351 or Loitho#4546 on Doom discord \n"
-		+ "Include a screenshot of this message\n"
-		+ "And if you're on Steam or Bethesda\n\n"
-		+ "Your modulesize is: \n"
-		+ moduleSize.ToString() + "\n",
-		"Doom Eternal Autosplitter script",
-		MessageBoxButtons.OKCancel,
-		MessageBoxIcon.Information);
-
-		// Allow action to be run if you press OK
-		// if (result == DialogResult.OK)
-		// {
-		// 	Process.Start("https://yourwebsite.com/README.md");
-		// }
+		MessageBox.Show("This game version is currently not supported by the Autosplitter, please contact Micrologist#2351 or Loitho#4546 on the Doom Discord. \n\nInclude a screenshot of this message and let us know whether you are using the Steam or the Bethesda version.\n\nModule Size: "+moduleSize.ToString(), "Doom Eternal - Unsupported Game Version");
 	}
 }
 
