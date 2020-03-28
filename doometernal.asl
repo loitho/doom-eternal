@@ -7,6 +7,7 @@
 state("DOOMEternalx64vk", "v7.1.1 Steam")
 {
 	bool isLoading : 0x4D11AD8;
+	bool isLoading2: 0x6051240;
 	bool isInGame : 0x612C1D8;
 	byte levelID : 0x061D0868, 0x28;
 	int cutsceneID: 0x4C7A084;
@@ -15,6 +16,7 @@ state("DOOMEternalx64vk", "v7.1.1 Steam")
 state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 {
 	bool isLoading : 0x4CD40D8;
+	bool isLoading2: 0x6012F40;
 	bool isInGame : 0x60EDED8;
 	byte levelID : 0x06192468, 0x28;
 	int cutsceneID: 0x4C3C684;
@@ -63,7 +65,7 @@ exit
 
 isLoading
 {
-	return (current.isLoading || !current.isInGame);
+	return (current.isLoading || current.isLoading2 || !current.isInGame);
 }
 
 split
