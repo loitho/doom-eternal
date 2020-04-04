@@ -93,13 +93,16 @@ gameTime
 
 start
 {
-	/*
-	// For when people reset HoE 
+	vars.highestLevelSplit = 5;
+	
+	// HoE was reset and opening cutscene was not shown
 	if(current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
 	{
+		vars.timeToRemove = 0;
+		vars.setGameTime = true;
 		return true;
 	}
-	*/
+	
 	if(current.cutsceneID == 0)
 		vars.startAfterCutscene = false;
 	
@@ -111,13 +114,12 @@ start
 	
 	if(current.isLoading && vars.startAfterCutscene) //opening cutscene was skipped with reset mission
 	{
-		vars.timeToRemove = 1.5;
+		vars.timeToRemove = 1;
 	}
 	
 	if(current.cutsceneID == 1 && vars.startAfterCutscene)
 	{
 		vars.startAfterCutscene = false;
-		vars.highestLevelSplit = 5;
 		vars.setGameTime = true;
 		return true;
 	}
