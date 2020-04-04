@@ -11,6 +11,7 @@ state("DOOMEternalx64vk", "v7.1.1 Steam")
 	bool isInGame : 0x612C1D8;
 	byte levelID : 0x061D0868, 0x28;
 	int cutsceneID: 0x4C7A084;
+	//byte canMove: 0x;
 }
 
 state("DOOMEternalx64vk", "v7.1.1 Bethesda")
@@ -20,6 +21,7 @@ state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 	bool isInGame : 0x60EDED8;
 	byte levelID : 0x06192468, 0x28;
 	int cutsceneID: 0x4C3C684;
+	byte canMove: 0x3361881;
 }
 
 startup
@@ -91,6 +93,13 @@ gameTime
 
 start
 {
+	/*
+	// For when people reset HoE 
+	if(current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
+	{
+		return true;
+	}
+	*/
 	if(current.cutsceneID == 0)
 		vars.startAfterCutscene = false;
 	
