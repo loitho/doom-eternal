@@ -96,7 +96,7 @@ start
 	vars.highestLevelSplit = 5;
 	
 	// HoE was reset and opening cutscene was not shown
-	if(current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
+	if(current.levelID == 5 && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
 	{
 		vars.timeToRemove = 0;
 		vars.setGameTime = true;
