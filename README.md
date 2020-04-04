@@ -57,6 +57,10 @@ Death Final Boss: 3162
 Ingame / No Cutscene playing: 1
 In Menu: 0
 ```
+## CanMove
+This byte determines if you're able to move at the start of the first level "Hell on Earth" it's used only when you skip the intro or restart the level through the "reset level" button
+- Value is 0 before you can move and 255 once you can move
+- Value is also 0 at the end of the loading screen in HoE
 
 ## a
 ```
