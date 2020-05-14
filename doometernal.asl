@@ -47,9 +47,10 @@ init
 	}
 	else
 	{
-		version = "Unsupported: " + moduleSize.ToString();
+		version = "Unsupported " + moduleSize.ToString();
 		// Display popup if version is incorrect
-		MessageBox.Show("This game version is currently not supported by the Autosplitter, please contact Micrologist#2351 or Loitho#4546 on the Doom Discord. \n\nInclude a screenshot of this message and let us know whether you are using the Steam or the Bethesda version.\n\nModule Size: "+moduleSize.ToString(), "Doom Eternal - Unsupported Game Version");
+		//MessageBox.Show("This game version is currently not supported by the Autosplitter, please contact Micrologist#2351 or Loitho#4546 on the Doom Discord. \n\nInclude a screenshot of this message and let us know whether you are using the Steam or the Bethesda version.\n\nModule Size: "+moduleSize.ToString(), "Doom Eternal - Unsupported Game Version");
+        	MessageBox.Show("This game version is currently not supported.\nA patch was released on 2020-05-14 and the Autosplitter is not compatible with that patch yet.\nPlease downpatch your game.", "Doom Eternal - Unsupported Game Version");
 	}
 }
 
