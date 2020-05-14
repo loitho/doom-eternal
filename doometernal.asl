@@ -24,6 +24,16 @@ state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 	byte canMove: 0x3361881;
 }
 
+state("DOOMEternalx64vk", "May Patch Steam")
+{
+    bool isLoading : 0x4D01058;
+	bool isLoading2: 0x60407C0;
+	bool isInGame : 0x5FF4B58;
+	byte levelID : 0x061C19F8, 0x28;
+	int cutsceneID: 0x4C69604;
+	byte canMove: 0x3400A11;
+}
+
 startup
 {
 	vars.startAfterCutscene = false;
@@ -45,13 +55,19 @@ init
 	{
 		version = "v7.1.1 Bethesda";
 	}
+   	 else if (moduleSize == 482037760) //steam may patch
+    	{
+        	MessageBox.Show("Support for this game version is largely untested.\n3Please report any bugs to Micrologist#2351 on Discord.", "Doom Eternal - Untested Game Version");
+        	version = "May Patch Steam";
+    	}
 	else
 	{
-		version = "Unsupported " + moduleSize.ToString();
+		version = "Unsupported: " + moduleSize.ToString();
 		// Display popup if version is incorrect
 		//MessageBox.Show("This game version is currently not supported by the Autosplitter, please contact Micrologist#2351 or Loitho#4546 on the Doom Discord. \n\nInclude a screenshot of this message and let us know whether you are using the Steam or the Bethesda version.\n\nModule Size: "+moduleSize.ToString(), "Doom Eternal - Unsupported Game Version");
-        	MessageBox.Show("This game version is currently not supported.\nA patch was released on 2020-05-14 and the Autosplitter is not compatible with that patch yet.\nPlease downpatch your game.", "Doom Eternal - Unsupported Game Version");
-	}
+       		MessageBox.Show("This game version is currently not supported.\nA patch was released on 2020-05-14 and the Autosplitter is not compatible with that patch yet.\nPlease downpatch your game.", "Doom Eternal - Unsupported Game Version");
+        
+    }
 }
 
 update
