@@ -57,7 +57,6 @@ init
 	}
    	 else if (moduleSize == 482037760) //steam may patch
     	{
-        	MessageBox.Show("Support for this game version is largely untested.\nPlease report any bugs to Micrologist#2351 on Discord.", "Doom Eternal - Untested Game Version");
         	version = "May Patch Steam";
     	}
 	else
