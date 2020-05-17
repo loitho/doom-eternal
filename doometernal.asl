@@ -1,7 +1,5 @@
 //Doom Eternal Autosplitter
-//v0.2 (23/03/2020)
-//v0.3 (27/03/2020) // isloading changed to accomodate for low performing disks
-//v0.4 (27/03/2020) // Adding popup for incorrect versions
+//v2020-05-17-1 Added steam support for may hotfix1
 //By Micrologist, Loitho
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
@@ -26,13 +24,24 @@ state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 
 state("DOOMEternalx64vk", "May Patch Steam")
 {
-    bool isLoading : 0x4D01058;
+    	bool isLoading : 0x4D01058;
 	bool isLoading2: 0x60407C0;
 	bool isInGame : 0x5FF4B58;
 	byte levelID : 0x061C19F8, 0x28;
 	int cutsceneID: 0x4C69604;
 	byte canMove: 0x3400A11;
 }
+
+state("DOOMEternalx64vk", "May Hotfix Steam")
+{
+   	bool isLoading : 0x4D02158;
+	bool isLoading2: 0x60418C0;
+	bool isInGame : 0x5FF5C58;
+	byte levelID : 0x061C2AF8, 0x28;
+	int cutsceneID: 0x4C6A704;
+	byte canMove: 0x3401A11;
+}
+
 
 startup
 {
@@ -55,15 +64,19 @@ init
 	{
 		version = "v7.1.1 Bethesda";
 	}
-   	 else if (moduleSize == 482037760) //steam may patch
+   	else if (moduleSize == 482037760) //steam may patch
     	{
         	version = "May Patch Steam";
     	}
+    	else if (moduleSize == 546783232) //steam may hotfix
+    	{
+        	version = "May Hotfix Steam";
+   	}
 	else
 	{
 		version = "Unsupported: " + moduleSize.ToString();
 		// Display popup if version is incorrect
-       		MessageBox.Show("This game version is currently not supported.\nA patch was released on 2020-05-14 and a hotfix was released on 2020-05-15.\nThe Autosplitter is not compatible with those versions yet.", "LiveSplit - Unsupported Game Version");
+       		MessageBox.Show("This game version is currently not supported.\nA patch was released on 2020-05-14 and a hotfix was released on 2020-05-15.\nThe Autosplitter is not compatible with the Bethesda versions of those patches yet.", "LiveSplit - Unsupported Game Version");
     	}
 }
 
