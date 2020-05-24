@@ -42,6 +42,16 @@ state("DOOMEternalx64vk", "May Hotfix Steam")
 	byte canMove: 0x3401A11;
 }
 
+state("DOOMEternalx64vk", "May Hotfix Bethesda")
+{
+	bool isLoading : 0x4CC47D8;
+	bool isLoading2: 0x6003640;
+	bool isInGame : 0x60DE978;
+	byte levelID : 0x06184748, 0x28;
+	int cutsceneID: 0x4C2CD84;
+	byte canMove: 0x33C78A1;
+}
+
 
 startup
 {
@@ -72,11 +82,15 @@ init
     	{
         	version = "May Hotfix Steam";
    	}
+    	else if (moduleSize == 455708672) 
+    	{
+        	version = "May Hotfix Bethesda";
+   	}
 	else
 	{
 		version = "Unsupported: " + moduleSize.ToString();
 		// Display popup if version is incorrect
-       		MessageBox.Show("This game version is currently not supported.\nA patch was released on 2020-05-14 and a hotfix was released on 2020-05-15.\nThe Autosplitter is not compatible with the Bethesda versions of those patches yet.", "LiveSplit - Unsupported Game Version");
+       		MessageBox.Show("This game version is currently not supported.", "LiveSplit - Unsupported Game Version");
     	}
 }
 
