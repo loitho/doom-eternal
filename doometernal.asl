@@ -52,6 +52,15 @@ state("DOOMEternalx64vk", "May Hotfix Bethesda")
 	byte canMove: 0x33C78A1;
 }
 
+state("DOOMEternalx64vk", "Patch 1.1 - Steam")
+{
+   	bool isLoading : 0x4D033D8;
+	bool isLoading2: 0x6042B40;
+	bool isInGame : 0x5FF6ED8;
+	byte levelID : 0x061C3D78, 0x28;
+	int cutsceneID: 0x4C6B984;
+	byte canMove: 0x3402A41;
+}
 
 startup
 {
@@ -86,6 +95,10 @@ init
     	{
         	version = "May Hotfix Bethesda";
    	}
+	else if (moduleSize == 492113920)
+	{
+		version = "Patch 1.1 - Steam";
+	}
 	else
 	{
 		version = "Unsupported: " + moduleSize.ToString();
