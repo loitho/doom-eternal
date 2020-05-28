@@ -62,6 +62,17 @@ state("DOOMEternalx64vk", "Patch 1.1 - Steam")
 	byte canMove: 0x3402A41;
 }
 
+state("DOOMEternalx64vk", "Patch 1.1 - Bethesda")
+{
+	bool isLoading : 0x4CC5958;
+	bool isLoading2: 0x60047C0;
+	bool isInGame : 0x60DFAF8;
+	byte levelID : 0x061858C8, 0x28;
+	int cutsceneID: 0x4C2DF04;
+	byte canMove: 0x33C88D1;
+}
+
+
 startup
 {
 	vars.startAfterCutscene = false;
@@ -99,11 +110,15 @@ init
 	{
 		version = "Patch 1.1 - Steam";
 	}
+	else if (moduleSize == 457285632)
+	{
+		version = "Patch 1.1 - Bethesda";
+	}
 	else
 	{
 		version = "Unsupported: " + moduleSize.ToString();
 		// Display popup if version is incorrect
-       		MessageBox.Show("This game version is currently not supported.", "LiveSplit - Unsupported Game Version");
+       		MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
     	}
 }
 
