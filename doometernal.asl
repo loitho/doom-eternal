@@ -1,5 +1,5 @@
 //Doom Eternal Autosplitter
-//v2020-05-17-1 Added steam support for may hotfix1
+//v2020-07-03 Added support for patch2
 //By Micrologist, Loitho
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
@@ -62,6 +62,7 @@ state("DOOMEternalx64vk", "Patch 1.1 - Steam")
 	byte canMove: 0x3402A41;
 }
 
+
 state("DOOMEternalx64vk", "Patch 1.1 - Bethesda")
 {
 	bool isLoading : 0x4CC5958;
@@ -71,6 +72,27 @@ state("DOOMEternalx64vk", "Patch 1.1 - Bethesda")
 	int cutsceneID: 0x4C2DF04;
 	byte canMove: 0x33C88D1;
 }
+
+state("DOOMEternalx64vk", "Patch 2.0 - Steam")
+{
+   	bool isLoading : 0x3463698;
+	bool isLoading2: 0x5081EA8;
+	bool isInGame : 0x6376768;
+	byte levelID : 0x0;
+	int cutsceneID: 0x0;
+	byte canMove: 0x0;
+}
+
+state("DOOMEternalx64vk", "Patch 2.0 - Bethesda")
+{
+   	bool isLoading : 0x34284F8;
+	bool isLoading2: 0x50434A8;
+	bool isInGame : 0x6337440;
+	byte levelID : 0x0;
+	int cutsceneID: 0x0;
+	byte canMove: 0x0;
+}
+
 
 
 startup
@@ -109,16 +131,16 @@ init
 		version = "v7.1.1 Bethesda";
 	}
    	else if (moduleSize == 482037760) //steam may patch
-    	{
-        	version = "May Patch Steam";
-    	}
-    	else if (moduleSize == 546783232) //steam may hotfix
-    	{
+    {
+        version = "May Patch Steam";
+    }
+    else if (moduleSize == 546783232) //steam may hotfix
+    {
         	version = "May Hotfix Steam";
    	}
-    	else if (moduleSize == 455708672) 
-    	{
-        	version = "May Hotfix Bethesda";
+    else if (moduleSize == 455708672) 
+    {
+        version = "May Hotfix Bethesda";
    	}
 	else if (moduleSize == 492113920)
 	{
@@ -128,12 +150,22 @@ init
 	{
 		version = "Patch 1.1 - Bethesda";
 	}
+    else if (moduleSize == 490299392)
+    {
+        version = "Patch 2.0 - Steam";
+        MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
+    }
+    else if (moduleSize == 454758400)
+    {
+        version = "Patch 2.0 - Bethesda";
+        MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
+    }
 	else
 	{
 		version = "Unsupported: " + moduleSize.ToString();
 		// Display popup if version is incorrect
-       		MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
-    	}
+    	MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
+    }
 }
 
 update
@@ -155,6 +187,9 @@ isLoading
 
 split
 {
+    if(version.Contains("Patch 2.0"))
+        return false;
+    
 	if(current.levelID > old.levelID && current.levelID > vars.highestLevelSplit)
 	{
 		vars.highestLevelSplit = current.levelID;
@@ -177,6 +212,9 @@ gameTime
 start
 {
 	vars.highestLevelSplit = 5;
+
+    if(version.Contains("Patch 2.0"))
+        return false;
 	
 	// HoE was reset and opening cutscene was not shown
 	if(current.levelID == 5 && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
