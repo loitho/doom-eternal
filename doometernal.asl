@@ -2,6 +2,8 @@
 //v2020-07-03 Added support for patch2
 //By Micrologist, Loitho
 
+// bowsr 2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
+
 state("DOOMEternalx64vk", "v7.1.1 Steam")
 {
 	bool isLoading : 0x4D11AD8;
@@ -93,6 +95,17 @@ state("DOOMEternalx64vk", "Patch 2.0 - Bethesda")
 	byte canMove: 0x0;
 }
 
+state("DOOMEternalx64vk", "Patch 2.1 - Steam")
+{
+	bool isLoading : 0x5084F28;
+	bool isLoading2: 0x63C5298;
+	bool isInGame : 0x6379668;
+	string31 levelName : 0x63CE708; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4FED4C4;
+	byte canMove: 0x64EA631;
+}
+
 
 
 startup
@@ -100,6 +113,11 @@ startup
 	vars.startAfterCutscene = false;
 	vars.highestLevelSplit = 5;
 	vars.openingCutsceneIDs = new List<int> { 3266, 3268, 3271, 3285 };
+
+	// Cutscene IDs were changed with Patch 2.1 (2.0?)
+	// 2.1 - Other IDs (For Reference) - First Priest: 3229 | Final Boss Intro: 3220, Death: 3215
+	vars.openingCutsceneIDsNew = new List<int> { 3263, 3265, 3268, 3282 };
+	
 	vars.timeToRemove = 0;
 	vars.setGameTime = false;
 	
@@ -160,6 +178,10 @@ init
         version = "Patch 2.0 - Bethesda";
         MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
     }
+	else if (moduleSize == 505344000)
+	{
+		version = "Patch 2.1 - Steam";
+	}
 	else
 	{
 		version = "Unsupported: " + moduleSize.ToString();
@@ -190,14 +212,34 @@ split
     if(version.Contains("Patch 2.0"))
         return false;
     
-	if(current.levelID > old.levelID && current.levelID > vars.highestLevelSplit)
+	// Grabbing the levelID no longer works on 2.0+ so the levelName strings are compared instead
+    if(version.Contains("Patch 2.1"))
 	{
-		vars.highestLevelSplit = current.levelID;
-		return true;
+		if(String.IsNullOrEmpty(current.levelName) || String.IsNullOrEmpty(old.levelName))
+			return false;
+		
+		// Prevents quitouts from advancing splits since highestLevelSplit is no longer used for 2.1+
+		if(current.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/hub/hub") || old.levelName.Contains("game/shell/shell"))
+			return false;
+
+        if(current.levelName != old.levelName)
+			return true;
+
+		if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == 3215)
+			return true;
+	}else
+	{
+		// Backwards compatibility for versions before 2.0
+
+		if(current.levelID > old.levelID && current.levelID > vars.highestLevelSplit)
+	    {
+	    	vars.highestLevelSplit = current.levelID;
+	    	return true;
+	    }
+	    
+	    if(current.levelID == 17 && current.cutsceneID == 3162) //final boss killed
+	    	return true;
 	}
-	
-	if(current.levelID == 17 && current.cutsceneID == 3162) //final boss killed
-		return true;
 }
 
 gameTime
@@ -216,28 +258,49 @@ start
     if(version.Contains("Patch 2.0"))
         return false;
 	
-	// HoE was reset and opening cutscene was not shown
-	if(current.levelID == 5 && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
+	// Grabbing the levelID no longer works on 2.0+ so the levelName strings are compared instead
+	if(version.Contains("Patch 2.1"))
 	{
-		vars.timeToRemove = 0;
-		vars.setGameTime = true;
-		return true;
+		// HoE was reset and opening cutscene was not shown
+	    if(current.levelName.Contains("e1m1_intro") && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
+	    {
+	    	vars.timeToRemove = 0;
+	    	vars.setGameTime = true;
+	    	return true;
+	    }
+	    
+	    if(current.levelName.Contains("e1m1_intro") && vars.openingCutsceneIDsNew.Contains(current.cutsceneID)) //opening cutscene is playing
+	    {
+	    	vars.timeToRemove = 3;
+	    	vars.startAfterCutscene = true;
+	    }
+	}else
+	{
+		// Backwards compatibility for versions before 2.0
+		
+	    // HoE was reset and opening cutscene was not shown
+	    if(current.levelID == 5 && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
+	    {
+	    	vars.timeToRemove = 0;
+	    	vars.setGameTime = true;
+	    	return true;
+	    }
+	    
+	    if(current.levelID == 5 && vars.openingCutsceneIDs.Contains(current.cutsceneID)) //opening cutscene is playing
+	    {
+	    	vars.timeToRemove = 3;
+	    	vars.startAfterCutscene = true;
+	    }
 	}
-	
+
 	if(current.cutsceneID == 0)
 		vars.startAfterCutscene = false;
-	
-	if(current.levelID == 5 && vars.openingCutsceneIDs.Contains(current.cutsceneID)) //opening cutscene is playing
-	{
-		vars.timeToRemove = 3;
-		vars.startAfterCutscene = true;
-	}
-	
+
 	if(current.isLoading && vars.startAfterCutscene) //opening cutscene was skipped with reset mission
 	{
 		vars.timeToRemove = 1;
 	}
-	
+
 	if(current.cutsceneID == 1 && vars.startAfterCutscene)
 	{
 		vars.startAfterCutscene = false;
