@@ -2,7 +2,8 @@
 //v2020-07-03 Added support for patch2
 //By Micrologist, Loitho
 
-// bowsr 2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
+// bowsr 2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
+//   *   2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
 {
@@ -106,6 +107,16 @@ state("DOOMEternalx64vk", "Patch 2.1 - Steam")
 	byte canMove: 0x64EA631;
 }
 
+state("DOOMEternalx64vk", "Patch 3.0 - DLC1 - Steam")
+{
+	bool isLoading : 0x527BC98;
+	byte isLoading2: 0x6695CD8;
+	bool isInGame : 0x6647F20;
+	string31 levelName : 0x669F218; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x6581140;
+	byte canMove: 0x67BDA41;
+}
 
 
 startup
@@ -114,9 +125,14 @@ startup
 	vars.highestLevelSplit = 5;
 	vars.openingCutsceneIDs = new List<int> { 3266, 3268, 3271, 3285 };
 
-	// Cutscene IDs were changed with Patch 2.1 (2.0?)
+	// Cutscene IDs were changed with Patch 2.1 (2.0?) & 3.0
 	// 2.1 - Other IDs (For Reference) - First Priest: 3229 | Final Boss Intro: 3220, Death: 3215
 	vars.openingCutsceneIDsNew = new List<int> { 3263, 3265, 3268, 3282 };
+
+	// 3.0 - Other IDs (For Reference) - First Priest: 3230 | Final Boss Intro: 3220, Death: 3215
+	// DLC1 IDs - Start: 2666, 2577 | Finish 1: 1957 - Finish 2: 4133, 4127
+	vars.openingCutsceneIDsDLC1_V = new List<int> { 3264, 3266, 3269, 3283 };
+	vars.openingCutsceneIDsDLC1_TAG = new List<int> { 2666, 2577 };
 	
 	vars.timeToRemove = 0;
 	vars.setGameTime = false;
@@ -182,6 +198,10 @@ init
 	{
 		version = "Patch 2.1 - Steam";
 	}
+	else if (moduleSize == 475557888)
+	{
+		version = "Patch 3.0 - DLC1 - Steam";
+	}
 	else
 	{
 		version = "Unsupported: " + moduleSize.ToString();
@@ -204,6 +224,11 @@ exit
 
 isLoading
 {
+	if(version.Contains("Patch 3.0"))
+	{
+		// 3.0 - isLoading2 now has a value of 2 if loading into a new level for the first time
+		return (current.isLoading || current.isLoading2 > 0 || !current.isInGame);
+	}
 	return (current.isLoading || current.isLoading2 || !current.isInGame);
 }
 
@@ -213,19 +238,27 @@ split
         return false;
     
 	// Grabbing the levelID no longer works on 2.0+ so the levelName strings are compared instead
-    if(version.Contains("Patch 2.1"))
+    if(version.Contains("Patch 2.1") || version.Contains("Patch 3.0"))
 	{
 		if(String.IsNullOrEmpty(current.levelName) || String.IsNullOrEmpty(old.levelName))
 			return false;
 		
 		// Prevents quitouts from advancing splits since highestLevelSplit is no longer used for 2.1+
-		if(current.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/hub/hub") || old.levelName.Contains("game/shell/shell"))
+		if(current.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/hub/hub") || old.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/dlc/hub/hub"))
 			return false;
 
         if(current.levelName != old.levelName)
 			return true;
 
+		// Vanilla Campaign final split
 		if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == 3215)
+			return true;
+
+		// The Ancient Gods P1 Campaign final split
+		// cutsceneID: 1957 is the first of two ending cutscenes, and is unskippable
+		//             4133 is the second of two ending cutscenes, and is skippable
+		//             There is no player input in between these two cutscenes, so the first is used
+		if(current.levelName.Contains("e4m3_mcity") && current.cutsceneID == 1957)
 			return true;
 	}else
 	{
@@ -274,6 +307,29 @@ start
 	    	vars.timeToRemove = 3;
 	    	vars.startAfterCutscene = true;
 	    }
+	}else if(version.Contains("Patch 3.0"))
+	{
+		// HoE was reset and opening cutscene was not shown
+	    if(current.levelName.Contains("e1m1_intro") && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
+	    {
+	    	vars.timeToRemove = 0;
+	    	vars.setGameTime = true;
+	    	return true;
+	    }
+	    
+	    if(current.levelName.Contains("e1m1_intro") && vars.openingCutsceneIDsDLC1_V.Contains(current.cutsceneID)) //opening cutscene is playing
+	    {
+	    	vars.timeToRemove = 3;
+	    	vars.startAfterCutscene = true;
+	    }
+
+		// The Ancient Gods Part One
+		if(current.levelName.Contains("e4m1_rig") && vars.openingCutsceneIDsDLC1_TAG.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
+		{
+			vars.timeToRemove = 0;
+			vars.setGameTime = true;
+			return true;
+		}
 	}else
 	{
 		// Backwards compatibility for versions before 2.0
