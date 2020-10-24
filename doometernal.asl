@@ -2,7 +2,8 @@
 //v2020-07-03 Added support for patch2
 //By Micrologist, Loitho
 
-// bowsr 2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
+// bowsr 2020-10-23 - Updated for Steam 3.1 and added support for Bethesda
+//   *   2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
 //   *   2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
