@@ -2,7 +2,8 @@
 //v2020-07-03 Added support for patch2
 //By Micrologist, Loitho
 
-// bowsr 2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
+// bowsr 2020-10-23 - Updated for Steam 3.1 and added support for Bethesda
+//   *   2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
 //   *   2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
@@ -118,6 +119,28 @@ state("DOOMEternalx64vk", "Patch 3.0 - DLC1 - Steam")
 	byte canMove: 0x67BDA41;
 }
 
+state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Steam")
+{
+	bool isLoading : 0x527BD18;
+	byte isLoading2: 0x6695D58;
+	bool isInGame : 0x6647FA0;
+	string31 levelName : 0x67706F0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x632A8A0;
+	byte canMove: 0x67BDAC1;
+}
+
+state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Bethesda")
+{
+	bool isLoading : 0x523D098;
+	byte isLoading2: 0x6656658;
+	bool isInGame : 0x66088B0;
+	string31 levelName : 0x6730FF0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x62EBA20;
+	byte canMove: 0x677E3C1;
+}
+
 
 startup
 {
@@ -202,6 +225,14 @@ init
 	{
 		version = "Patch 3.0 - DLC1 - Steam";
 	}
+	else if (moduleSize == 504107008)
+	{
+		version = "Patch 3.1 - DLC1 - Steam";
+	}
+	else if (moduleSize == 485183488)
+	{
+		version = "Patch 3.1 - DLC1 - Bethesda";
+	}
 	else
 	{
 		version = "Unsupported: " + moduleSize.ToString();
@@ -224,7 +255,7 @@ exit
 
 isLoading
 {
-	if(version.Contains("Patch 3.0"))
+	if(version.Contains("DLC1"))
 	{
 		// 3.0 - isLoading2 now has a value of 2 if loading into a new level for the first time
 		return (current.isLoading || current.isLoading2 > 0 || !current.isInGame);
@@ -238,7 +269,7 @@ split
         return false;
     
 	// Grabbing the levelID no longer works on 2.0+ so the levelName strings are compared instead
-    if(version.Contains("Patch 2.1") || version.Contains("Patch 3.0"))
+    if(version.Contains("Patch 2.1") || version.Contains("DLC1"))
 	{
 		if(String.IsNullOrEmpty(current.levelName) || String.IsNullOrEmpty(old.levelName))
 			return false;
@@ -307,7 +338,7 @@ start
 	    	vars.timeToRemove = 3;
 	    	vars.startAfterCutscene = true;
 	    }
-	}else if(version.Contains("Patch 3.0"))
+	}else if(version.Contains("DLC1"))
 	{
 		// HoE was reset and opening cutscene was not shown
 	    if(current.levelName.Contains("e1m1_intro") && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
