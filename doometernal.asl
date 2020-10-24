@@ -129,6 +129,17 @@ state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Steam")
 	byte canMove: 0x67BDAC1;
 }
 
+state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Bethesda")
+{
+	bool isLoading : 0x523D098;
+	byte isLoading2: 0x6656658;
+	bool isInGame : 0x66088B0;
+	string31 levelName : 0x6730FF0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x62EBA20;
+	byte canMove: 0x677E3C1;
+}
+
 
 startup
 {
@@ -216,6 +227,10 @@ init
 	else if (moduleSize == 504107008)
 	{
 		version = "Patch 3.1 - DLC1 - Steam";
+	}
+	else if (moduleSize == 485183488)
+	{
+		version = "Patch 3.1 - DLC1 - Bethesda";
 	}
 	else
 	{
