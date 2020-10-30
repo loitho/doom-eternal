@@ -2,6 +2,7 @@
 //v2020-07-03 Added support for patch2
 //By Micrologist, Loitho
 
+// Undeceiver 2020-10-30 - Added (optional) hidden combat rating tracking for The Ancient Gods 100%.
 // bowsr 2020-10-23 - Updated for Steam 3.1 and added support for Bethesda
 //   *   2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
 //   *   2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
@@ -128,6 +129,7 @@ state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x632A8A0;
 	byte canMove: 0x67BDAC1;
+	int tagCombatRating: 0x67706A0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
 state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Bethesda")
@@ -138,7 +140,7 @@ state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Bethesda")
 	string31 levelName : 0x6730FF0; 
 	byte levelID : 0x0;
 	int cutsceneID: 0x62EBA20;
-	byte canMove: 0x677E3C1;
+	byte canMove: 0x677E3C1;	
 }
 
 
@@ -173,71 +175,103 @@ startup
 			timer.CurrentTimingMethod = TimingMethod.GameTime;
         	}
 	}
+
+	settings.Add("trackHiddenCR",false,"Track hidden combat rating");
+	// Text component to print hidden CR
+	vars.textComponent = (Action<string, string>)((id, text) => {
+    		var textSettings = timer.Layout.Components.Where(x => x.GetType().Name == "TextComponent").Select(x => x.GetType().GetProperty("Settings").GetValue(x, null));
+	    	var textSetting = textSettings.FirstOrDefault(x => (x.GetType().GetProperty("Text1").GetValue(x, null) as string) == id);
+    		if (textSetting == null) {
+      			var textComponentAssembly = Assembly.LoadFrom("Components\\LiveSplit.Text.dll");
+      			var textComponent = Activator.CreateInstance(textComponentAssembly.GetType("LiveSplit.UI.Components.TextComponent"), timer);
+      			timer.Layout.LayoutComponents.Add(new LiveSplit.UI.Components.LayoutComponent("LiveSplit.Text.dll", textComponent as LiveSplit.UI.Components.IComponent));
+
+      			textSetting = textComponent.GetType().GetProperty("Settings", BindingFlags.Instance | BindingFlags.Public).GetValue(textComponent, null);
+      			textSetting.GetType().GetProperty("Text1").SetValue(textSetting, id);
+    		}
+
+    		if (textSetting != null)
+    			textSetting.GetType().GetProperty("Text2").SetValue(textSetting, text);
+	});
+	// Total CR values for each level
+	// We do this as a variable for each level for now because they're few. Feel free to transform into a better structure.
+	vars.maxUACACR = 21;
+	vars.UACAlevelName = "e4m1_rig";
+	vars.maxBSCR = 29;
+	vars.BSlevelName = "e4m2_swamp";
+	vars.maxHoltCR = 17;
+	vars.HoltLevelName = "e4m3_mcity";
+	vars.curLevelMaxCR = 1;
+	vars.inMaxCRLevel = false;	
 }
 
 init
 {
 	int moduleSize = modules.First().ModuleMemorySize;
 	print("Main Module Size: "+moduleSize.ToString());
-	if (moduleSize == 507191296 || moduleSize == 515133440 || moduleSize == 510681088)
+	// Undeceiver 2020/10/29 - A guy from the LiveSplit Discord almost forced me to change this to a switch in order to help me do what I had to. I told him I did not want to break it, but I couldn't deny it should not break it.
+	switch(moduleSize)
 	{
-		version = "v7.1.1 Steam";
-	} 
-	else if (moduleSize == 450445312 || moduleSize == 444944384) //not tested
-	{
-		version = "v7.1.1 Bethesda";
-	}
-   	else if (moduleSize == 482037760) //steam may patch
-    {
-        version = "May Patch Steam";
-    }
-    else if (moduleSize == 546783232) //steam may hotfix
-    {
-        	version = "May Hotfix Steam";
-   	}
-    else if (moduleSize == 455708672) 
-    {
-        version = "May Hotfix Bethesda";
-   	}
-	else if (moduleSize == 492113920)
-	{
-		version = "Patch 1.1 - Steam";
-	}
-	else if (moduleSize == 457285632)
-	{
-		version = "Patch 1.1 - Bethesda";
-	}
-    else if (moduleSize == 490299392)
-    {
-        version = "Patch 2.0 - Steam";
-        MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
-    }
-    else if (moduleSize == 454758400)
-    {
-        version = "Patch 2.0 - Bethesda";
-        MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
-    }
-	else if (moduleSize == 505344000)
-	{
-		version = "Patch 2.1 - Steam";
-	}
-	else if (moduleSize == 475557888)
-	{
-		version = "Patch 3.0 - DLC1 - Steam";
-	}
-	else if (moduleSize == 504107008)
-	{
-		version = "Patch 3.1 - DLC1 - Steam";
-	}
-	else if (moduleSize == 485183488)
-	{
-		version = "Patch 3.1 - DLC1 - Bethesda";
-	}
-	else
-	{
-		version = "Unsupported: " + moduleSize.ToString();
-		// Display popup if version is incorrect
-    	MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
+		case 507191296: case 515133440: case 510681088:
+			version = "v7.1.1 Steam";
+			vars.isTagCRSupported = false;
+			break;
+		case 450445312: case 444944384: //not tested
+			version = "v7.1.1 Bethesda";
+			vars.isTagCRSupported = false;
+			break;
+		case 482037760: //steam may patch
+    			version = "May Patch Steam";
+			vars.isTagCRSupported = false;
+			break;
+		case 546783232: //steam may hotfix
+    		   	version = "May Hotfix Steam";
+			vars.isTagCRSupported = false;
+			break;
+   		case 455708672:
+        		version = "May Hotfix Bethesda";
+			vars.isTagCRSupported = false;
+			break;
+		case 492113920:
+			version = "Patch 1.1 - Steam";
+			vars.isTagCRSupported = false;
+			break;
+		case 457285632:
+			version = "Patch 1.1 - Bethesda";
+			vars.isTagCRSupported = false;
+			break;
+		case 490299392:
+        		version = "Patch 2.0 - Steam";
+        		MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
+			vars.isTagCRSupported = false;
+			break;
+		case 454758400:
+    			version = "Patch 2.0 - Bethesda";
+        		MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
+			vars.isTagCRSupported = false;
+			break;
+		case 505344000:
+			version = "Patch 2.1 - Steam";
+			vars.isTagCRSupported = false;
+			break;
+		case 475557888:
+			version = "Patch 3.0 - DLC1 - Steam";
+			vars.isTagCRSupported = false;
+			break;
+		case 504107008:
+			version = "Patch 3.1 - DLC1 - Steam";
+			vars.isTagCRSupported = true;
+			break;
+		case 485183488:
+			version = "Patch 3.1 - DLC1 - Bethesda";
+			vars.isTagCRSupported = false;
+			break;
+		default:
+			version = "Unsupported: " + moduleSize.ToString();
+			// Display popup if version is incorrect
+    			MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
+			vars.isTagCRSupported = false;
+			break;
     }
 }
 
@@ -246,6 +280,30 @@ update
 	// Disable the autosplitter if the version is incorrect
 	if (version.Contains("Unsupported"))
 		return false;
+	
+	if (vars.isTagCRSupported && settings["trackHiddenCR"])
+	{
+		vars.inMaxCRLevel = false;
+		if (current.levelName.Contains(vars.UACAlevelName))
+		{
+			vars.inMaxCRLevel = true;
+			vars.curLevelMaxCR = vars.maxUACACR;
+		} else if (current.levelName.Contains(vars.BSlevelName)) {
+			vars.inMaxCRLevel = true;
+			vars.curLevelMaxCR = vars.maxBSCR;
+		} else if (current.levelName.Contains(vars.HoltLevelName)) {
+			vars.inMaxCRLevel = true;
+			vars.curLevelMaxCR = vars.maxHoltCR;
+		}
+
+		if (vars.inMaxCRLevel)
+		{
+			vars.curCRPercentage = 100 * current.tagCombatRating / vars.curLevelMaxCR;
+			vars.textComponent("Hidden combat rating ", current.tagCombatRating.ToString() + "/" + vars.curLevelMaxCR + " (" + vars.curCRPercentage.ToString("0.") + "%)");
+		} else {
+			vars.textComponent("Hidden combat rating ", "(not in a level)");		
+		}
+	 }
 }
 
 exit
