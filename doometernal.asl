@@ -2,10 +2,11 @@
 //v2020-07-03 Added support for patch2
 //By Micrologist, Loitho
 
+// bowsr      2020-12-01 - Updated for Patch 4.0
 // Undeceiver 2020-10-30 - Added (optional) hidden combat rating tracking for The Ancient Gods 100%.
-// bowsr 2020-10-23 - Updated for Steam 3.1 and added support for Bethesda
-//   *   2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
-//   *   2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
+// bowsr      2020-10-23 - Updated for Steam 3.1 and added support for Bethesda
+//   *        2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
+//   *        2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
 
 state("DOOMEternalx64vk", "v7.1.1 Steam")
 {
@@ -143,6 +144,31 @@ state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Bethesda")
 	byte canMove: 0x677E3C1;	
 }
 
+state("DOOMEternalx64vk", "Patch 4.0 - DLC1 - Steam")
+{
+	bool isLoading : 0x520FD78;
+	byte isLoading2: 0x66B0B88;
+	bool isInGame : 0x6665090;
+	string31 levelName : 0x678B6C0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x62E89D0;
+	byte canMove: 0x67D8B91;
+	int tagCombatRating: 0x678B670, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+    // There was another valid pointer chain, noted here just in case the current one stops working for whatever reason
+    // 0x678B670, 0x458, 0x8, 0x88
+}
+
+state("DOOMEternalx64vk", "Patch 4.0 - DLC1 - Bethesda")
+{
+	bool isLoading : 0x51D1178;
+	byte isLoading2: 0x6671D88;
+	bool isInGame : 0x6626280;
+	string31 levelName : 0x674C8C0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x62A9C50;
+	byte canMove: 0x6799D91;	
+}
+
 
 startup
 {
@@ -158,6 +184,10 @@ startup
 	// DLC1 IDs - Start: 2666, 2577 | Finish 1: 1957 - Finish 2: 4133, 4127
 	vars.openingCutsceneIDsDLC1_V = new List<int> { 3264, 3266, 3269, 3283 };
 	vars.openingCutsceneIDsDLC1_TAG = new List<int> { 2666, 2577 };
+
+    // 4.0 - Other IDs - Final Boss Intro: 3222, Death: 3217
+    // DLC1 IDs - Finish: 1955
+    vars.openingCutsceneIDsDLC1_TAG_4 = new List<int> { 2662, 2573 };
 	
 	vars.timeToRemove = 0;
 	vars.setGameTime = false;
@@ -266,6 +296,14 @@ init
 			version = "Patch 3.1 - DLC1 - Bethesda";
 			vars.isTagCRSupported = false;
 			break;
+        case 478056448:
+            version = "Patch 4.0 - DLC1 - Steam";
+            vars.isTagCRSupported = true;
+            break;
+        case 453394432:
+            version = "Patch 4.0 - DLC1 - Bethesda";
+            vars.isTagCRSupported = false;
+            break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
 			// Display popup if version is incorrect
@@ -339,16 +377,25 @@ split
         if(current.levelName != old.levelName)
 			return true;
 
-		// Vanilla Campaign final split
-		if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == 3215)
-			return true;
+        if(version.Contains("Patch 4.0"))
+        {
+            // Vanilla Campaign final split
+		    if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == 3217)
+			    return true;
 
-		// The Ancient Gods P1 Campaign final split
-		// cutsceneID: 1957 is the first of two ending cutscenes, and is unskippable
-		//             4133 is the second of two ending cutscenes, and is skippable
-		//             There is no player input in between these two cutscenes, so the first is used
-		if(current.levelName.Contains("e4m3_mcity") && current.cutsceneID == 1957)
-			return true;
+            // The Ancient Gods P1 Campaign final split
+            if(current.levelName.Contains("e4m3_mcity") && current.cutsceneID == 1955)
+			    return true;
+        }else
+        {
+            // Vanilla Campaign final split
+		    if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == 3215)
+			    return true;
+
+            // The Ancient Gods P1 Campaign final split
+            if(current.levelName.Contains("e4m3_mcity") && current.cutsceneID == 1957)
+			    return true;
+        }
 	}else
 	{
 		// Backwards compatibility for versions before 2.0
@@ -413,12 +460,23 @@ start
 	    }
 
 		// The Ancient Gods Part One
-		if(current.levelName.Contains("e4m1_rig") && vars.openingCutsceneIDsDLC1_TAG.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
-		{
-			vars.timeToRemove = 0;
-			vars.setGameTime = true;
-			return true;
-		}
+        if(version.Contains("Patch 4.0"))
+        {
+		    if(current.levelName.Contains("e4m1_rig") && vars.openingCutsceneIDsDLC1_TAG_4.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
+		    {
+		    	vars.timeToRemove = 0;
+		    	vars.setGameTime = true;
+		    	return true;
+		    }
+        }else
+        {
+		    if(current.levelName.Contains("e4m1_rig") && vars.openingCutsceneIDsDLC1_TAG.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
+		    {
+		    	vars.timeToRemove = 0;
+		    	vars.setGameTime = true;
+		    	return true;
+		    }
+        }
 	}else
 	{
 		// Backwards compatibility for versions before 2.0
