@@ -141,7 +141,7 @@ state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Bethesda")
 	string31 levelName : 0x6730FF0; 
 	byte levelID : 0x0;
 	int cutsceneID: 0x62EBA20;
-	byte canMove: 0x677E3C1;	
+	byte canMove: 0x677E3C1;
 }
 
 state("DOOMEternalx64vk", "Patch 4.0 - DLC1 - Steam")
@@ -166,7 +166,30 @@ state("DOOMEternalx64vk", "Patch 4.0 - DLC1 - Bethesda")
 	string31 levelName : 0x674C8C0; 
 	byte levelID : 0x0;
 	int cutsceneID: 0x62A9C50;
-	byte canMove: 0x6799D91;	
+	byte canMove: 0x6799D91;
+}
+
+state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Steam")
+{
+	bool isLoading : 0x520FD78;
+	byte isLoading2: 0x66B1788;
+	bool isInGame : 0x6665C90;
+	string31 levelName : 0x678C2C0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x62E89D0;
+	byte canMove: 0x67D9791;
+	int tagCombatRating: 0x678C270, 0x0, 0x288, 0x1A8, 0x8, 0x88; // 0x678C270, 0x458, 0x8, 0x88
+}
+
+state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Bethesda")
+{
+	bool isLoading : 0x51D1178;
+	byte isLoading2: 0x6672988;
+	bool isInGame : 0x6626E80;
+	string31 levelName : 0x674C8C0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x62A9C50;
+	byte canMove: 0x6799D91;
 }
 
 
@@ -304,6 +327,14 @@ init
             version = "Patch 4.0 - DLC1 - Bethesda";
             vars.isTagCRSupported = false;
             break;
+		case 472821760:
+			version = "Patch 4.1 - DLC1 - Steam";
+			vars.isTagCRSupported = true;
+			break;
+		case 439070720:
+			version = "Patch 4.1 - DLC1 - Bethesda";
+			vars.isTagCRSupported = false;
+			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
 			// Display popup if version is incorrect
@@ -377,7 +408,7 @@ split
         if(current.levelName != old.levelName)
 			return true;
 
-        if(version.Contains("Patch 4.0"))
+        if(version.Contains("Patch 4"))
         {
             // Vanilla Campaign final split
 		    if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == 3217)
@@ -460,7 +491,7 @@ start
 	    }
 
 		// The Ancient Gods Part One
-        if(version.Contains("Patch 4.0"))
+        if(version.Contains("Patch 4"))
         {
 		    if(current.levelName.Contains("e4m1_rig") && vars.openingCutsceneIDsDLC1_TAG_4.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
 		    {
