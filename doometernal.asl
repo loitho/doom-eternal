@@ -186,7 +186,7 @@ state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Bethesda")
 	bool isLoading : 0x51D1178;
 	byte isLoading2: 0x6672988;
 	bool isInGame : 0x6626E80;
-	string31 levelName : 0x674C8C0; 
+	string31 levelName : 0x674D4C0; 
 	byte levelID : 0x0;
 	int cutsceneID: 0x62A9C50;
 	byte canMove: 0x6799D91;
