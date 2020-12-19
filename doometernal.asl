@@ -190,6 +190,7 @@ state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Bethesda")
 	byte levelID : 0x0;
 	int cutsceneID: 0x62A9C50;
 	byte canMove: 0x6799D91;
+	int tagCombatRating: 0x674D470, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
 
@@ -333,7 +334,7 @@ init
 			break;
 		case 439070720:
 			version = "Patch 4.1 - DLC1 - Bethesda";
-			vars.isTagCRSupported = false;
+			vars.isTagCRSupported = true;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
