@@ -189,7 +189,7 @@ state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Bethesda")
 	string31 levelName : 0x674D4C0; 
 	byte levelID : 0x0;
 	int cutsceneID: 0x62A9C50;
-	byte canMove: 0x6799D91;
+	byte canMove: 0x679A991;
 	int tagCombatRating: 0x674D470, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
