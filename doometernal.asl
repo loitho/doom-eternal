@@ -1,7 +1,8 @@
 // Doom Eternal Autosplitter
 // By Micrologist, Loitho, bowsr, Undeceiver
 
-// bowsr      2020-12-01 - Updated for Patch 4.0
+// bowsr      2021-01-20 - Refactored start/split methods, added options to split when returning to the hub
+//   *        2020-12-01 - Updated for Patch 4.0
 // Undeceiver 2020-10-30 - Added (optional) hidden combat rating tracking for The Ancient Gods 100%.
 // bowsr      2020-10-23 - Updated for Steam 3.1 and added support for Bethesda
 //   *        2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
@@ -240,6 +241,17 @@ startup
 	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
 	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
 
+	// Settings to support hub visits as separate splits
+	settings.Add("fortressSplits", false, "Split when entering Fortress of Doom");
+	settings.SetToolTip("fortressSplits", "Enable this setting if you want the autosplitter to split when entering the hub.\nYou can also disable on a per level basis if you want some but not the rest.");
+	settings.Add("fortressHOE", true, "Hell on Earth", "fortressSplits");
+	settings.Add("fortressExultia", true, "Exultia", "fortressSplits");
+	settings.Add("fortressDHB", true, "Doom Hunter Base", "fortressSplits");
+	settings.Add("fortressSGN", true, "Super Gore Nest", "fortressSplits");
+	settings.Add("fortressARC", true, "Arc Complex", "fortressSplits");
+	settings.Add("fortressSP", true, "Sentinel Prime", "fortressSplits");
+	settings.Add("fortressTB", true, "Taras Nabad", "fortressSplits");
+
 	// Text component to print hidden CR
 	vars.textComponent = (Action<string, string>)((id, text) => {
     		var textSettings = timer.Layout.Components.Where(x => x.GetType().Name == "TextComponent").Select(x => x.GetType().GetProperty("Settings").GetValue(x, null));
@@ -444,6 +456,17 @@ split
 
         if(current.levelName != old.levelName)
 		{
+			// Split upon entry to hub
+			if(current.levelName.Contains("game/hub/hub"))
+			{
+				if(old.levelName.Contains("e1m1_intro") && !settings["fortressHOE"]) 		return false; // Hell on Earth
+				if(old.levelName.Contains("e1m2_battle") && !settings["fortressExultia"]) 	return false; // Exultia
+				if(old.levelName.Contains("e1m4_boss") && !settings["fortressDHB"]) 		return false; // Doom Hunter Base
+				if(old.levelName.Contains("e2m1_nest") && !settings["fortressSGN"]) 		return false; // Super Gore Nest
+				if(old.levelName.Contains("e2m2_base") && !settings["fortressARC"]) 		return false; // Arc Complex
+				if(old.levelName.Contains("e2m4_boss") && !settings["fortressSP"]) 			return false; // Sentinel Prime
+				if(old.levelName.Contains("e3m1_slayer") && !settings["fortressTB"]) 		return false; // Taras Nabad
+			}
 			return true;
 		}
 
