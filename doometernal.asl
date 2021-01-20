@@ -1,7 +1,7 @@
 // Doom Eternal Autosplitter
 // By Micrologist, Loitho, bowsr, Undeceiver
 
-// bowsr      2021-01-20 - Refactored start/split methods, added options to split when returning to the hub
+// bowsr      2021-01-20 - Refactored start/split methods, added options to split when returning to the hub, and merged SGN ML .asl
 //   *        2020-12-01 - Updated for Patch 4.0
 // Undeceiver 2020-10-30 - Added (optional) hidden combat rating tracking for The Ancient Gods 100%.
 // bowsr      2020-10-23 - Updated for Steam 3.1 and added support for Bethesda
@@ -241,6 +241,12 @@ startup
 	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
 	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
 
+	// Setting that enables a split at the final SGN cutscene (intended for Master Level)
+	// This also disables the standard autosplit/start functions to prevent issues (load remover still applies)
+	settings.Add("sgnML", false, "Super Gore Nest ML (DISABLES NORMAL AUTOSPLITTER)");
+	settings.SetToolTip("sgnML", "Enabling this option allows for the timer to autosplit at the end of the SGN ML." + 
+								 "\nWARNING: This disables the autosplitter in both the base and dlc campaigns on versions 4.0+");
+
 	// Settings to support hub visits as separate splits
 	settings.Add("fortressSplits", false, "Split when entering Fortress of Doom");
 	settings.SetToolTip("fortressSplits", "Enable this setting if you want the autosplitter to split when entering the hub.\nYou can also disable on a per level basis if you want some but not the rest.");
@@ -353,20 +359,24 @@ init
             version = "Patch 4.0 - DLC1 - Steam";
 			vars.gameVersion = 40;
             vars.isTagCRSupported = true;
+			vars.sgnCutscene = 6704;
             break;
         case 453394432:
             version = "Patch 4.0 - DLC1 - Bethesda";
 			vars.gameVersion = 40;
+			vars.sgnCutscene = 6704;
             break;
 		case 472821760:
 			version = "Patch 4.1 - DLC1 - Steam";
 			vars.gameVersion = 41;
 			vars.isTagCRSupported = true;
+			vars.sgnCutscene = 6706;
 			break;
 		case 439070720:
 			version = "Patch 4.1 - DLC1 - Bethesda";
 			vars.gameVersion = 41;
 			vars.isTagCRSupported = true;
+			vars.sgnCutscene = 6706;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
@@ -444,14 +454,21 @@ split
     if(vars.gameVersion == 20)
         return false;
     
+	if(vars.gameVersion >= 40 && settings["sgnML"])
+	{
+		if(current.levelName.Contains("e2m1_nest") && current.cutsceneID == vars.sgnCutscene)
+			return true;
+		else
+			return false;
+	}
 	// Grabbing the levelID no longer works on 2.0+ so the levelName strings are compared instead
     if(vars.newSplitMethod)
 	{
 		if(String.IsNullOrEmpty(current.levelName) || String.IsNullOrEmpty(old.levelName))
 			return false;
-		
+
 		// Prevents quitouts from advancing splits since highestLevelSplit is no longer used
-		if(current.levelName.Contains("game/shell/shell") /* || current.levelName.Contains("game/hub/hub") */ || old.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/dlc/hub/hub"))
+		if(current.levelName.Contains("game/shell/shell") || old.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/dlc/hub/hub"))
 			return false;
 
         if(current.levelName != old.levelName)
@@ -484,7 +501,7 @@ split
 	    	vars.highestLevelSplit = current.levelID;
 	    	return true;
 	    }
-	    
+
 	    if(current.levelID == 17 && current.cutsceneID == vars.endingCutsceneID) //final boss killed
 	    	return true;
 	}
@@ -503,7 +520,7 @@ start
 {
 	vars.highestLevelSplit = 5;
 
-    if(vars.gameVersion == 20)
+    if(vars.gameVersion == 20 || (vars.gameVersion >= 40 && settings["sgnML"]))
         return false;
 	
 	// Grabbing the levelID no longer works on 2.0+ so the levelName strings are compared instead
