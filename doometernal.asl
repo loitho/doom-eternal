@@ -1,6 +1,5 @@
-//Doom Eternal Autosplitter
-//v2020-07-03 Added support for patch2
-//By Micrologist, Loitho
+// Doom Eternal Autosplitter
+// By Micrologist, Loitho, bowsr, Undeceiver
 
 // bowsr      2020-12-01 - Updated for Patch 4.0
 // Undeceiver 2020-10-30 - Added (optional) hidden combat rating tracking for The Ancient Gods 100%.
@@ -8,7 +7,7 @@
 //   *        2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
 //   *        2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
 
-state("DOOMEternalx64vk", "v7.1.1 Steam")
+state("DOOMEternalx64vk", "v7.1.1 Steam") // Release Version (Slopeboosts)
 {
 	bool isLoading : 0x4D11AD8;
 	bool isLoading2: 0x6051240;
@@ -16,6 +15,7 @@ state("DOOMEternalx64vk", "v7.1.1 Steam")
 	byte levelID : 0x061D0868, 0x28;
 	int cutsceneID: 0x4C7A084;
 	byte canMove: 0x339BA01;
+	string31 levelName : 0x612A850;
 }
 
 state("DOOMEternalx64vk", "v7.1.1 Bethesda")
@@ -30,7 +30,7 @@ state("DOOMEternalx64vk", "v7.1.1 Bethesda")
 
 state("DOOMEternalx64vk", "May Patch Steam")
 {
-    	bool isLoading : 0x4D01058;
+    bool isLoading : 0x4D01058;
 	bool isLoading2: 0x60407C0;
 	bool isInGame : 0x5FF4B58;
 	byte levelID : 0x061C19F8, 0x28;
@@ -66,6 +66,7 @@ state("DOOMEternalx64vk", "Patch 1.1 - Steam")
 	byte levelID : 0x061C3D78, 0x28;
 	int cutsceneID: 0x4C6B984;
 	byte canMove: 0x3402A41;
+	string31 levelName : 0x611C4F0;
 }
 
 
@@ -196,22 +197,28 @@ state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Bethesda")
 
 startup
 {
+	vars.gameVersion = 0;
+	vars.newSplitMethod = true;
+	
 	vars.startAfterCutscene = false;
 	vars.highestLevelSplit = 5;
+	vars.isTagCRSupported = false;
+
+	// Vanilla Cutscene IDs
 	vars.openingCutsceneIDs = new List<int> { 3266, 3268, 3271, 3285 };
+	vars.endingCutsceneID = 3162;
+	// TAG1 Cutscene IDs
+	vars.openingDLC1CutsceneIDs = new List<int> { 2666, 2577 };
+	vars.endingDLC1CutsceneID = 1957;
 
-	// Cutscene IDs were changed with Patch 2.1 (2.0?) & 3.0
+	// Cutscene IDs were changed with later versions
 	// 2.1 - Other IDs (For Reference) - First Priest: 3229 | Final Boss Intro: 3220, Death: 3215
-	vars.openingCutsceneIDsNew = new List<int> { 3263, 3265, 3268, 3282 };
-
+	//
 	// 3.0 - Other IDs (For Reference) - First Priest: 3230 | Final Boss Intro: 3220, Death: 3215
 	// DLC1 IDs - Start: 2666, 2577 | Finish 1: 1957 - Finish 2: 4133, 4127
-	vars.openingCutsceneIDsDLC1_V = new List<int> { 3264, 3266, 3269, 3283 };
-	vars.openingCutsceneIDsDLC1_TAG = new List<int> { 2666, 2577 };
-
+	//
     // 4.0 - Other IDs - Final Boss Intro: 3222, Death: 3217
     // DLC1 IDs - Finish: 1955
-    vars.openingCutsceneIDsDLC1_TAG_4 = new List<int> { 2662, 2573 };
 	
 	vars.timeToRemove = 0;
 	vars.setGameTime = false;
@@ -230,7 +237,9 @@ startup
         	}
 	}
 
-	settings.Add("trackHiddenCR",false,"Track hidden combat rating");
+	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
+	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
+
 	// Text component to print hidden CR
 	vars.textComponent = (Action<string, string>)((id, text) => {
     		var textSettings = timer.Layout.Components.Where(x => x.GetType().Name == "TextComponent").Select(x => x.GetType().GetProperty("Settings").GetValue(x, null));
@@ -268,81 +277,108 @@ init
 	{
 		case 507191296: case 515133440: case 510681088:
 			version = "v7.1.1 Steam";
-			vars.isTagCRSupported = false;
+			vars.gameVersion = 1;
 			break;
 		case 450445312: case 444944384: //not tested
 			version = "v7.1.1 Bethesda";
-			vars.isTagCRSupported = false;
+			vars.gameVersion = 1;
+			vars.newSplitMethod = false;
 			break;
 		case 482037760: //steam may patch
-    			version = "May Patch Steam";
-			vars.isTagCRSupported = false;
+    		version = "May Patch Steam";
+			vars.gameVersion = 10;
+			vars.newSplitMethod = false;
 			break;
 		case 546783232: //steam may hotfix
-    		   	version = "May Hotfix Steam";
-			vars.isTagCRSupported = false;
+    		version = "May Hotfix Steam";
+			vars.gameVersion = 10;
+			vars.newSplitMethod = false;
 			break;
    		case 455708672:
-        		version = "May Hotfix Bethesda";
-			vars.isTagCRSupported = false;
+        	version = "May Hotfix Bethesda";
+			vars.gameVersion = 10;
+			vars.newSplitMethod = false;
 			break;
 		case 492113920:
 			version = "Patch 1.1 - Steam";
-			vars.isTagCRSupported = false;
+			vars.gameVersion = 11;
 			break;
 		case 457285632:
 			version = "Patch 1.1 - Bethesda";
-			vars.isTagCRSupported = false;
+			vars.gameVersion = 11;
+			vars.newSplitMethod = false;
 			break;
 		case 490299392:
-        		version = "Patch 2.0 - Steam";
-        		MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
-			vars.isTagCRSupported = false;
+        	version = "Patch 2.0 - Steam";
+			vars.gameVersion = 20;
+			vars.newSplitMethod = false;
+        	MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
 			break;
 		case 454758400:
-    			version = "Patch 2.0 - Bethesda";
-        		MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
-			vars.isTagCRSupported = false;
+    		version = "Patch 2.0 - Bethesda";
+			vars.gameVersion = 20;
+			vars.newSplitMethod = false;
+        	MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
 			break;
 		case 505344000:
 			version = "Patch 2.1 - Steam";
-			vars.isTagCRSupported = false;
+			vars.gameVersion = 21;
 			break;
 		case 475557888:
 			version = "Patch 3.0 - DLC1 - Steam";
-			vars.isTagCRSupported = false;
+			vars.gameVersion = 30;
 			break;
 		case 504107008:
 			version = "Patch 3.1 - DLC1 - Steam";
+			vars.gameVersion = 31;
 			vars.isTagCRSupported = true;
 			break;
 		case 485183488:
 			version = "Patch 3.1 - DLC1 - Bethesda";
-			vars.isTagCRSupported = false;
+			vars.gameVersion = 31;
 			break;
         case 478056448:
             version = "Patch 4.0 - DLC1 - Steam";
+			vars.gameVersion = 40;
             vars.isTagCRSupported = true;
             break;
         case 453394432:
             version = "Patch 4.0 - DLC1 - Bethesda";
-            vars.isTagCRSupported = false;
+			vars.gameVersion = 40;
             break;
 		case 472821760:
 			version = "Patch 4.1 - DLC1 - Steam";
+			vars.gameVersion = 41;
 			vars.isTagCRSupported = true;
 			break;
 		case 439070720:
 			version = "Patch 4.1 - DLC1 - Bethesda";
+			vars.gameVersion = 41;
 			vars.isTagCRSupported = true;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
 			// Display popup if version is incorrect
-    			MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
+    		MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
 			vars.isTagCRSupported = false;
 			break;
     }
+
+	if(vars.gameVersion >= 21)
+	{
+		vars.openingCutsceneIDs = new List<int> { 3263, 3265, 3268, 3282 };
+		vars.endingCutsceneID = 3215;
+		if(vars.gameVersion >= 30)
+		{
+			vars.openingCutsceneIDs = new List<int> { 3264, 3266, 3269, 3283 };
+			if(vars.gameVersion >= 40)
+			{
+				vars.endingCutsceneID = 3217;
+				vars.openingDLC1CutsceneIDs = new List<int> { 2662, 2573 };
+				vars.endingDLC1CutsceneID = 1955;
+			}
+		}
+	}
 }
 
 update
@@ -383,7 +419,7 @@ exit
 
 isLoading
 {
-	if(version.Contains("DLC1"))
+	if(vars.gameVersion >= 30)
 	{
 		// 3.0 - isLoading2 now has a value of 2 if loading into a new level for the first time
 		return (current.isLoading || current.isLoading2 > 0 || !current.isInGame);
@@ -393,44 +429,32 @@ isLoading
 
 split
 {
-    if(version.Contains("Patch 2.0"))
+    if(vars.gameVersion == 20)
         return false;
     
 	// Grabbing the levelID no longer works on 2.0+ so the levelName strings are compared instead
-    if(version.Contains("Patch 2.1") || version.Contains("DLC1"))
+    if(vars.newSplitMethod)
 	{
 		if(String.IsNullOrEmpty(current.levelName) || String.IsNullOrEmpty(old.levelName))
 			return false;
 		
-		// Prevents quitouts from advancing splits since highestLevelSplit is no longer used for 2.1+
-		if(current.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/hub/hub") || old.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/dlc/hub/hub"))
+		// Prevents quitouts from advancing splits since highestLevelSplit is no longer used
+		if(current.levelName.Contains("game/shell/shell") /* || current.levelName.Contains("game/hub/hub") */ || old.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/dlc/hub/hub"))
 			return false;
 
         if(current.levelName != old.levelName)
+		{
+			return true;
+		}
+
+		if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == vars.endingCutsceneID)
 			return true;
 
-        if(version.Contains("Patch 4"))
-        {
-            // Vanilla Campaign final split
-		    if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == 3217)
-			    return true;
-
-            // The Ancient Gods P1 Campaign final split
-            if(current.levelName.Contains("e4m3_mcity") && current.cutsceneID == 1955)
-			    return true;
-        }else
-        {
-            // Vanilla Campaign final split
-		    if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == 3215)
-			    return true;
-
-            // The Ancient Gods P1 Campaign final split
-            if(current.levelName.Contains("e4m3_mcity") && current.cutsceneID == 1957)
-			    return true;
-        }
+		if(current.levelName.Contains("e4m3_mcity") && current.cutsceneID == vars.endingDLC1CutsceneID)
+			return true;
 	}else
 	{
-		// Backwards compatibility for versions before 2.0
+		// Backwards compatibility for old versions
 
 		if(current.levelID > old.levelID && current.levelID > vars.highestLevelSplit)
 	    {
@@ -438,7 +462,7 @@ split
 	    	return true;
 	    }
 	    
-	    if(current.levelID == 17 && current.cutsceneID == 3162) //final boss killed
+	    if(current.levelID == 17 && current.cutsceneID == vars.endingCutsceneID) //final boss killed
 	    	return true;
 	}
 }
@@ -456,11 +480,11 @@ start
 {
 	vars.highestLevelSplit = 5;
 
-    if(version.Contains("Patch 2.0"))
+    if(vars.gameVersion == 20)
         return false;
 	
 	// Grabbing the levelID no longer works on 2.0+ so the levelName strings are compared instead
-	if(version.Contains("Patch 2.1"))
+	if(vars.newSplitMethod)
 	{
 		// HoE was reset and opening cutscene was not shown
 	    if(current.levelName.Contains("e1m1_intro") && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
@@ -470,45 +494,18 @@ start
 	    	return true;
 	    }
 	    
-	    if(current.levelName.Contains("e1m1_intro") && vars.openingCutsceneIDsNew.Contains(current.cutsceneID)) //opening cutscene is playing
-	    {
-	    	vars.timeToRemove = 3;
-	    	vars.startAfterCutscene = true;
-	    }
-	}else if(version.Contains("DLC1"))
-	{
-		// HoE was reset and opening cutscene was not shown
-	    if(current.levelName.Contains("e1m1_intro") && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
-	    {
-	    	vars.timeToRemove = 0;
-	    	vars.setGameTime = true;
-	    	return true;
-	    }
-	    
-	    if(current.levelName.Contains("e1m1_intro") && vars.openingCutsceneIDsDLC1_V.Contains(current.cutsceneID)) //opening cutscene is playing
+	    if(current.levelName.Contains("e1m1_intro") && vars.openingCutsceneIDs.Contains(current.cutsceneID)) //opening cutscene is playing
 	    {
 	    	vars.timeToRemove = 3;
 	    	vars.startAfterCutscene = true;
 	    }
 
-		// The Ancient Gods Part One
-        if(version.Contains("Patch 4"))
-        {
-		    if(current.levelName.Contains("e4m1_rig") && vars.openingCutsceneIDsDLC1_TAG_4.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
-		    {
-		    	vars.timeToRemove = 0;
-		    	vars.setGameTime = true;
-		    	return true;
-		    }
-        }else
-        {
-		    if(current.levelName.Contains("e4m1_rig") && vars.openingCutsceneIDsDLC1_TAG.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
-		    {
-		    	vars.timeToRemove = 0;
-		    	vars.setGameTime = true;
-		    	return true;
-		    }
-        }
+		if(current.levelName.Contains("e4m1_rig") && vars.openingDLC1CutsceneIDs.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
+		{
+			vars.timeToRemove = 0;
+			vars.setGameTime = true;
+			return true;
+		}
 	}else
 	{
 		// Backwards compatibility for versions before 2.0
