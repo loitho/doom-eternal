@@ -468,7 +468,11 @@ split
 			return false;
 
 		// Prevents quitouts from advancing splits since highestLevelSplit is no longer used
-		if(current.levelName.Contains("game/shell/shell") || old.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/dlc/hub/hub"))
+		if(current.levelName.Contains("game/shell/shell") || current.levelName.Contains("game/dlc/hub/hub"))
+			return false;
+
+		// Prevents mission select from splitting
+		if(vars.completedLevels.Contains(current.levelName))
 			return false;
 
         if(current.levelName != old.levelName)
@@ -476,16 +480,32 @@ split
 			// Split upon entry to hub
 			if(current.levelName.Contains("game/hub/hub"))
 			{
-				if(old.levelName.Contains("e1m1_intro") && !settings["fortressHOE"]) 		return false; // Hell on Earth
-				if(old.levelName.Contains("e1m2_battle") && !settings["fortressExultia"]) 	return false; // Exultia
-				if(old.levelName.Contains("e1m4_boss") && !settings["fortressDHB"]) 		return false; // Doom Hunter Base
-				if(old.levelName.Contains("e2m1_nest") && !settings["fortressSGN"]) 		return false; // Super Gore Nest
-				if(old.levelName.Contains("e2m2_base") && !settings["fortressARC"]) 		return false; // Arc Complex
-				if(old.levelName.Contains("e2m4_boss") && !settings["fortressSP"]) 			return false; // Sentinel Prime
-				if(old.levelName.Contains("e3m1_slayer") && !settings["fortressTB"]) 		return false; // Taras Nabad
+				if(vars.prevLevel.Contains("e1m1_intro") && !settings["fortressHOE"]) 		return false; // Hell on Earth
+				if(vars.prevLevel.Contains("e1m2_battle") && !settings["fortressExultia"]) 	return false; // Exultia
+				if(vars.prevLevel.Contains("e1m4_boss") && !settings["fortressDHB"]) 		return false; // Doom Hunter Base
+				if(vars.prevLevel.Contains("e2m1_nest") && !settings["fortressSGN"]) 		return false; // Super Gore Nest
+				if(vars.prevLevel.Contains("e2m2_base") && !settings["fortressARC"]) 		return false; // Arc Complex
+				if(vars.prevLevel.Contains("e2m4_boss") && !settings["fortressSP"]) 		return false; // Sentinel Prime
+				if(vars.prevLevel.Contains("e3m1_slayer") && !settings["fortressTB"]) 		return false; // Taras Nabad
 			}
-			return true;
+
+			// Prevents quitouts from splitting
+			if((!old.levelName.Contains("game/shell/shell") && vars.completedLevels.Contains(old.levelName)))
+				return false;
+
+			if((current.levelName != vars.prevLevel && !vars.completedLevels.Contains(vars.prevLevel)))
+			{
+				// Stores completed levels so using mission select (e.g. for IDKFA glitch) doesn't split
+				vars.completedLevels.Add(vars.prevLevel);
+			}
+			
+			// Compares to actual level (not hub/menu)
+			return current.levelName != vars.prevLevel;
 		}
+
+		// Stores actual level. Used to prevent splitting issues with menu quitouts.
+		if(!current.levelName.Contains("game/hub/hub"))
+			vars.prevLevel = current.levelName;
 
 		if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == vars.endingCutsceneID)
 			return true;
@@ -526,6 +546,8 @@ start
 	// Grabbing the levelID no longer works on 2.0+ so the levelName strings are compared instead
 	if(vars.newSplitMethod)
 	{
+		vars.completedLevels = new List<string>();
+
 		// HoE was reset and opening cutscene was not shown
 	    if(current.levelName.Contains("e1m1_intro") && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame) && old.canMove == 0 && current.canMove == 255)
 	    {
