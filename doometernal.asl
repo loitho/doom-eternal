@@ -489,8 +489,8 @@ split
 				if(vars.prevLevel.Contains("e3m1_slayer") && !settings["fortressTB"]) 		return false; // Taras Nabad
 			}
 
-			// Prevents quitouts from splitting
-			if((!old.levelName.Contains("game/shell/shell") && vars.completedLevels.Contains(old.levelName)))
+			// Prevents hub quitouts from splitting
+			if((old.levelName.Contains("game/shell/shell") && vars.completedLevels.Contains(old.levelName)))
 				return false;
 
 			if((current.levelName != vars.prevLevel && !vars.completedLevels.Contains(vars.prevLevel)))
