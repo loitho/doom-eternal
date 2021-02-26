@@ -490,7 +490,7 @@ split
 			}
 
 			// Prevents hub quitouts from splitting
-			if((old.levelName.Contains("game/shell/shell") && vars.completedLevels.Contains(old.levelName)))
+			if((old.levelName.Contains("game/shell/shell") && vars.completedLevels.Contains(vars.prevLevel)))
 				return false;
 
 			if((current.levelName != vars.prevLevel && !vars.completedLevels.Contains(vars.prevLevel)))
