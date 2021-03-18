@@ -112,7 +112,7 @@ state("DOOMEternalx64vk", "Patch 2.1 - Steam")
 	byte canMove: 0x64EA631;
 }
 
-state("DOOMEternalx64vk", "Patch 3.0 - DLC1 - Steam")
+state("DOOMEternalx64vk", "Patch 3.0 - Steam")
 {
 	bool isLoading : 0x527BC98;
 	byte isLoading2: 0x6695CD8;
@@ -123,7 +123,7 @@ state("DOOMEternalx64vk", "Patch 3.0 - DLC1 - Steam")
 	byte canMove: 0x67BDA41;
 }
 
-state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Steam")
+state("DOOMEternalx64vk", "Patch 3.1 - Steam")
 {
 	bool isLoading : 0x527BD18;
 	byte isLoading2: 0x6695D58;
@@ -135,7 +135,7 @@ state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Steam")
 	int tagCombatRating: 0x67706A0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Bethesda")
+state("DOOMEternalx64vk", "Patch 3.1 - Bethesda")
 {
 	bool isLoading : 0x523D098;
 	byte isLoading2: 0x6656658;
@@ -146,7 +146,7 @@ state("DOOMEternalx64vk", "Patch 3.1 - DLC1 - Bethesda")
 	byte canMove: 0x677E3C1;
 }
 
-state("DOOMEternalx64vk", "Patch 4.0 - DLC1 - Steam")
+state("DOOMEternalx64vk", "Patch 4.0 - Steam")
 {
 	bool isLoading : 0x520FD78;
 	byte isLoading2: 0x66B0B88;
@@ -160,7 +160,7 @@ state("DOOMEternalx64vk", "Patch 4.0 - DLC1 - Steam")
     // 0x678B670, 0x458, 0x8, 0x88
 }
 
-state("DOOMEternalx64vk", "Patch 4.0 - DLC1 - Bethesda")
+state("DOOMEternalx64vk", "Patch 4.0 - Bethesda")
 {
 	bool isLoading : 0x51D1178;
 	byte isLoading2: 0x6671D88;
@@ -171,7 +171,7 @@ state("DOOMEternalx64vk", "Patch 4.0 - DLC1 - Bethesda")
 	byte canMove: 0x6799D91;
 }
 
-state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Steam")
+state("DOOMEternalx64vk", "Patch 4.1 - Steam")
 {
 	bool isLoading : 0x520FD78;
 	byte isLoading2: 0x66B1788;
@@ -183,7 +183,7 @@ state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Steam")
 	int tagCombatRating: 0x678C270, 0x0, 0x288, 0x1A8, 0x8, 0x88; // 0x678C270, 0x458, 0x8, 0x88
 }
 
-state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Bethesda")
+state("DOOMEternalx64vk", "Patch 4.1 - Bethesda")
 {
 	bool isLoading : 0x51D1178;
 	byte isLoading2: 0x6672988;
@@ -193,6 +193,18 @@ state("DOOMEternalx64vk", "Patch 4.1 - DLC1 - Bethesda")
 	int cutsceneID: 0x62A9C50;
 	byte canMove: 0x679A991;
 	int tagCombatRating: 0x674D470, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
+state("DOOMEternalx64vk", "Patch 5.0 - Steam")
+{
+	bool isLoading : 0x4F058C8;
+	byte isLoading2: 0x63A6510;
+	bool isInGame : 0x635B870;
+	string31 levelName : 0x657DDE0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4EA1F78;
+	byte canMove: 0x65CCEE1;
+	int tagCombatRating: 0x657DD90, 0x0, 0x288, 0x1A8, 0x8, 0x88; // 0x678C270, 0x458, 0x8, 0x88
 }
 
 
@@ -211,6 +223,9 @@ startup
 	// TAG1 Cutscene IDs
 	vars.openingDLC1CutsceneIDs = new List<int> { 2666, 2577 };
 	vars.endingDLC1CutsceneID = 1957;
+	// TAG2 Cutscene IDs
+	vars.openingDLC2CutsceneIDs = new List<int> { 3499, 3532 };
+	vars.endingDLC2CutsceneID = 499;
 
 	// Cutscene IDs were changed with later versions
 	// 2.1 - Other IDs (For Reference) - First Priest: 3229 | Final Boss Intro: 3220, Death: 3215
@@ -343,40 +358,46 @@ init
 			vars.gameVersion = 21;
 			break;
 		case 475557888:
-			version = "Patch 3.0 - DLC1 - Steam";
+			version = "Patch 3.0 - Steam";
 			vars.gameVersion = 30;
 			break;
 		case 504107008:
-			version = "Patch 3.1 - DLC1 - Steam";
+			version = "Patch 3.1 - Steam";
 			vars.gameVersion = 31;
 			vars.isTagCRSupported = true;
 			break;
 		case 485183488:
-			version = "Patch 3.1 - DLC1 - Bethesda";
+			version = "Patch 3.1 - Bethesda";
 			vars.gameVersion = 31;
 			break;
         case 478056448:
-            version = "Patch 4.0 - DLC1 - Steam";
+            version = "Patch 4.0 - Steam";
 			vars.gameVersion = 40;
             vars.isTagCRSupported = true;
 			vars.sgnCutscene = 6704;
             break;
         case 453394432:
-            version = "Patch 4.0 - DLC1 - Bethesda";
+            version = "Patch 4.0 - Bethesda";
 			vars.gameVersion = 40;
 			vars.sgnCutscene = 6704;
             break;
 		case 472821760:
-			version = "Patch 4.1 - DLC1 - Steam";
+			version = "Patch 4.1 - Steam";
 			vars.gameVersion = 41;
 			vars.isTagCRSupported = true;
 			vars.sgnCutscene = 6706;
 			break;
 		case 439070720:
-			version = "Patch 4.1 - DLC1 - Bethesda";
+			version = "Patch 4.1 - Bethesda";
 			vars.gameVersion = 41;
 			vars.isTagCRSupported = true;
 			vars.sgnCutscene = 6706;
+			break;
+		case 475787264:
+			version = "Patch 5.0 - Steam";
+			vars.gameVersion = 50;
+			vars.isTagCRSupported = true;
+			// vars.sgnCutscene = ;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
@@ -398,6 +419,13 @@ init
 				vars.endingCutsceneID = 3217;
 				vars.openingDLC1CutsceneIDs = new List<int> { 2662, 2573 };
 				vars.endingDLC1CutsceneID = 1955;
+				if(vars.gameVersion >= 50)
+				{
+					vars.openingCutsceneIDs = new List<int> { 3264, 3265, 3268, 3282 };
+					vars.endingCutsceneID = 3220;
+					vars.openingDLC1CutsceneIDs = new List<int> { 2674, 2585 };
+					vars.endingDLC1CutsceneID = 1961;
+				}
 			}
 		}
 	}
@@ -512,6 +540,9 @@ split
 
 		if(current.levelName.Contains("e4m3_mcity") && current.cutsceneID == vars.endingDLC1CutsceneID)
 			return true;
+
+		if(current.levelName.Contains("e5m4_boss") && current.cutsceneID == vars.endingDLC2CutsceneID)
+			return true;
 	}else
 	{
 		// Backwards compatibility for old versions
@@ -562,9 +593,18 @@ start
 	    	vars.startAfterCutscene = true;
 	    }
 
+		// TAG1 Start
 		if(current.levelName.Contains("e4m1_rig") && vars.openingDLC1CutsceneIDs.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
 		{
 			vars.timeToRemove = 0;
+			vars.setGameTime = true;
+			return true;
+		}
+
+		// TAG2 Start
+		if(current.levelName.Contains("e5m1_spear") && vars.openingDLC2CutsceneIDs.Contains(old.cutsceneID) && current.cutsceneID == 1 && !(current.isLoading || !current.isInGame))
+		{
+			vars.timetoRemove = 0;
 			vars.setGameTime = true;
 			return true;
 		}
