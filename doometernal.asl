@@ -204,7 +204,19 @@ state("DOOMEternalx64vk", "Patch 5.0 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4EA1F78;
 	byte canMove: 0x65CCEE1;
-	int tagCombatRating: 0x657DD90, 0x0, 0x288, 0x1A8, 0x8, 0x88; // 0x678C270, 0x458, 0x8, 0x88
+	int tagCombatRating: 0x657DD90, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
+state("DOOMEternalx64vk", "Patch 5.0 - Bethesda")
+{
+	bool isLoading : 0x4EC5C48;
+	byte isLoading2: 0x6366690;
+	bool isInGame : 0x631BA00;
+	string31 levelName : 0x653DF60; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4E60DD8;
+	byte canMove: 0x658D061;
+	int tagCombatRating: 0x653DF10, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
 
@@ -374,30 +386,30 @@ init
             version = "Patch 4.0 - Steam";
 			vars.gameVersion = 40;
             vars.isTagCRSupported = true;
-			vars.sgnCutscene = 6704;
             break;
         case 453394432:
             version = "Patch 4.0 - Bethesda";
 			vars.gameVersion = 40;
-			vars.sgnCutscene = 6704;
             break;
 		case 472821760:
 			version = "Patch 4.1 - Steam";
 			vars.gameVersion = 41;
 			vars.isTagCRSupported = true;
-			vars.sgnCutscene = 6706;
 			break;
 		case 439070720:
 			version = "Patch 4.1 - Bethesda";
 			vars.gameVersion = 41;
 			vars.isTagCRSupported = true;
-			vars.sgnCutscene = 6706;
 			break;
 		case 475787264:
 			version = "Patch 5.0 - Steam";
 			vars.gameVersion = 50;
 			vars.isTagCRSupported = true;
-			// vars.sgnCutscene = ;
+			break;
+		case 474456064:
+			version = "Patch 5.0 - Bethesda";
+			vars.gameVersion = 50;
+			vars.isTagCRSupported = true;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
@@ -419,12 +431,15 @@ init
 				vars.endingCutsceneID = 3217;
 				vars.openingDLC1CutsceneIDs = new List<int> { 2662, 2573 };
 				vars.endingDLC1CutsceneID = 1955;
+				vars.sgnCutscene = 6704;
+				if(vars.gameVersion == 41) vars.sgnCutscene = 6706;
 				if(vars.gameVersion >= 50)
 				{
-					vars.openingCutsceneIDs = new List<int> { 3264, 3265, 3268, 3282 };
+					vars.openingCutsceneIDs = new List<int> { 3263, 3265, 3268, 3282 };
 					vars.endingCutsceneID = 3220;
 					vars.openingDLC1CutsceneIDs = new List<int> { 2674, 2585 };
 					vars.endingDLC1CutsceneID = 1961;
+					vars.sgnCutscene = 6615;
 				}
 			}
 		}
