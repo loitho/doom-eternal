@@ -267,6 +267,8 @@ startup
 
 	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
 	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
+	settings.Add("trackHiddenCRTAG2", false, "Track hidden combat rating (TAG2)");
+	// settings.SetToolTip("trackHiddenCRTAG2", " ");
 
 	// Setting that enables a split at the final SGN cutscene (intended for Master Level)
 	// This also disables the standard autosplit/start functions to prevent issues (load remover still applies)
@@ -309,6 +311,12 @@ startup
 	vars.BSlevelName = "e4m2_swamp";
 	vars.maxHoltCR = 17;
 	vars.HoltLevelName = "e4m3_mcity";
+	vars.maxSpearCR = 38;
+	vars.spearLevelName = "e5m1_spear";
+	vars.maxReclaimedCR = 18;
+	vars.reclaimedLevelName = "e5m2_earth";
+	vars.maxImmoraCR = 7;
+	vars.immoraLevelName = "e5m3_hell";
 	vars.curLevelMaxCR = 1;
 	vars.inMaxCRLevel = false;	
 }
@@ -452,19 +460,33 @@ update
 	if (version.Contains("Unsupported"))
 		return false;
 	
-	if (vars.isTagCRSupported && settings["trackHiddenCR"])
+	if (vars.isTagCRSupported && (settings["trackHiddenCR"] || settings["trackHiddenCRTAG2"]))
 	{
 		vars.inMaxCRLevel = false;
-		if (current.levelName.Contains(vars.UACAlevelName))
-		{
-			vars.inMaxCRLevel = true;
-			vars.curLevelMaxCR = vars.maxUACACR;
-		} else if (current.levelName.Contains(vars.BSlevelName)) {
-			vars.inMaxCRLevel = true;
-			vars.curLevelMaxCR = vars.maxBSCR;
-		} else if (current.levelName.Contains(vars.HoltLevelName)) {
-			vars.inMaxCRLevel = true;
-			vars.curLevelMaxCR = vars.maxHoltCR;
+		if(settings["trackHiddenCR"]) {
+			if (current.levelName.Contains(vars.UACAlevelName))
+			{
+				vars.inMaxCRLevel = true;
+				vars.curLevelMaxCR = vars.maxUACACR;
+			} else if (current.levelName.Contains(vars.BSlevelName)) {
+				vars.inMaxCRLevel = true;
+				vars.curLevelMaxCR = vars.maxBSCR;
+			} else if (current.levelName.Contains(vars.HoltLevelName)) {
+				vars.inMaxCRLevel = true;
+				vars.curLevelMaxCR = vars.maxHoltCR;
+			}
+		}
+		if(settings["trackHiddenCRTAG2"]) {
+			if (current.levelName.Contains(vars.spearLevelName)) {
+				vars.inMaxCRLevel = true;
+				vars.curLevelMaxCR = vars.maxSpearCR;
+			} else if (current.levelName.Contains(vars.reclaimedLevelName)) {
+				vars.inMaxCRLevel = true;
+				vars.curLevelMaxCR = vars.maxReclaimedCR;
+			} else if (current.levelName.Contains(vars.immoraLevelName)) {
+				vars.inMaxCRLevel = true;
+				vars.curLevelMaxCR = vars.maxImmoraCR;
+			}
 		}
 
 		if (vars.inMaxCRLevel)
