@@ -219,6 +219,30 @@ state("DOOMEternalx64vk", "Patch 5.0 - Bethesda")
 	int tagCombatRating: 0x653DF10, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
+state("DOOMEternalx64vk", "Patch 5.1 - Steam")
+{
+	bool isLoading : 0x4F058C8;
+	byte isLoading2: 0x63A6510;
+	bool isInGame : 0x635B870;
+	string31 levelName : 0x657DDE0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4EA1F78;
+	byte canMove: 0x65CCEE1;
+	int tagCombatRating: 0x657DD90, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
+state("DOOMEternalx64vk", "Patch 5.1 - Bethesda")
+{
+	bool isLoading : 0x4EC5C48;
+	byte isLoading2: 0x6366690;
+	bool isInGame : 0x631BA00;
+	string31 levelName : 0x653DF60; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4E60DD8;
+	byte canMove: 0x658D061;
+	int tagCombatRating: 0x653DF10, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
 
 startup
 {
@@ -417,6 +441,16 @@ init
 		case 474456064:
 			version = "Patch 5.0 - Bethesda";
 			vars.gameVersion = 50;
+			vars.isTagCRSupported = true;
+			break;
+		case 459132928:
+			version = "Patch 5.1 - Steam";
+			vars.gameVersion = 51;
+			vars.isTagCRSupported = true;
+			break;
+		case 447852544:
+			version = "Patch 5.1 - Bethesda";
+			vars.gameVersion = 51;
 			vars.isTagCRSupported = true;
 			break;
 		default:
