@@ -522,7 +522,7 @@ init
 						vars.endingCutsceneID = 3238;
 						vars.openingDLC1CutsceneIDs = new List<int> { 3014, 3092 };
 						vars.endingDLC1CutsceneID = 1053;
-						vars.openingDLC2CutsceneIDs = new List<int> { 3391, 3354 }
+						vars.openingDLC2CutsceneIDs = new List<int> { 3391, 3354 };
 						vars.endingDLC2CutsceneID = 549;
 						vars.sgnCutscene = 6612;
 					}
