@@ -550,7 +550,7 @@ init
 			vars.gameVersion = 62;
 			vars.isTagCRSupported = true;
 			break;
-		case :
+		case 424820736:
 			version = "Patch 6.2 - Bethesda";
 			vars.gameVersion = 62;
 			vars.isTagCRSupported = true;
