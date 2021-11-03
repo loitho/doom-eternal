@@ -363,6 +363,34 @@ state("DOOMEternalx64vk", "Patch 6.4 - Bethesda")
 	int tagCombatRating: 0x6916850, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
+state("DOOMEternalx64vk", "Patch 6.66 - Steam")
+{
+	bool isLoading : 0x5194E18;
+	byte isLoading2: 0x68FCC90;
+	bool isInGame : 0x68AFF10;
+	string31 levelName : 0x6AD43A0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x512EFA8;
+	byte canMove: 0x6B1E7C1;
+	int tagCombatRating: 0x6AD4350, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
+/**
+	TODO - Bethesda 6.66
+
+state("DOOMEternalx64vk", "Patch 6.66 - Bethesda")
+{
+	bool isLoading : 0x;
+	byte isLoading2: 0x;
+	bool isInGame : 0x;
+	string31 levelName : 0x; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x;
+	byte canMove: 0x;
+	int tagCombatRating: 0x, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+**/
+
 
 startup
 {
@@ -623,6 +651,20 @@ init
 			vars.gameVersion = 64;
 			vars.isTagCRSupported = true;
 			break;
+		case 508350464:
+			version = "Patch 6.66 - Steam";
+			vars.gameVersion = 66;
+			vars.isTagCRSupported = true;
+			break;
+			/**
+				TODO - Bethesda 6.66
+
+		case :
+			version = "Patch 6.66 - Bethesda";
+			vars.gameVersion = 66;
+			vars.isTagCRSupported = true;
+			break;
+			**/
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
 			// Display popup if version is incorrect
@@ -661,6 +703,13 @@ init
 						vars.openingDLC2CutsceneIDs = new List<int> { 3391, 3354 };
 						vars.endingDLC2CutsceneID = 549;
 						vars.sgnCutscene = 6612;
+						if(vars.gameVersion >= 66)
+						{
+							vars.endingCutsceneID = 3239;
+							vars.openingDLC1CutsceneIDs = new List<int> { 3015, 3093 };
+							vars.openingDLC2CutsceneIDs = new List<int> { 3465, 3428 };
+							vars.sgnCutscene = 6613;
+						}
 					}
 				}
 			}
