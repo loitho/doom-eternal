@@ -375,21 +375,17 @@ state("DOOMEternalx64vk", "Patch 6.66 - Steam")
 	int tagCombatRating: 0x6AD4350, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-/**
-	TODO - Bethesda 6.66
-
 state("DOOMEternalx64vk", "Patch 6.66 - Bethesda")
 {
-	bool isLoading : 0x;
-	byte isLoading2: 0x;
-	bool isInGame : 0x;
-	string31 levelName : 0x; 
+	bool isLoading : 0x514EF18;
+	byte isLoading2: 0x68B6B90;
+	bool isInGame : 0x686AFE0;
+	string31 levelName : 0x6A8E2A0; 
 	byte levelID : 0x0;
-	int cutsceneID: 0x;
-	byte canMove: 0x;
-	int tagCombatRating: 0x, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	int cutsceneID: 0x50E90A8;
+	byte canMove: 0x6AD86C1;
+	int tagCombatRating: 0x6A8E250, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
-**/
 
 
 startup
@@ -658,15 +654,11 @@ init
 			vars.gameVersion = 66;
 			vars.isTagCRSupported = true;
 			break;
-			/**
-				TODO - Bethesda 6.66
-
-		case :
+		case 430272512:
 			version = "Patch 6.66 - Bethesda";
 			vars.gameVersion = 66;
 			vars.isTagCRSupported = true;
 			break;
-			**/
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
 			// Display popup if version is incorrect
