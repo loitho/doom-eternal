@@ -396,6 +396,8 @@ startup
 {
 	vars.gameVersion = 0;
 	vars.newSplitMethod = true;
+    vars.ebs = false;
+    vars.injectEBS = false;
 	
 	vars.startAfterCutscene = false;
 	vars.highestLevelSplit = 5;
@@ -769,6 +771,28 @@ exit
 
 isLoading
 {
+	// Blackscreen detection
+	// 	Current Real Time is saved upon the start and end of a blackscreen, then the diff is injected back into Game Time in the gameTime() Action
+    var loading2 = false;
+    if(vars.gameVersion >= 30) loading2 = current.isLoading2 > 0;
+    else loading2 = current.isLoading2;
+    
+    if(vars.ebs)
+    {
+		// This condition checks if the blackscreen ends or if a new level is loaded during a blackscreen
+        if(!current.isLoading || (current.isLoading && current.isLoading2 != old.isLoading2))
+        {
+            vars.ebs = false;
+            vars.timeAfterEBS = timer.CurrentTime.RealTime;
+            vars.injectEBS = true;
+        }
+    }
+    if(current.isLoading && !loading2 && current.isInGame && !vars.ebs)
+    {
+        vars.ebs = true;
+        vars.timeBeforeEBS = timer.CurrentTime.RealTime;
+    }
+    
 	if(vars.gameVersion >= 30)
 	{
 		// 3.0 - isLoading2 now has a value of 2 if loading into a new level for the first time
@@ -865,6 +889,17 @@ gameTime
 		vars.setGameTime = false;
 		return TimeSpan.FromSeconds(-vars.timeToRemove);
 	}
+
+    // Injects EBS time, minus one second, back into Game Timer if the EBS time is greater than two seconds.
+	// 	If a blackscreen's duration is greater than two seconds, this guarantees that it is an EBS.
+	// 	Subtracting a second is to account for the normal blackscreen length that always happens upon reloads/quitouts.
+    if(vars.injectEBS)
+    {
+        vars.injectEBS = false;
+        var diff = vars.timeAfterEBS - vars.timeBeforeEBS;
+        var newGameTime = timer.CurrentTime.GameTime + diff - TimeSpan.FromSeconds(1);
+        return (diff >= TimeSpan.FromSeconds(2)) ? newGameTime : timer.CurrentTime.GameTime;
+    }
 }
 
 start
