@@ -102,7 +102,7 @@ Load Removal uses 3 values to determine if the runner is loading or in menu. `is
  2. Once you've got a relatively small list of pointers (load into multiple different maps to help slim down the list), you'll need to go through a few of them with the `Find what accesses this address` option. Start from the bottom
      - If you have not already done so, save your cheat table and current scan session before continuing. Attaching CE's debugger to DOOMEternal can cause the game to randomly crash and/or hang on loads
  3. Find the address that is accessed by the following instructions. Use this for the `isInGame` value in the ASL file
-     - Do note that the instructions may not appear exactly like this, but should still follow the same structure across versions
+     - Do note that the instructions may not appear exactly like this, but should still follow the same structure across versions  
      ![Imgur](https://i.imgur.com/tAGxXhO.png)  
      `lock inc` appears after `isInGame` swaps to `1`  
      `lock dec` appears after `isInGame` swaps to `0`
