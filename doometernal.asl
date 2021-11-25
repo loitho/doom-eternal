@@ -1,13 +1,6 @@
 // Doom Eternal Autosplitter
 // By Micrologist, Loitho, bowsr, Undeceiver
 
-// bowsr      2021-01-20 - Refactored start/split methods, added options to split when returning to the hub, and merged SGN ML .asl
-//   *        2020-12-01 - Updated for Patch 4.0
-// Undeceiver 2020-10-30 - Added (optional) hidden combat rating tracking for The Ancient Gods 100%.
-// bowsr      2020-10-23 - Updated for Steam 3.1 and added support for Bethesda
-//   *        2020-10-21 - Added support for DLC Auto Start/Split and updated for Steam 3.0
-//   *        2020-08-30 - Updated Load Remover and Auto Start/Split for Steam 2.1
-
 state("DOOMEternalx64vk", "v7.1.1 Steam") // Release Version (Slopeboosts)
 {
 	bool isLoading : 0x4D11AD8;
@@ -387,6 +380,30 @@ state("DOOMEternalx64vk", "Patch 6.66 - Bethesda")
 	int tagCombatRating: 0x6A8E250, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
+state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Steam")
+{
+	bool isLoading : 0x51B8498;
+	byte isLoading2: 0x6920310;
+	bool isInGame : 0x68D3590;
+	string31 levelName : 0x6AF7A20; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x5153B48;
+	byte canMove: 0x6B41ED1;
+	int tagCombatRating: 0x6AF79D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
+/*state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Bethesda")
+{
+	bool isLoading : 0x;
+	byte isLoading2: 0x;
+	bool isInGame : 0x;
+	string31 levelName : 0x; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x;
+	byte canMove: 0x;
+	int tagCombatRating: 0x, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}*/
+
 
 startup
 {
@@ -437,8 +454,8 @@ startup
 
 	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
 	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
-	settings.Add("trackHiddenCRTAG2", false, "Track hidden combat rating (TAG2)");
-	// settings.SetToolTip("trackHiddenCRTAG2", " ");
+	settings.Add("trackHiddenCRTAG2", false, "Track hidden combat rating (TAG2 - Deprecated)");
+	settings.SetToolTip("trackHiddenCRTAG2", "Setting is no longer required for TAG2 100% All Combat runs.\nFunctionality still works if you still want it, but you can safely this.");
 
 	// Setting that enables a split at the final SGN cutscene (intended for Master Level)
 	// This also disables the standard autosplit/start functions to prevent issues (load remover still applies)
@@ -659,6 +676,16 @@ init
 			vars.gameVersion = 66;
 			vars.isTagCRSupported = true;
 			break;
+		case 478367744:
+			version = "Patch 6.66 Rev 1 - Steam";
+			vars.gameVersion = 67;
+			vars.isTagCRSupported = true;
+			break;
+		/*case :
+			version = "Patch 6.66 Rev 1 - Bethesda";
+			vars.gameVersion = 67;
+			vars.isTagCRSupported = true;
+			break;*/
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
 			// Display popup if version is incorrect
@@ -667,28 +694,28 @@ init
 			break;
     }
 
-	if(vars.gameVersion >= 21)
+	if(vars.gameVersion >= 21) // Update 2.1
 	{
 		vars.openingCutsceneIDs = new List<int> { 3263, 3265, 3268, 3282 };
 		vars.endingCutsceneID = 3215;
-		if(vars.gameVersion >= 30)
+		if(vars.gameVersion >= 30) // Update 3.0
 		{
 			vars.openingCutsceneIDs = new List<int> { 3264, 3266, 3269, 3283 };
-			if(vars.gameVersion >= 40)
+			if(vars.gameVersion >= 40) // Update 4.0
 			{
 				vars.endingCutsceneID = 3217;
 				vars.openingDLC1CutsceneIDs = new List<int> { 2662, 2573 };
 				vars.endingDLC1CutsceneID = 1955;
 				vars.sgnCutscene = 6704;
-				if(vars.gameVersion == 41) vars.sgnCutscene = 6706;
-				if(vars.gameVersion >= 50)
+				if(vars.gameVersion == 41) vars.sgnCutscene = 6706; // Update 4.1
+				if(vars.gameVersion >= 50) // Update 5.0
 				{
 					vars.openingCutsceneIDs = new List<int> { 3263, 3265, 3268, 3282 };
 					vars.endingCutsceneID = 3220;
 					vars.openingDLC1CutsceneIDs = new List<int> { 2674, 2585 };
 					vars.endingDLC1CutsceneID = 1961;
 					vars.sgnCutscene = 6615;
-					if(vars.gameVersion >= 60)
+					if(vars.gameVersion >= 60) // Update 6.0
 					{
 						vars.openingCutsceneIDs = new List<int> { 3228, 3230, 3233, 3247 };
 						vars.endingCutsceneID = 3238;
@@ -697,12 +724,16 @@ init
 						vars.openingDLC2CutsceneIDs = new List<int> { 3391, 3354 };
 						vars.endingDLC2CutsceneID = 549;
 						vars.sgnCutscene = 6612;
-						if(vars.gameVersion >= 66)
+						if(vars.gameVersion >= 66) // Update 6.66
 						{
 							vars.endingCutsceneID = 3239;
 							vars.openingDLC1CutsceneIDs = new List<int> { 3015, 3093 };
 							vars.openingDLC2CutsceneIDs = new List<int> { 3465, 3428 };
 							vars.sgnCutscene = 6613;
+							if(vars.gameVersion >= 67) // Update 6.66 Rev 1
+							{
+								vars.openingDLC2CutsceneIDs = new List<int> { 3466, 3429 };
+							}
 						}
 					}
 				}
