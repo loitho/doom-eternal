@@ -392,17 +392,17 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Steam")
 	int tagCombatRating: 0x6AF79D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-/*state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Bethesda")
+state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Bethesda")
 {
-	bool isLoading : 0x;
-	byte isLoading2: 0x;
-	bool isInGame : 0x;
-	string31 levelName : 0x; 
+	bool isLoading : 0x5171698;
+	byte isLoading2: 0x68D9310;
+	bool isInGame : 0x688C5A0;
+	string31 levelName : 0x6AB0A20; 
 	byte levelID : 0x0;
-	int cutsceneID: 0x;
-	byte canMove: 0x;
-	int tagCombatRating: 0x, 0x0, 0x288, 0x1A8, 0x8, 0x88;
-}*/
+	int cutsceneID: 0x510CD48;
+	byte canMove: 0x6AFAED1;
+	int tagCombatRating: 0x6AB09D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
 
 
 startup
@@ -455,7 +455,7 @@ startup
 	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
 	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
 	settings.Add("trackHiddenCRTAG2", false, "Track hidden combat rating (TAG2 - Deprecated)");
-	settings.SetToolTip("trackHiddenCRTAG2", "Setting is no longer required for TAG2 100% All Combat runs.\nFunctionality still works if you still want it, but you can safely this.");
+	settings.SetToolTip("trackHiddenCRTAG2", "Setting is no longer required for TAG2 100% All Combat runs.\nFunctionality still works if you still want it, but you can safely disable this.");
 
 	// Setting that enables a split at the final SGN cutscene (intended for Master Level)
 	// This also disables the standard autosplit/start functions to prevent issues (load remover still applies)
@@ -681,11 +681,11 @@ init
 			vars.gameVersion = 67;
 			vars.isTagCRSupported = true;
 			break;
-		/*case :
+		case 407707648:
 			version = "Patch 6.66 Rev 1 - Bethesda";
 			vars.gameVersion = 67;
 			vars.isTagCRSupported = true;
-			break;*/
+			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
 			// Display popup if version is incorrect

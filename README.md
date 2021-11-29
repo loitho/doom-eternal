@@ -93,7 +93,7 @@ Load Removal uses 3 values to determine if the runner is loading or in menu. `is
 #### isLoading and isLoading2
 
  1. In Cheat Engine, scan for a single `Byte` value that is `1` when there is a loading screen and `0` when in the game or main menu
- 2. Once you've slimmed the results down enough, you'll want to enter a loading screen in between levels (I use `map game/sp/e1m3_cult/e1m3_cult.map` then `noclip` to the end of the level). In this loading screen, there should be a single pointer with a value of `2`. This is the `isLoading2` value in the ASL file
+ 2. Once you've slimmed the results down enough, you'll want to enter a loading screen in between levels (I use `map game/sp/e1m3_cult/e1m3_cult.map` then `noclip` to the end of the level. WARNING: This overwrites your currently selected save slot). In this loading screen, there should be a single pointer with a value of `2`. This is the `isLoading2` value in the ASL file
  3. Afterwards, there should be two pointers that swap to `0` slower than than `isLoading2` when exiting a loading screen (this swap happens when the blackscreen ends). Use the 1st of the two for `isLoading` in the ASL file (address ends in an `8`)
 
 #### isInGame
@@ -141,6 +141,7 @@ This byte determines if you're able to move at the start of the first level **He
 - Value is `0` before you can move and `255` once you can move
 - Value is also `0` at the end of the loading screen in HoE
 
+There should be three consecutive pointers with the exact same behavior. Use the first of these three (ends in a `1`).  
 Value is named `canMove` in the ASL file.
 
 ### Combat Rating
