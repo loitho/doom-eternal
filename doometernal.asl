@@ -10,6 +10,7 @@ state("DOOMEternalx64vk", "v7.1.1 Steam") // Release Version (Slopeboosts)
 	int cutsceneID: 0x4C7A084;
 	byte canMove: 0x339BA01;
 	string31 levelName : 0x612A850;
+	byte rampJumps : 0x6126430;
 }
 
 state("DOOMEternalx64vk", "v7.1.1 Bethesda")
@@ -415,6 +416,7 @@ startup
 	vars.startAfterCutscene = false;
 	vars.highestLevelSplit = 5;
 	vars.isTagCRSupported = false;
+	vars.disableRJSupport = false;
 
 	// Vanilla Cutscene IDs
 	vars.openingCutsceneIDs = new List<int> { 3266, 3268, 3271, 3285 };
@@ -451,6 +453,9 @@ startup
 			timer.CurrentTimingMethod = TimingMethod.GameTime;
         	}
 	}
+
+	settings.Add("disableRJ", false, "Disable Ramp Jumping (Release Version Only)");
+	settings.SetToolTip("disableRJ", "Sets pm_allowRampJumping to 0.\nRequired for Limited & Restricted runs played on the 1.0 (Release) Patch.");
 
 	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
 	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
@@ -518,6 +523,7 @@ init
 		case 507191296: case 515133440: case 510681088:
 			version = "v7.1.1 Steam";
 			vars.gameVersion = 1;
+			vars.disableRJSupport = true;
 			break;
 		case 450445312: case 444944384: //not tested
 			version = "v7.1.1 Bethesda";
@@ -691,6 +697,7 @@ init
 			// Display popup if version is incorrect
     		MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
 			vars.isTagCRSupported = false;
+			vars.disableRJSupport = false;
 			break;
     }
 
@@ -747,6 +754,11 @@ update
 	// Disable the autosplitter if the version is incorrect
 	if (version.Contains("Unsupported"))
 		return false;
+
+	if(vars.disableRJSupport && current.rampJumps == 1)
+	{
+		if(settings["disableRJ"]) game.WriteBytes(modules.First().BaseAddress + 0x6126430, new byte[] { 0x0 });
+	}
 	
 	if (vars.isTagCRSupported && (settings["trackHiddenCR"] || settings["trackHiddenCRTAG2"]))
 	{
