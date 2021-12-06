@@ -1,7 +1,7 @@
 // Doom Eternal Autosplitter
 // By Micrologist, Loitho, bowsr, Undeceiver
 
-state("DOOMEternalx64vk", "v7.1.1 Steam") // Release Version (Slopeboosts)
+state("DOOMEternalx64vk", "Release Patch 1.0 - Steam") // Release Version (Slopeboosts)
 {
 	bool isLoading : 0x4D11AD8;
 	bool isLoading2: 0x6051240;
@@ -13,7 +13,7 @@ state("DOOMEternalx64vk", "v7.1.1 Steam") // Release Version (Slopeboosts)
 	byte rampJumps : 0x6126430;
 }
 
-state("DOOMEternalx64vk", "v7.1.1 Bethesda")
+state("DOOMEternalx64vk", "Release Patch 1.0 - Bethesda")
 {
 	bool isLoading : 0x4CD40D8;
 	bool isLoading2: 0x6012F40;
@@ -428,15 +428,10 @@ startup
 	vars.openingDLC2CutsceneIDs = new List<int> { 3499, 3532 };
 	vars.endingDLC2CutsceneID = 499;
 
-	// Cutscene IDs were changed with later versions
-	// 2.1 - Other IDs (For Reference) - First Priest: 3229 | Final Boss Intro: 3220, Death: 3215
-	//
-	// 3.0 - Other IDs (For Reference) - First Priest: 3230 | Final Boss Intro: 3220, Death: 3215
-	// DLC1 IDs - Start: 2666, 2577 | Finish 1: 1957 - Finish 2: 4133, 4127
-	//
-    // 4.0 - Other IDs - Final Boss Intro: 3222, Death: 3217
-    // DLC1 IDs - Finish: 1955
-	
+	// Cutscene IDs can change across versions
+	// Opening Cutscene has 4 IDs that change by +2 +3 +14
+	// See the README in this ASL's repository for more detailed instructions on how to find the pointer
+
 	vars.timeToRemove = 0;
 	vars.setGameTime = false;
 	
@@ -454,6 +449,7 @@ startup
         	}
 	}
 
+	// Setting to allow automatically disabling Ramp Jumping on the Steam Release version
 	settings.Add("disableRJ", false, "Disable Ramp Jumping (Release Version Only)");
 	settings.SetToolTip("disableRJ", "Sets pm_allowRampJumping to 0.\nRequired for Limited & Restricted runs played on the 1.0 (Release) Patch.");
 
@@ -521,12 +517,12 @@ init
 	switch(moduleSize)
 	{
 		case 507191296: case 515133440: case 510681088:
-			version = "v7.1.1 Steam";
+			version = "Release Patch 1.0 - Steam";
 			vars.gameVersion = 1;
 			vars.disableRJSupport = true;
 			break;
 		case 450445312: case 444944384: //not tested
-			version = "v7.1.1 Bethesda";
+			version = "Release Patch 1.0 - Bethesda";
 			vars.gameVersion = 1;
 			vars.newSplitMethod = false;
 			break;
@@ -755,6 +751,7 @@ update
 	if (version.Contains("Unsupported"))
 		return false;
 
+	// Sets "pm_allowRampJumping" to 0 if version 1.0 is detected and the user has enabled the option in the settings
 	if(vars.disableRJSupport && current.rampJumps == 1)
 	{
 		if(settings["disableRJ"]) game.WriteBytes(modules.First().BaseAddress + 0x6126430, new byte[] { 0x0 });
