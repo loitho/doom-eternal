@@ -418,6 +418,9 @@ startup
 	vars.isTagCRSupported = false;
 	vars.disableRJSupport = false;
 
+	vars.hasSplitFS = false;
+	vars.hasSplitHolt = false;
+
 	// Vanilla Cutscene IDs
 	vars.openingCutsceneIDs = new List<int> { 3266, 3268, 3271, 3285 };
 	vars.endingCutsceneID = 3162;
@@ -474,6 +477,12 @@ startup
 	settings.Add("fortressARC", true, "Arc Complex", "fortressSplits");
 	settings.Add("fortressSP", true, "Sentinel Prime", "fortressSplits");
 	settings.Add("fortressTB", true, "Taras Nabad", "fortressSplits");
+
+	// Settings to support sequential playthroughs (Base + DLCs, etc)
+	settings.Add("sequentialSplitting", false, "Sequential Playthrough Splitting");
+	settings.SetToolTip("sequentialSplitting", "Enables support for sequential playthroughs of the Base Campaign and DLCs.");
+	settings.Add("sequentialLevelSplit", true, "Split on Icon/Samur death cutscenes", "sequentialSplitting");
+	settings.SetToolTip("sequentialLevelSplit", "Disabling this changes split method to next level splitting.\ne.g. Will no longer split on Icon's death cutscene, but will instead split when you load into UACA.");
 
 	// Text component to print hidden CR
 	vars.textComponent = (Action<string, string>)((id, text) => {
@@ -883,6 +892,10 @@ split
 				vars.completedLevels.Add(vars.prevLevel);
 			}
 			
+			// Prevents splitting when changing from Final Sin or Holt if cutscene splits are still enabled for sequential playthroughs.
+			if((vars.prevLevel.Contains("e3m4_boss") || vars.prevLevel.Contains("e4m3_mcity")) && settings["sequentialLevelSplit"])
+				return false;
+
 			// Compares to actual level (not hub/menu)
 			return current.levelName != vars.prevLevel;
 		}
@@ -891,12 +904,33 @@ split
 		if(!current.levelName.Contains("game/hub/hub"))
 			vars.prevLevel = current.levelName;
 
+		// Split on Icon of Sin death cutscene
 		if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == vars.endingCutsceneID)
+		{
+			if(settings["sequentialSplitting"])
+			{
+				// Prevents splitting on cutscene if level splitting for sequential runs is enabled
+				// Also prevents splitting multiple times during the cutscene
+				if(!settings["sequentialLevelSplit"] || vars.hasSplitFS) return false;
+				vars.hasSplitFS = true;
+			}
 			return true;
+		}
 
+		// Split on Samur death cutscene (1st one)
 		if(current.levelName.Contains("e4m3_mcity") && current.cutsceneID == vars.endingDLC1CutsceneID)
+		{
+			if(settings["sequentialSplitting"])
+			{
+				// Prevents splitting on cutscene if level splitting for sequential runs is enabled
+				// Also prevents splitting multiple times during the cutscene
+				if(!settings["sequentialLevelSplit"] || vars.hasSplitHolt) return false;
+				vars.hasSplitHolt = true;
+			}
 			return true;
+		}
 
+		// Split on Dark Lord death cutscene
 		if(current.levelName.Contains("e5m4_boss") && current.cutsceneID == vars.endingDLC2CutsceneID)
 			return true;
 	}else
@@ -937,6 +971,8 @@ gameTime
 start
 {
 	vars.highestLevelSplit = 5;
+	vars.hasSplitFS = false;
+	vars.hasSplitHolt = false;
 
     if(vars.gameVersion == 20 || (vars.gameVersion >= 40 && settings["sgnML"]))
         return false;
