@@ -127,6 +127,7 @@ state("DOOMEternalx64vk", "Patch 3.1 - Steam")
 	int cutsceneID: 0x632A8A0;
 	byte canMove: 0x67BDAC1;
 	int tagCombatRating: 0x67706A0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	byte unDelay: 0x67CF2F0;
 }
 
 state("DOOMEternalx64vk", "Patch 3.1 - Bethesda")
@@ -175,6 +176,7 @@ state("DOOMEternalx64vk", "Patch 4.1 - Steam")
 	int cutsceneID: 0x62E89D0;
 	byte canMove: 0x67D9791;
 	int tagCombatRating: 0x678C270, 0x0, 0x288, 0x1A8, 0x8, 0x88; // 0x678C270, 0x458, 0x8, 0x88
+	byte unDelay: 0x67EB1C0;
 }
 
 state("DOOMEternalx64vk", "Patch 4.1 - Bethesda")
@@ -223,6 +225,7 @@ state("DOOMEternalx64vk", "Patch 5.1 - Steam")
 	int cutsceneID: 0x4EA1F78;
 	byte canMove: 0x65CCEE1;
 	int tagCombatRating: 0x657DD90, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	byte unDelay: 0x65DF250;
 }
 
 state("DOOMEternalx64vk", "Patch 5.1 - Bethesda")
@@ -391,6 +394,7 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Steam")
 	int cutsceneID: 0x5153B48;
 	byte canMove: 0x6B41ED1;
 	int tagCombatRating: 0x6AF79D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	byte unDelay: 0x6B53F10;
 }
 
 state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Bethesda")
@@ -403,6 +407,7 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Bethesda")
 	int cutsceneID: 0x510CD48;
 	byte canMove: 0x6AFAED1;
 	int tagCombatRating: 0x6AB09D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	byte unDelay: 0x6B0CF10;
 }
 
 
@@ -417,6 +422,9 @@ startup
 	vars.highestLevelSplit = 5;
 	vars.isTagCRSupported = false;
 	vars.disableRJSupport = false;
+
+	// Var to store Offset of "pauseMenu_delayUNPrompt" command
+	vars.unDelayOffset = 0x0;
 
 	vars.hasSplitFS = false;
 	vars.hasSplitHolt = false;
@@ -455,6 +463,11 @@ startup
 	// Setting to allow automatically disabling Ramp Jumping on the Steam Release version
 	settings.Add("disableRJ", false, "Disable Ramp Jumping (Release Version Only)");
 	settings.SetToolTip("disableRJ", "Sets pm_allowRampJumping to 0.\nRequired for Limited & Restricted runs played on the 1.0 (Release) Patch.");
+
+	// Setting to allow automatically disabling Ultra-Nightmare quitout delay
+	// Supported versions -> Steam: 3.1/4.1/5.1/6.66 Rev 1 | Bethesda: 6.66 Rev 1
+	settings.Add("unDelay", false, "Disable UN quitout delay");
+	settings.SetToolTip("unDelay", "Disables the delay when quitting to menu/desktop during an Ultra-Nightmare run.\nOnly supported for versions: Steam 3.1/4.1/5.1/6.66 Rev 1, and Bethesda 6.66 Rev 1.");
 
 	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
 	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
@@ -583,6 +596,7 @@ init
 			version = "Patch 3.1 - Steam";
 			vars.gameVersion = 31;
 			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x67CF2F0;
 			break;
 		case 485183488:
 			version = "Patch 3.1 - Bethesda";
@@ -601,6 +615,7 @@ init
 			version = "Patch 4.1 - Steam";
 			vars.gameVersion = 41;
 			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x67EB1C0;
 			break;
 		case 439070720:
 			version = "Patch 4.1 - Bethesda";
@@ -621,6 +636,7 @@ init
 			version = "Patch 5.1 - Steam";
 			vars.gameVersion = 51;
 			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x65DF250;
 			break;
 		case 447852544:
 			version = "Patch 5.1 - Bethesda";
@@ -691,11 +707,13 @@ init
 			version = "Patch 6.66 Rev 1 - Steam";
 			vars.gameVersion = 67;
 			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x6B53F10;
 			break;
 		case 407707648:
 			version = "Patch 6.66 Rev 1 - Bethesda";
 			vars.gameVersion = 67;
 			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x6B0CF10;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
@@ -764,6 +782,13 @@ update
 	if(vars.disableRJSupport && current.rampJumps == 1)
 	{
 		if(settings["disableRJ"]) game.WriteBytes(modules.First().BaseAddress + 0x6126430, new byte[] { 0x0 });
+	}
+
+	// Sets "pauseMenu_delayUNPrompt" to 0 if a supported version is detected and the user enabled the option.
+	// This command removes the ~3 second delay before you can quit to menu/desktop during an Ultra-Nightmare run.
+	if(vars.unDelayOffset != 0x0 && current.unDelay == 1)
+	{
+		if(settings["unDelay"]) game.WriteBytes(modules.First().BaseAddress + (int)vars.unDelayOffset, new byte[] { 0x0 });
 	}
 	
 	if (vars.isTagCRSupported && (settings["trackHiddenCR"] || settings["trackHiddenCRTAG2"]))
