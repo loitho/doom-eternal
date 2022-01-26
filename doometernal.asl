@@ -410,6 +410,32 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Bethesda")
 	byte unDelay: 0x6B0CF10;
 }
 
+state("DOOMEternalx64vk", "Patch 6.66 Rev 1.1 - Steam")
+{
+	bool isLoading : 0x51B9898;
+	byte isLoading2: 0x6921710;
+	bool isInGame : 0x68D5B70;
+	string31 levelName : 0x6AF8E20; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x5154F48;
+	byte canMove: 0x6B432D1;
+	int tagCombatRating: 0x6AF8DD0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	byte unDelay: 0x6B55310;
+}
+
+state("DOOMEternalx64vk", "Patch 6.66 Rev 1.1 - Bethesda")
+{
+	bool isLoading : 0x5172A18;
+	byte isLoading2: 0x68DA690;
+	bool isInGame : 0x688EAE0;
+	string31 levelName : 0x6AB1DA0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x510E0C8;
+	byte canMove: 0x6AFC251;
+	int tagCombatRating: 0x6AB1D50, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	byte unDelay: 0x6B0E290;
+}
+
 
 startup
 {
@@ -714,6 +740,18 @@ init
 			vars.gameVersion = 67;
 			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x6B0CF10;
+			break;
+		case 475570176:
+			version = "Patch 6.66 Rev 1.1 - Steam";
+			vars.gameVersion = 68;
+			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x6B55310;
+			break;
+		case 474185728:
+			version = "Patch 6.66 Rev 1.1 - Bethesda";
+			vars.gameVersion = 68;
+			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x6B0E290;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
