@@ -151,7 +151,7 @@ We have a resource document detailing all **required** encounters (and some opti
 
 To find this value:
  1. Start a new save and kill all enemies until the first fight concludes and the bottom door unlocks (`killMonsters` is a useful command for this). Scan for a single `Byte` of value `1`. Make sure to scan **ALL** memory space, not just DOOM Eternal's
- 2. Complete the next fight and scan for values increased by `1`. You can also check the console for a string that reads `<SIZE> Encounter complete. Awarding X Combat Points: Y of 21 at Z.ZZ completion percent` and scan for the exact value of `X`
+ 2. Complete the next fight and scan for values increased by `1`. You can also check the console for a string that reads `<SIZE> Encounter complete. Awarding X Combat Points: Y of 21 at Z.ZZ completion percent`. `X` corresponds to the increase, `Y` corresponds to the current total
  3. Repeat step 2 until you reach the hallway with Zombies and a single Turret (this encounter does not grant Combat Rating, so complete the fight but don't scan)
  4. After the single Turret in the hallway with Zombies, repeat step 2 again until you reach the Marauder in front of the elevator that requires the Red Keycard
  5. Ride the elevator up, then move passed all the enemies until you reach the button near the codex. Once the Cacodemons spawn, do one final scan. This should leave you with a single pointer.

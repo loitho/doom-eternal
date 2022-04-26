@@ -436,6 +436,19 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 1.1 - Bethesda")
 	byte unDelay: 0x6B0E290;
 }
 
+state("DOOMEternalx64vk", "Patch 6.66 Rev 2 - Steam")
+{
+	bool isLoading : 0x51F4418;
+	byte isLoading2: 0x695C490;
+	bool isInGame : 0x690F710;
+	string31 levelName : 0x6B33E30; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x518FAC8;
+	byte canMove: 0x68C83D1;
+	int tagCombatRating: 0x6B33DE0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	byte unDelay: 0x6B904E0;
+}
+
 
 startup
 {
@@ -753,6 +766,12 @@ init
 			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x6B0E290;
 			break;
+		case 510251008:
+			version = "Patch 6.66 Rev 2 - Steam";
+			vars.gameVersion = 69;
+			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x6B904E0;
+			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
 			// Display popup if version is incorrect
@@ -801,6 +820,13 @@ init
 							if(vars.gameVersion >= 67) // Update 6.66 Rev 1
 							{
 								vars.openingDLC2CutsceneIDs = new List<int> { 3466, 3429 };
+								if(vars.gameVersion >= 69) // Update 6.66 Rev 2
+								{
+									vars.openingCutsceneIDs = new List<int> { 3229, 3231, 3234, 3248 };
+									vars.endingCutsceneID = 3241;
+									vars.endingDLC1CutsceneID = 1054;
+									vars.sgnCutscene = 6614;
+								}
 							}
 						}
 					}
