@@ -13,6 +13,16 @@ state("DOOMEternalx64vk", "Release Patch 1.0 - Steam") // Release Version (Slope
 	byte rampJumps : 0x6126430;
 }
 
+state("DOOMEternalx64vk", "Release Patch 1.0 - Bethesda")
+{
+	bool isLoading : 0x4CD40D8;
+	bool isLoading2: 0x6012F40;
+	bool isInGame : 0x60EDED8;
+	byte levelID : 0x06192468, 0x28;
+	int cutsceneID: 0x4C3C684;
+	byte canMove: 0x3361881;
+}
+
 state("DOOMEternalx64vk", "May Patch Steam")
 {
     bool isLoading : 0x4D01058;
@@ -33,6 +43,16 @@ state("DOOMEternalx64vk", "May Hotfix Steam")
 	byte canMove: 0x3401A11;
 }
 
+state("DOOMEternalx64vk", "May Hotfix Bethesda")
+{
+	bool isLoading : 0x4CC47D8;
+	bool isLoading2: 0x6003640;
+	bool isInGame : 0x60DE978;
+	byte levelID : 0x06184748, 0x28;
+	int cutsceneID: 0x4C2CD84;
+	byte canMove: 0x33C78A1;
+}
+
 state("DOOMEternalx64vk", "Patch 1.1 - Steam")
 {
    	bool isLoading : 0x4D033D8;
@@ -44,11 +64,32 @@ state("DOOMEternalx64vk", "Patch 1.1 - Steam")
 	string31 levelName : 0x611C4F0;
 }
 
+
+state("DOOMEternalx64vk", "Patch 1.1 - Bethesda")
+{
+	bool isLoading : 0x4CC5958;
+	bool isLoading2: 0x60047C0;
+	bool isInGame : 0x60DFAF8;
+	byte levelID : 0x061858C8, 0x28;
+	int cutsceneID: 0x4C2DF04;
+	byte canMove: 0x33C88D1;
+}
+
 state("DOOMEternalx64vk", "Patch 2.0 - Steam")
 {
    	bool isLoading : 0x3463698;
 	bool isLoading2: 0x5081EA8;
 	bool isInGame : 0x6376768;
+	byte levelID : 0x0;
+	int cutsceneID: 0x0;
+	byte canMove: 0x0;
+}
+
+state("DOOMEternalx64vk", "Patch 2.0 - Bethesda")
+{
+   	bool isLoading : 0x34284F8;
+	bool isLoading2: 0x50434A8;
+	bool isInGame : 0x6337440;
 	byte levelID : 0x0;
 	int cutsceneID: 0x0;
 	byte canMove: 0x0;
@@ -89,6 +130,17 @@ state("DOOMEternalx64vk", "Patch 3.1 - Steam")
 	byte unDelay: 0x67CF2F0;
 }
 
+state("DOOMEternalx64vk", "Patch 3.1 - Bethesda")
+{
+	bool isLoading : 0x523D098;
+	byte isLoading2: 0x6656658;
+	bool isInGame : 0x66088B0;
+	string31 levelName : 0x6730FF0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x62EBA20;
+	byte canMove: 0x677E3C1;
+}
+
 state("DOOMEternalx64vk", "Patch 4.0 - Steam")
 {
 	bool isLoading : 0x520FD78;
@@ -101,6 +153,17 @@ state("DOOMEternalx64vk", "Patch 4.0 - Steam")
 	int tagCombatRating: 0x678B670, 0x0, 0x288, 0x1A8, 0x8, 0x88;
     // There was another valid pointer chain, noted here just in case the current one stops working for whatever reason
     // 0x678B670, 0x458, 0x8, 0x88
+}
+
+state("DOOMEternalx64vk", "Patch 4.0 - Bethesda")
+{
+	bool isLoading : 0x51D1178;
+	byte isLoading2: 0x6671D88;
+	bool isInGame : 0x6626280;
+	string31 levelName : 0x674C8C0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x62A9C50;
+	byte canMove: 0x6799D91;
 }
 
 state("DOOMEternalx64vk", "Patch 4.1 - Steam")
@@ -116,6 +179,18 @@ state("DOOMEternalx64vk", "Patch 4.1 - Steam")
 	byte unDelay: 0x67EB1C0;
 }
 
+state("DOOMEternalx64vk", "Patch 4.1 - Bethesda")
+{
+	bool isLoading : 0x51D1178;
+	byte isLoading2: 0x6672988;
+	bool isInGame : 0x6626E80;
+	string31 levelName : 0x674D4C0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x62A9C50;
+	byte canMove: 0x679A991;
+	int tagCombatRating: 0x674D470, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
 state("DOOMEternalx64vk", "Patch 5.0 - Steam")
 {
 	bool isLoading : 0x4F058C8;
@@ -126,6 +201,18 @@ state("DOOMEternalx64vk", "Patch 5.0 - Steam")
 	int cutsceneID: 0x4EA1F78;
 	byte canMove: 0x65CCEE1;
 	int tagCombatRating: 0x657DD90, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
+state("DOOMEternalx64vk", "Patch 5.0 - Bethesda")
+{
+	bool isLoading : 0x4EC5C48;
+	byte isLoading2: 0x6366690;
+	bool isInGame : 0x631BA00;
+	string31 levelName : 0x653DF60; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4E60DD8;
+	byte canMove: 0x658D061;
+	int tagCombatRating: 0x653DF10, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
 state("DOOMEternalx64vk", "Patch 5.1 - Steam")
@@ -141,6 +228,18 @@ state("DOOMEternalx64vk", "Patch 5.1 - Steam")
 	byte unDelay: 0x65DF250;
 }
 
+state("DOOMEternalx64vk", "Patch 5.1 - Bethesda")
+{
+	bool isLoading : 0x4EC5C48;
+	byte isLoading2: 0x6366690;
+	bool isInGame : 0x631BA00;
+	string31 levelName : 0x653DF60; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4E60DD8;
+	byte canMove: 0x658D061;
+	int tagCombatRating: 0x653DF10, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
 state("DOOMEternalx64vk", "Patch 6.0 - Steam")
 {
 	bool isLoading : 0x500BE98;
@@ -151,6 +250,18 @@ state("DOOMEternalx64vk", "Patch 6.0 - Steam")
 	int cutsceneID: 0x4FA7548;
 	byte canMove: 0x69A4D81;
 	int tagCombatRating: 0x695B0D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
+state("DOOMEternalx64vk", "Patch 6.0 - Bethesda")
+{
+	bool isLoading : 0x4FC6298;
+	byte isLoading2: 0x673DA90;
+	bool isInGame : 0x66F1D00;
+	string31 levelName : 0x6915320; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4F61948;
+	byte canMove: 0x695EF81;
+	int tagCombatRating: 0x69152D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
 state("DOOMEternalx64vk", "Patch 6.1 - Steam")
@@ -165,6 +276,18 @@ state("DOOMEternalx64vk", "Patch 6.1 - Steam")
 	int tagCombatRating: 0x695B0D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
+state("DOOMEternalx64vk", "Patch 6.1 - Bethesda")
+{
+	bool isLoading : 0x4FC6298;
+	byte isLoading2: 0x673DA90;
+	bool isInGame : 0x66F1D00;
+	string31 levelName : 0x6915320; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4F61948;
+	byte canMove: 0x695EF81;
+	int tagCombatRating: 0x69152D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
 state("DOOMEternalx64vk", "Patch 6.2 - Steam")
 {
 	bool isLoading : 0x500E418;
@@ -175,6 +298,18 @@ state("DOOMEternalx64vk", "Patch 6.2 - Steam")
 	int cutsceneID: 0x4FA85A8;
 	byte canMove: 0x69A7301;
 	int tagCombatRating: 0x695D650, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
+state("DOOMEternalx64vk", "Patch 6.2 - Bethesda")
+{
+	bool isLoading : 0x4FC7818;
+	byte isLoading2: 0x673F010;
+	bool isInGame : 0x66F3280;
+	string31 levelName : 0x69168A0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4F619A8;
+	byte canMove: 0x6960501;
+	int tagCombatRating: 0x6916850, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
 state("DOOMEternalx64vk", "Patch 6.3 - Steam")
@@ -189,6 +324,18 @@ state("DOOMEternalx64vk", "Patch 6.3 - Steam")
 	int tagCombatRating: 0x695D650, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
+state("DOOMEternalx64vk", "Patch 6.3 - Bethesda")
+{
+	bool isLoading : 0x4FC7818;
+	byte isLoading2: 0x673F010;
+	bool isInGame : 0x66F3280;
+	string31 levelName : 0x69168A0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4F619A8;
+	byte canMove: 0x6960501;
+	int tagCombatRating: 0x6916850, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
 state("DOOMEternalx64vk", "Patch 6.4 - Steam")
 {
 	bool isLoading : 0x500E418;
@@ -201,6 +348,18 @@ state("DOOMEternalx64vk", "Patch 6.4 - Steam")
 	int tagCombatRating: 0x695D650, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
+state("DOOMEternalx64vk", "Patch 6.4 - Bethesda")
+{
+	bool isLoading : 0x4FC7818;
+	byte isLoading2: 0x673F010;
+	bool isInGame : 0x66F3280;
+	string31 levelName : 0x69168A0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x4F619A8;
+	byte canMove: 0x6960501;
+	int tagCombatRating: 0x6916850, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
 state("DOOMEternalx64vk", "Patch 6.66 - Steam")
 {
 	bool isLoading : 0x5194E18;
@@ -211,6 +370,18 @@ state("DOOMEternalx64vk", "Patch 6.66 - Steam")
 	int cutsceneID: 0x512EFA8;
 	byte canMove: 0x6B1E7C1;
 	int tagCombatRating: 0x6AD4350, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+}
+
+state("DOOMEternalx64vk", "Patch 6.66 - Bethesda")
+{
+	bool isLoading : 0x514EF18;
+	byte isLoading2: 0x68B6B90;
+	bool isInGame : 0x686AFE0;
+	string31 levelName : 0x6A8E2A0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x50E90A8;
+	byte canMove: 0x6AD86C1;
+	int tagCombatRating: 0x6A8E250, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
 state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Steam")
@@ -226,6 +397,19 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Steam")
 	byte unDelay: 0x6B53F10;
 }
 
+state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Bethesda")
+{
+	bool isLoading : 0x5171698;
+	byte isLoading2: 0x68D9310;
+	bool isInGame : 0x688C5A0;
+	string31 levelName : 0x6AB0A20; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x510CD48;
+	byte canMove: 0x6AFAED1;
+	int tagCombatRating: 0x6AB09D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	byte unDelay: 0x6B0CF10;
+}
+
 state("DOOMEternalx64vk", "Patch 6.66 Rev 1.1 - Steam")
 {
 	bool isLoading : 0x51B9898;
@@ -237,6 +421,19 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 1.1 - Steam")
 	byte canMove: 0x6B432D1;
 	int tagCombatRating: 0x6AF8DD0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 	byte unDelay: 0x6B55310;
+}
+
+state("DOOMEternalx64vk", "Patch 6.66 Rev 1.1 - Bethesda")
+{
+	bool isLoading : 0x5172A18;
+	byte isLoading2: 0x68DA690;
+	bool isInGame : 0x688EAE0;
+	string31 levelName : 0x6AB1DA0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x510E0C8;
+	byte canMove: 0x6AFC251;
+	int tagCombatRating: 0x6AB1D50, 0x0, 0x288, 0x1A8, 0x8, 0x88;
+	byte unDelay: 0x6B0E290;
 }
 
 state("DOOMEternalx64vk", "Patch 6.66 Rev 2 - Steam")
@@ -307,9 +504,9 @@ startup
 	settings.SetToolTip("disableRJ", "Sets pm_allowRampJumping to 0.\nRequired for Limited & Restricted runs played on the 1.0 (Release) Patch.");
 
 	// Setting to allow automatically disabling Ultra-Nightmare quitout delay
-	// Supported versions -> Steam: 3.1/4.1/5.1/6.66 Rev 1
+	// Supported versions -> Steam: 3.1/4.1/5.1/6.66 Rev 1 | Bethesda: 6.66 Rev 1
 	settings.Add("unDelay", false, "Disable UN quitout delay");
-	settings.SetToolTip("unDelay", "Disables the delay when quitting to menu/desktop during an Ultra-Nightmare run.\nOnly supported for versions: Steam 3.1/4.1/5.1/6.66 Rev 1+");
+	settings.SetToolTip("unDelay", "Disables the delay when quitting to menu/desktop during an Ultra-Nightmare run.\nOnly supported for versions: Steam 3.1/4.1/5.1/6.66 Rev 1, and Bethesda 6.66 Rev 1.");
 
 	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
 	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
@@ -385,6 +582,11 @@ init
 			vars.gameVersion = 1;
 			vars.disableRJSupport = true;
 			break;
+		case 450445312: case 444944384: //not tested
+			version = "Release Patch 1.0 - Bethesda";
+			vars.gameVersion = 1;
+			vars.newSplitMethod = false;
+			break;
 		case 482037760: //steam may patch
     		version = "May Patch Steam";
 			vars.gameVersion = 10;
@@ -395,12 +597,28 @@ init
 			vars.gameVersion = 10;
 			vars.newSplitMethod = false;
 			break;
+   		case 455708672:
+        	version = "May Hotfix Bethesda";
+			vars.gameVersion = 10;
+			vars.newSplitMethod = false;
+			break;
 		case 492113920:
 			version = "Patch 1.1 - Steam";
 			vars.gameVersion = 11;
 			break;
+		case 457285632:
+			version = "Patch 1.1 - Bethesda";
+			vars.gameVersion = 11;
+			vars.newSplitMethod = false;
+			break;
 		case 490299392:
         	version = "Patch 2.0 - Steam";
+			vars.gameVersion = 20;
+			vars.newSplitMethod = false;
+        	MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
+			break;
+		case 454758400:
+    		version = "Patch 2.0 - Bethesda";
 			vars.gameVersion = 20;
 			vars.newSplitMethod = false;
         	MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
@@ -419,10 +637,18 @@ init
 			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x67CF2F0;
 			break;
+		case 485183488:
+			version = "Patch 3.1 - Bethesda";
+			vars.gameVersion = 31;
+			break;
         case 478056448:
             version = "Patch 4.0 - Steam";
 			vars.gameVersion = 40;
             vars.isTagCRSupported = true;
+            break;
+        case 453394432:
+            version = "Patch 4.0 - Bethesda";
+			vars.gameVersion = 40;
             break;
 		case 472821760:
 			version = "Patch 4.1 - Steam";
@@ -430,8 +656,18 @@ init
 			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x67EB1C0;
 			break;
+		case 439070720:
+			version = "Patch 4.1 - Bethesda";
+			vars.gameVersion = 41;
+			vars.isTagCRSupported = true;
+			break;
 		case 475787264:
 			version = "Patch 5.0 - Steam";
+			vars.gameVersion = 50;
+			vars.isTagCRSupported = true;
+			break;
+		case 474456064:
+			version = "Patch 5.0 - Bethesda";
 			vars.gameVersion = 50;
 			vars.isTagCRSupported = true;
 			break;
@@ -441,8 +677,18 @@ init
 			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x65DF250;
 			break;
+		case 447852544:
+			version = "Patch 5.1 - Bethesda";
+			vars.gameVersion = 51;
+			vars.isTagCRSupported = true;
+			break;
 		case 481435648:
 			version = "Patch 6.0 - Steam";
+			vars.gameVersion = 60;
+			vars.isTagCRSupported = true;
+			break;
+		case 469774336:
+			version = "Patch 6.0 - Bethesda";
 			vars.gameVersion = 60;
 			vars.isTagCRSupported = true;
 			break;
@@ -451,8 +697,18 @@ init
 			vars.gameVersion = 61;
 			vars.isTagCRSupported = true;
 			break;
+		case 432082944:
+			version = "Patch 6.1 - Bethesda";
+			vars.gameVersion = 61;
+			vars.isTagCRSupported = true;
+			break;
 		case 464543744:
 			version = "Patch 6.2 - Steam";
+			vars.gameVersion = 62;
+			vars.isTagCRSupported = true;
+			break;
+		case 424820736:
+			version = "Patch 6.2 - Bethesda";
 			vars.gameVersion = 62;
 			vars.isTagCRSupported = true;
 			break;
@@ -461,13 +717,28 @@ init
 			vars.gameVersion = 63;
 			vars.isTagCRSupported = true;
 			break;
+		case 397348864:
+			version = "Patch 6.3 - Bethesda";
+			vars.gameVersion = 63;
+			vars.isTagCRSupported = true;
+			break;
 		case 494395392:
 			version = "Patch 6.4 - Steam";
 			vars.gameVersion = 64;
 			vars.isTagCRSupported = true;
 			break;
+		case 433848320:
+			version = "Patch 6.4 - Bethesda";
+			vars.gameVersion = 64;
+			vars.isTagCRSupported = true;
+			break;
 		case 508350464:
 			version = "Patch 6.66 - Steam";
+			vars.gameVersion = 66;
+			vars.isTagCRSupported = true;
+			break;
+		case 430272512:
+			version = "Patch 6.66 - Bethesda";
 			vars.gameVersion = 66;
 			vars.isTagCRSupported = true;
 			break;
@@ -477,11 +748,23 @@ init
 			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x6B53F10;
 			break;
+		case 407707648:
+			version = "Patch 6.66 Rev 1 - Bethesda";
+			vars.gameVersion = 67;
+			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x6B0CF10;
+			break;
 		case 475570176:
 			version = "Patch 6.66 Rev 1.1 - Steam";
 			vars.gameVersion = 68;
 			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x6B55310;
+			break;
+		case 474185728:
+			version = "Patch 6.66 Rev 1.1 - Bethesda";
+			vars.gameVersion = 68;
+			vars.isTagCRSupported = true;
+			vars.unDelayOffset = 0x6B0E290;
 			break;
 		case 510251008:
 			version = "Patch 6.66 Rev 2 - Steam";

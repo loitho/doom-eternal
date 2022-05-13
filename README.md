@@ -3,6 +3,7 @@
 You have to give a big thanks to Micrologist for his awesome work!  
 And thanks to Undeceiver for writing the Hidden Combat Rating portion of the ASL.
 
+ - [Bethesda Launcher Support](#bethesda-launcher-support)
  - [Unlocking Console Commands](#unlocking-console-commands)
  - [Updating the Autosplitter](#updating-the-autosplitter)
    - [Level Name](#level-name)
@@ -14,6 +15,12 @@ And thanks to Undeceiver for writing the Hidden Combat Rating portion of the ASL
    - [Can Move](#can-move)
    - [Combat Rating](#combat-rating)
    - [Finding the Module Size](#finding-the-module-size)
+
+## Bethesda Launcher Support
+
+Due to Bethesda sunsetting their launcher on May 11, 2022, support for those versions of DOOM Eternal has been dropped as of May 13, 2022.
+If you own the game on this launcher and wish to keep playing it, you will need to transfer to a Steam account. [Instructions to do so can be found here](https://bethesda.net/en/account/transfer-library).
+If, for whatever reason, you need the ASL that supports Bethesda versions of the game, you can find it in the `archive` folder in this repository.
 
 ### Unlocking Console Commands
 
