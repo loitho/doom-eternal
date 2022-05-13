@@ -18,10 +18,13 @@ And thanks to Undeceiver for writing the Hidden Combat Rating portion of the ASL
 
 ## Bethesda Launcher Support
 
-Due to Bethesda sunsetting their launcher on May 11, 2022, support for those versions of DOOM Eternal has been dropped as of May 13, 2022.
-If you own the game on this launcher and wish to keep playing it, you will need to transfer to a Steam account. [Instructions to do so can be found here](https://bethesda.net/en/account/transfer-library).
+Due to Bethesda sunsetting their launcher on May 11, 2022, support for those versions of DOOM Eternal has been dropped as of May 13, 2022.  
+If you own the game on this launcher and wish to keep playing it, you will need to transfer to a Steam account.  
+[Instructions to do so can be found here](https://bethesda.net/en/account/transfer-library).
+
 If, for whatever reason, you need the ASL that supports Bethesda versions of the game, you can find it in the `archive` folder in this repository.
 
+---
 ### Unlocking Console Commands
 
 To unlock the console, you can use [meath00k](https://github.com/brongo/m3337ho0o0ok/releases "meath00k Repository - Releases").  
