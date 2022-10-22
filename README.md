@@ -104,7 +104,7 @@ Load Removal uses 3 values to determine if the runner is loading or in menu. `is
 
  1. In Cheat Engine, scan for a single `Byte` value that is `1` when there is a loading screen and `0` when in the game or main menu
  2. Once you've slimmed the results down enough, you'll want to enter a loading screen in between levels (I use `map game/sp/e1m3_cult/e1m3_cult.map` then `noclip` to the end of the level. WARNING: This overwrites your currently selected save slot). In this loading screen, there should be a single pointer with a value of `2`. This is the `isLoading2` value in the ASL file
- 3. Afterwards, there should be two pointers that swap to `0` slower than than `isLoading2` when exiting a loading screen (this swap happens when the blackscreen ends). Use the 1st of the two for `isLoading` in the ASL file (address ends in an `8`)
+ 3. Afterwards, there should be two pointers that swap to `0` slower than `isLoading2` when exiting a loading screen (this swap happens when the blackscreen ends). Use the 1st of the two for `isLoading` in the ASL file (address ends in an `8`)
 
 #### isInGame
 
@@ -155,6 +155,12 @@ There should be three consecutive pointers with the exact same behavior. Use the
 Value is named `canMove` in the ASL file.
 
 ### Combat Rating
+
+**The Hidden Combat Rating feature for the autosplitter has been completely deprecated and removed, as it is no longer needed.**  
+No versions of the game will have this HCR system, so if you need it, you can use the HCR ASL file in the `archive` folder of this repository.  
+If you need this system on a newer version of the game, you'll have to find the address in memory yourself. (Instructions below)
+
+---
 
 Hidden Combat Rating is currently used to validate whether a runner has completed all fights in *The Ancient Gods 1* for the **100% All Combat Rating** category.  
 We have a resource document detailing all **required** encounters (and some optional) in the game and DLCs that you may find of use. You can find the UAC Atlantica encounters [here](https://docs.google.com/document/d/15BZ6j8a0nQukOvY93aHMsUO2MStfqPIX33Rl-8CGRR8/edit#heading=h.sp3rwqsk8lgu "Encounter Index - UACA").
