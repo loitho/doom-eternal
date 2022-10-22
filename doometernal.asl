@@ -1,7 +1,7 @@
 // Doom Eternal Autosplitter
 // By Micrologist, Loitho, bowsr, Undeceiver
 
-state("DOOMEternalx64vk", "Release Patch 1.0 - Steam") // Release Version (Slopeboosts)
+state("DOOMEternalx64vk", "Release 1.0 (Steam)") // Release Version (Slopeboosts)
 {
 	bool isLoading : 0x4D11AD8;
 	bool isLoading2: 0x6051240;
@@ -33,7 +33,7 @@ state("DOOMEternalx64vk", "May Hotfix Steam")
 	byte canMove: 0x3401A11;
 }
 
-state("DOOMEternalx64vk", "Patch 1.1 - Steam")
+state("DOOMEternalx64vk", "1.1 (Steam)")
 {
    	bool isLoading : 0x4D033D8;
 	bool isLoading2: 0x6042B40;
@@ -44,7 +44,7 @@ state("DOOMEternalx64vk", "Patch 1.1 - Steam")
 	string31 levelName : 0x611C4F0;
 }
 
-state("DOOMEternalx64vk", "Patch 2.0 - Steam")
+state("DOOMEternalx64vk", "2.0 (Steam)")
 {
    	bool isLoading : 0x3463698;
 	bool isLoading2: 0x5081EA8;
@@ -54,7 +54,7 @@ state("DOOMEternalx64vk", "Patch 2.0 - Steam")
 	byte canMove: 0x0;
 }
 
-state("DOOMEternalx64vk", "Patch 2.1 - Steam")
+state("DOOMEternalx64vk", "2.1 (Steam)")
 {
 	bool isLoading : 0x5084F28;
 	bool isLoading2: 0x63C5298;
@@ -65,7 +65,7 @@ state("DOOMEternalx64vk", "Patch 2.1 - Steam")
 	byte canMove: 0x64EA631;
 }
 
-state("DOOMEternalx64vk", "Patch 3.0 - Steam")
+state("DOOMEternalx64vk", "3.0 (Steam)")
 {
 	bool isLoading : 0x527BC98;
 	byte isLoading2: 0x6695CD8;
@@ -76,7 +76,7 @@ state("DOOMEternalx64vk", "Patch 3.0 - Steam")
 	byte canMove: 0x67BDA41;
 }
 
-state("DOOMEternalx64vk", "Patch 3.1 - Steam")
+state("DOOMEternalx64vk", "3.1 (Steam)")
 {
 	bool isLoading : 0x527BD18;
 	byte isLoading2: 0x6695D58;
@@ -85,11 +85,10 @@ state("DOOMEternalx64vk", "Patch 3.1 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x632A8A0;
 	byte canMove: 0x67BDAC1;
-	int tagCombatRating: 0x67706A0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 	byte unDelay: 0x67CF2F0;
 }
 
-state("DOOMEternalx64vk", "Patch 4.0 - Steam")
+state("DOOMEternalx64vk", "4.0 (Steam)")
 {
 	bool isLoading : 0x520FD78;
 	byte isLoading2: 0x66B0B88;
@@ -98,12 +97,9 @@ state("DOOMEternalx64vk", "Patch 4.0 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x62E89D0;
 	byte canMove: 0x67D8B91;
-	int tagCombatRating: 0x678B670, 0x0, 0x288, 0x1A8, 0x8, 0x88;
-    // There was another valid pointer chain, noted here just in case the current one stops working for whatever reason
-    // 0x678B670, 0x458, 0x8, 0x88
 }
 
-state("DOOMEternalx64vk", "Patch 4.1 - Steam")
+state("DOOMEternalx64vk", "4.1 (Steam)")
 {
 	bool isLoading : 0x520FD78;
 	byte isLoading2: 0x66B1788;
@@ -112,11 +108,10 @@ state("DOOMEternalx64vk", "Patch 4.1 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x62E89D0;
 	byte canMove: 0x67D9791;
-	int tagCombatRating: 0x678C270, 0x0, 0x288, 0x1A8, 0x8, 0x88; // 0x678C270, 0x458, 0x8, 0x88
 	byte unDelay: 0x67EB1C0;
 }
 
-state("DOOMEternalx64vk", "Patch 5.0 - Steam")
+state("DOOMEternalx64vk", "5.0 (Steam)")
 {
 	bool isLoading : 0x4F058C8;
 	byte isLoading2: 0x63A6510;
@@ -125,10 +120,9 @@ state("DOOMEternalx64vk", "Patch 5.0 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4EA1F78;
 	byte canMove: 0x65CCEE1;
-	int tagCombatRating: 0x657DD90, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-state("DOOMEternalx64vk", "Patch 5.1 - Steam")
+state("DOOMEternalx64vk", "5.1 (Steam)")
 {
 	bool isLoading : 0x4F058C8;
 	byte isLoading2: 0x63A6510;
@@ -137,11 +131,10 @@ state("DOOMEternalx64vk", "Patch 5.1 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4EA1F78;
 	byte canMove: 0x65CCEE1;
-	int tagCombatRating: 0x657DD90, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 	byte unDelay: 0x65DF250;
 }
 
-state("DOOMEternalx64vk", "Patch 6.0 - Steam")
+state("DOOMEternalx64vk", "6.0 (Steam)")
 {
 	bool isLoading : 0x500BE98;
 	byte isLoading2: 0x6783890;
@@ -150,10 +143,9 @@ state("DOOMEternalx64vk", "Patch 6.0 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA7548;
 	byte canMove: 0x69A4D81;
-	int tagCombatRating: 0x695B0D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-state("DOOMEternalx64vk", "Patch 6.1 - Steam")
+state("DOOMEternalx64vk", "6.1 (Steam)")
 {
 	bool isLoading : 0x500BE98;
 	byte isLoading2: 0x6783890;
@@ -162,10 +154,9 @@ state("DOOMEternalx64vk", "Patch 6.1 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA7548;
 	byte canMove: 0x69A4D81;
-	int tagCombatRating: 0x695B0D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-state("DOOMEternalx64vk", "Patch 6.2 - Steam")
+state("DOOMEternalx64vk", "6.2 (Steam)")
 {
 	bool isLoading : 0x500E418;
 	byte isLoading2: 0x6785E10;
@@ -174,10 +165,9 @@ state("DOOMEternalx64vk", "Patch 6.2 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA85A8;
 	byte canMove: 0x69A7301;
-	int tagCombatRating: 0x695D650, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-state("DOOMEternalx64vk", "Patch 6.3 - Steam")
+state("DOOMEternalx64vk", "6.3 (Steam)")
 {
 	bool isLoading : 0x500E418;
 	byte isLoading2: 0x6785E10;
@@ -186,10 +176,9 @@ state("DOOMEternalx64vk", "Patch 6.3 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA85A8;
 	byte canMove: 0x69A7301;
-	int tagCombatRating: 0x695D650, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-state("DOOMEternalx64vk", "Patch 6.4 - Steam")
+state("DOOMEternalx64vk", "6.4 (Steam)")
 {
 	bool isLoading : 0x500E418;
 	byte isLoading2: 0x6785E10;
@@ -198,10 +187,9 @@ state("DOOMEternalx64vk", "Patch 6.4 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA85A8;
 	byte canMove: 0x69A7301;
-	int tagCombatRating: 0x695D650, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-state("DOOMEternalx64vk", "Patch 6.66 - Steam")
+state("DOOMEternalx64vk", "6.66 (Steam)")
 {
 	bool isLoading : 0x5194E18;
 	byte isLoading2: 0x68FCC90;
@@ -210,10 +198,9 @@ state("DOOMEternalx64vk", "Patch 6.66 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x512EFA8;
 	byte canMove: 0x6B1E7C1;
-	int tagCombatRating: 0x6AD4350, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 }
 
-state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Steam")
+state("DOOMEternalx64vk", "6.66 Rev 1 (Steam)")
 {
 	bool isLoading : 0x51B8498;
 	byte isLoading2: 0x6920310;
@@ -222,11 +209,10 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 1 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x5153B48;
 	byte canMove: 0x6B41ED1;
-	int tagCombatRating: 0x6AF79D0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 	byte unDelay: 0x6B53F10;
 }
 
-state("DOOMEternalx64vk", "Patch 6.66 Rev 1.1 - Steam")
+state("DOOMEternalx64vk", "6.66 Rev 1.1 (Steam)")
 {
 	bool isLoading : 0x51B9898;
 	byte isLoading2: 0x6921710;
@@ -235,11 +221,10 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 1.1 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x5154F48;
 	byte canMove: 0x6B432D1;
-	int tagCombatRating: 0x6AF8DD0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 	byte unDelay: 0x6B55310;
 }
 
-state("DOOMEternalx64vk", "Patch 6.66 Rev 2 - Steam")
+state("DOOMEternalx64vk", "6.66 Rev 2 (Steam)")
 {
 	bool isLoading : 0x51F4418;
 	byte isLoading2: 0x695C490;
@@ -248,8 +233,19 @@ state("DOOMEternalx64vk", "Patch 6.66 Rev 2 - Steam")
 	byte levelID : 0x0;
 	int cutsceneID: 0x518FAC8;
 	byte canMove: 0x68C83D1;
-	int tagCombatRating: 0x6B33DE0, 0x0, 0x288, 0x1A8, 0x8, 0x88;
 	byte unDelay: 0x6B904E0;
+}
+
+state("DOOMEternalx64vk", "6.66 Rev 2 (Gamepass)")
+{
+	bool isLoading : 0x52ADE98;
+	byte isLoading2: 0x6A16410;
+	bool isInGame : 0x69CA7D0;
+	string31 levelName : 0x6BED920; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x5249548;
+	byte canMove: 0x6C37E91;
+	byte unDelay: 0x6C49FD0;
 }
 
 
@@ -262,7 +258,6 @@ startup
 	
 	vars.startAfterCutscene = false;
 	vars.highestLevelSplit = 5;
-	vars.isTagCRSupported = false;
 	vars.disableRJSupport = false;
 
 	// Var to store Offset of "pauseMenu_delayUNPrompt" command
@@ -311,11 +306,6 @@ startup
 	settings.Add("unDelay", false, "Disable UN quitout delay");
 	settings.SetToolTip("unDelay", "Disables the delay when quitting to menu/desktop during an Ultra-Nightmare run.\nOnly supported for versions: Steam 3.1/4.1/5.1/6.66 Rev 1+");
 
-	settings.Add("trackHiddenCR", false, "Track hidden combat rating (TAG1)");
-	settings.SetToolTip("trackHiddenCR", "Required setting if running 100% All Combat Rating (ACR) for Ancient Gods 1");
-	settings.Add("trackHiddenCRTAG2", false, "Track hidden combat rating (TAG2 - Deprecated)");
-	settings.SetToolTip("trackHiddenCRTAG2", "Setting is no longer required for TAG2 100% All Combat runs.\nFunctionality still works if you still want it, but you can safely disable this.");
-
 	// Setting that enables a split at the final SGN cutscene (intended for Master Level)
 	// This also disables the standard autosplit/start functions to prevent issues (load remover still applies)
 	settings.Add("sgnML", false, "Super Gore Nest ML (DISABLES NORMAL AUTOSPLITTER)");
@@ -338,50 +328,17 @@ startup
 	settings.SetToolTip("sequentialSplitting", "Enables support for sequential playthroughs of the Base Campaign and DLCs.");
 	settings.Add("sequentialLevelSplit", true, "Split on Icon/Samur death cutscenes", "sequentialSplitting");
 	settings.SetToolTip("sequentialLevelSplit", "Disabling this changes split method to next level splitting.\ne.g. Will no longer split on Icon's death cutscene, but will instead split when you load into UACA.");
-
-	// Text component to print hidden CR
-	vars.textComponent = (Action<string, string>)((id, text) => {
-    		var textSettings = timer.Layout.Components.Where(x => x.GetType().Name == "TextComponent").Select(x => x.GetType().GetProperty("Settings").GetValue(x, null));
-	    	var textSetting = textSettings.FirstOrDefault(x => (x.GetType().GetProperty("Text1").GetValue(x, null) as string) == id);
-    		if (textSetting == null) {
-      			var textComponentAssembly = Assembly.LoadFrom("Components\\LiveSplit.Text.dll");
-      			var textComponent = Activator.CreateInstance(textComponentAssembly.GetType("LiveSplit.UI.Components.TextComponent"), timer);
-      			timer.Layout.LayoutComponents.Add(new LiveSplit.UI.Components.LayoutComponent("LiveSplit.Text.dll", textComponent as LiveSplit.UI.Components.IComponent));
-
-      			textSetting = textComponent.GetType().GetProperty("Settings", BindingFlags.Instance | BindingFlags.Public).GetValue(textComponent, null);
-      			textSetting.GetType().GetProperty("Text1").SetValue(textSetting, id);
-    		}
-
-    		if (textSetting != null)
-    			textSetting.GetType().GetProperty("Text2").SetValue(textSetting, text);
-	});
-	// Total CR values for each level
-	// We do this as a variable for each level for now because they're few. Feel free to transform into a better structure.
-	vars.maxUACACR = 21;
-	vars.UACAlevelName = "e4m1_rig";
-	vars.maxBSCR = 29;
-	vars.BSlevelName = "e4m2_swamp";
-	vars.maxHoltCR = 17;
-	vars.HoltLevelName = "e4m3_mcity";
-	vars.maxSpearCR = 38;
-	vars.spearLevelName = "e5m1_spear";
-	vars.maxReclaimedCR = 18;
-	vars.reclaimedLevelName = "e5m2_earth";
-	vars.maxImmoraCR = 7;
-	vars.immoraLevelName = "e5m3_hell";
-	vars.curLevelMaxCR = 1;
-	vars.inMaxCRLevel = false;	
 }
 
 init
 {
 	int moduleSize = modules.First().ModuleMemorySize;
-	print("Main Module Size: "+moduleSize.ToString());
+	print("Main Module Size: " + moduleSize.ToString());
 	// Undeceiver 2020/10/29 - A guy from the LiveSplit Discord almost forced me to change this to a switch in order to help me do what I had to. I told him I did not want to break it, but I couldn't deny it should not break it.
 	switch(moduleSize)
 	{
 		case 507191296: case 515133440: case 510681088:
-			version = "Release Patch 1.0 - Steam";
+			version = "Release 1.0 (Steam)";
 			vars.gameVersion = 1;
 			vars.disableRJSupport = true;
 			break;
@@ -396,104 +353,94 @@ init
 			vars.newSplitMethod = false;
 			break;
 		case 492113920:
-			version = "Patch 1.1 - Steam";
+			version = "1.1 (Steam)";
 			vars.gameVersion = 11;
 			break;
 		case 490299392:
-        	version = "Patch 2.0 - Steam";
+        	version = "2.0 (Steam)";
 			vars.gameVersion = 20;
 			vars.newSplitMethod = false;
         	MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
 			break;
 		case 505344000:
-			version = "Patch 2.1 - Steam";
+			version = "2.1 (Steam)";
 			vars.gameVersion = 21;
 			break;
 		case 475557888:
-			version = "Patch 3.0 - Steam";
+			version = "3.0 (Steam)";
 			vars.gameVersion = 30;
 			break;
 		case 504107008:
-			version = "Patch 3.1 - Steam";
+			version = "3.1 (Steam)";
 			vars.gameVersion = 31;
-			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x67CF2F0;
 			break;
         case 478056448:
-            version = "Patch 4.0 - Steam";
+            version = "4.0 (Steam)";
 			vars.gameVersion = 40;
-            vars.isTagCRSupported = true;
             break;
 		case 472821760:
-			version = "Patch 4.1 - Steam";
+			version = "4.1 (Steam)";
 			vars.gameVersion = 41;
-			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x67EB1C0;
 			break;
 		case 475787264:
-			version = "Patch 5.0 - Steam";
+			version = "5.0 (Steam)";
 			vars.gameVersion = 50;
-			vars.isTagCRSupported = true;
 			break;
 		case 459132928:
-			version = "Patch 5.1 - Steam";
+			version = "5.1 (Steam)";
 			vars.gameVersion = 51;
-			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x65DF250;
 			break;
 		case 481435648:
-			version = "Patch 6.0 - Steam";
+			version = "6.0 (Steam)";
 			vars.gameVersion = 60;
-			vars.isTagCRSupported = true;
 			break;
 		case 465915904:
-			version = "Patch 6.1 - Steam";
+			version = "6.1 (Steam)";
 			vars.gameVersion = 61;
-			vars.isTagCRSupported = true;
 			break;
 		case 464543744:
-			version = "Patch 6.2 - Steam";
+			version = "6.2 (Steam)";
 			vars.gameVersion = 62;
-			vars.isTagCRSupported = true;
 			break;
 		case 483786752:
-			version = "Patch 6.3 - Steam";
+			version = "6.3 (Steam)";
 			vars.gameVersion = 63;
-			vars.isTagCRSupported = true;
 			break;
 		case 494395392:
-			version = "Patch 6.4 - Steam";
+			version = "6.4 (Steam)";
 			vars.gameVersion = 64;
-			vars.isTagCRSupported = true;
 			break;
 		case 508350464:
-			version = "Patch 6.66 - Steam";
+			version = "6.66 (Steam)";
 			vars.gameVersion = 66;
-			vars.isTagCRSupported = true;
 			break;
 		case 478367744:
-			version = "Patch 6.66 Rev 1 - Steam";
+			version = "6.66 Rev 1 (Steam)";
 			vars.gameVersion = 67;
-			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x6B53F10;
 			break;
 		case 475570176:
-			version = "Patch 6.66 Rev 1.1 - Steam";
+			version = "6.66 Rev 1.1 (Steam)";
 			vars.gameVersion = 68;
-			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x6B55310;
 			break;
 		case 510251008:
-			version = "Patch 6.66 Rev 2 - Steam";
+			version = "6.66 Rev 2 (Steam)";
 			vars.gameVersion = 69;
-			vars.isTagCRSupported = true;
 			vars.unDelayOffset = 0x6B904E0;
+			break;
+		case 445820928:
+			version = "6.66 Rev 2 (Gamepass)";
+			vars.gameVersion = 69;
+			vars.unDelayOffset = 0x6C49FD0;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
 			// Display popup if version is incorrect
     		MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
-			vars.isTagCRSupported = false;
 			vars.disableRJSupport = false;
 			break;
     }
@@ -571,44 +518,6 @@ update
 	{
 		if(settings["unDelay"]) game.WriteBytes(modules.First().BaseAddress + (int)vars.unDelayOffset, new byte[] { 0x0 });
 	}
-	
-	if (vars.isTagCRSupported && (settings["trackHiddenCR"] || settings["trackHiddenCRTAG2"]))
-	{
-		vars.inMaxCRLevel = false;
-		if(settings["trackHiddenCR"]) {
-			if (current.levelName.Contains(vars.UACAlevelName))
-			{
-				vars.inMaxCRLevel = true;
-				vars.curLevelMaxCR = vars.maxUACACR;
-			} else if (current.levelName.Contains(vars.BSlevelName)) {
-				vars.inMaxCRLevel = true;
-				vars.curLevelMaxCR = vars.maxBSCR;
-			} else if (current.levelName.Contains(vars.HoltLevelName)) {
-				vars.inMaxCRLevel = true;
-				vars.curLevelMaxCR = vars.maxHoltCR;
-			}
-		}
-		if(settings["trackHiddenCRTAG2"]) {
-			if (current.levelName.Contains(vars.spearLevelName)) {
-				vars.inMaxCRLevel = true;
-				vars.curLevelMaxCR = vars.maxSpearCR;
-			} else if (current.levelName.Contains(vars.reclaimedLevelName)) {
-				vars.inMaxCRLevel = true;
-				vars.curLevelMaxCR = vars.maxReclaimedCR;
-			} else if (current.levelName.Contains(vars.immoraLevelName)) {
-				vars.inMaxCRLevel = true;
-				vars.curLevelMaxCR = vars.maxImmoraCR;
-			}
-		}
-
-		if (vars.inMaxCRLevel)
-		{
-			vars.curCRPercentage = 100 * current.tagCombatRating / vars.curLevelMaxCR;
-			vars.textComponent("Hidden combat rating ", current.tagCombatRating.ToString() + "/" + vars.curLevelMaxCR + " (" + vars.curCRPercentage.ToString("0.") + "%)");
-		} else {
-			vars.textComponent("Hidden combat rating ", "(not in a level)");		
-		}
-	 }
 }
 
 exit
