@@ -85,7 +85,6 @@ state("DOOMEternalx64vk", "3.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x632A8A0;
 	byte canMove: 0x67BDAC1;
-	byte unDelay: 0x67CF2F0;
 }
 
 state("DOOMEternalx64vk", "4.0 (Steam)")
@@ -108,7 +107,6 @@ state("DOOMEternalx64vk", "4.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x62E89D0;
 	byte canMove: 0x67D9791;
-	byte unDelay: 0x67EB1C0;
 }
 
 state("DOOMEternalx64vk", "5.0 (Steam)")
@@ -131,7 +129,6 @@ state("DOOMEternalx64vk", "5.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4EA1F78;
 	byte canMove: 0x65CCEE1;
-	byte unDelay: 0x65DF250;
 }
 
 state("DOOMEternalx64vk", "6.0 (Steam)")
@@ -209,7 +206,6 @@ state("DOOMEternalx64vk", "6.66 Rev 1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x5153B48;
 	byte canMove: 0x6B41ED1;
-	byte unDelay: 0x6B53F10;
 }
 
 state("DOOMEternalx64vk", "6.66 Rev 1.1 (Steam)")
@@ -221,7 +217,6 @@ state("DOOMEternalx64vk", "6.66 Rev 1.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x5154F48;
 	byte canMove: 0x6B432D1;
-	byte unDelay: 0x6B55310;
 }
 
 state("DOOMEternalx64vk", "6.66 Rev 2 (Steam)")
@@ -233,7 +228,6 @@ state("DOOMEternalx64vk", "6.66 Rev 2 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x518FAC8;
 	byte canMove: 0x68C83D1;
-	byte unDelay: 0x6B904E0;
 }
 
 state("DOOMEternalx64vk", "6.66 Rev 2 (Gamepass)")
@@ -245,7 +239,6 @@ state("DOOMEternalx64vk", "6.66 Rev 2 (Gamepass)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x5249548;
 	byte canMove: 0x6C37E91;
-	byte unDelay: 0x6C49FD0;
 }
 
 
@@ -300,11 +293,6 @@ startup
 	// Setting to allow automatically disabling Ramp Jumping on the Steam Release version
 	settings.Add("disableRJ", false, "Disable Ramp Jumping (Release Version Only)");
 	settings.SetToolTip("disableRJ", "Sets pm_allowRampJumping to 0.\nRequired for Limited & Restricted runs played on the 1.0 (Release) Patch.");
-
-	// Setting to allow automatically disabling Ultra-Nightmare quitout delay
-	// Supported versions -> Steam: 3.1/4.1/5.1/6.66 Rev 1
-	settings.Add("unDelay", false, "Disable UN quitout delay");
-	settings.SetToolTip("unDelay", "Disables the delay when quitting to menu/desktop during an Ultra-Nightmare run.\nOnly supported for versions: Steam 3.1/4.1/5.1/6.66 Rev 1+");
 
 	// Setting that enables a split at the final SGN cutscene (intended for Master Level)
 	// This also disables the standard autosplit/start functions to prevent issues (load remover still applies)
@@ -373,7 +361,6 @@ init
 		case 504107008:
 			version = "3.1 (Steam)";
 			vars.gameVersion = 31;
-			vars.unDelayOffset = 0x67CF2F0;
 			break;
         case 478056448:
             version = "4.0 (Steam)";
@@ -382,7 +369,6 @@ init
 		case 472821760:
 			version = "4.1 (Steam)";
 			vars.gameVersion = 41;
-			vars.unDelayOffset = 0x67EB1C0;
 			break;
 		case 475787264:
 			version = "5.0 (Steam)";
@@ -391,7 +377,6 @@ init
 		case 459132928:
 			version = "5.1 (Steam)";
 			vars.gameVersion = 51;
-			vars.unDelayOffset = 0x65DF250;
 			break;
 		case 481435648:
 			version = "6.0 (Steam)";
@@ -420,22 +405,18 @@ init
 		case 478367744:
 			version = "6.66 Rev 1 (Steam)";
 			vars.gameVersion = 67;
-			vars.unDelayOffset = 0x6B53F10;
 			break;
 		case 475570176:
 			version = "6.66 Rev 1.1 (Steam)";
 			vars.gameVersion = 68;
-			vars.unDelayOffset = 0x6B55310;
 			break;
 		case 510251008:
 			version = "6.66 Rev 2 (Steam)";
 			vars.gameVersion = 69;
-			vars.unDelayOffset = 0x6B904E0;
 			break;
 		case 445820928:
 			version = "6.66 Rev 2 (Gamepass)";
 			vars.gameVersion = 69;
-			vars.unDelayOffset = 0x6C49FD0;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
@@ -510,13 +491,6 @@ update
 	if(vars.disableRJSupport && current.rampJumps == 1)
 	{
 		if(settings["disableRJ"]) game.WriteBytes(modules.First().BaseAddress + 0x6126430, new byte[] { 0x0 });
-	}
-
-	// Sets "pauseMenu_delayUNPrompt" to 0 if a supported version is detected and the user enabled the option.
-	// This command removes the ~3 second delay before you can quit to menu/desktop during an Ultra-Nightmare run.
-	if(vars.unDelayOffset != 0x0 && current.unDelay == 1)
-	{
-		if(settings["unDelay"]) game.WriteBytes(modules.First().BaseAddress + (int)vars.unDelayOffset, new byte[] { 0x0 });
 	}
 }
 
