@@ -734,3 +734,26 @@ start
 		return true;
 	}
 }
+
+reset
+{
+	if(current.levelName.Contains("e1m1_intro"))
+	{
+		if(vars.openingCutsceneIDs.Contains(current.cutsceneID))
+		{
+			return true;
+		}
+	}else if(!settings["sequentialSplitting"] && current.levelName.Contains("e4m1_rig"))
+	{
+		if(vars.openingDLC1CutsceneIDs.Contains(current.cutsceneID))
+		{
+			return true;
+		}
+	}else if(!settings["sequentialSplitting"] && current.levelName.Contains("e5m1_spear"))
+	{
+		if(vars.openingDLC2CutsceneIDs.Contains(current.cutsceneID))
+		{
+			return true;
+		}
+	}
+}
