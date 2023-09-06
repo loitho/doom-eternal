@@ -241,6 +241,17 @@ state("DOOMEternalx64vk", "6.66 Rev 2 (Gamepass)")
 	byte canMove: 0x6C37E91;
 }
 
+state("DOOMEternalx64vk", "6.66 Rev 2.2 (Steam)")
+{
+	bool isLoading : 0x51C8398;
+	byte isLoading2: 0x6930410;
+	bool isInGame : 0x68E4870;
+	string31 levelName : 0x6B07DB0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x5163A48;
+	byte canMove: 0x6B52321;
+}
+
 
 startup
 {
@@ -417,6 +428,10 @@ init
 		case 445820928:
 			version = "6.66 Rev 2 (Gamepass)";
 			vars.gameVersion = 69;
+			break;
+		case 121769984:
+			version = "6.66 Rev 2.2 (Steam)";
+			vars.gameVersion = 70;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
