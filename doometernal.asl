@@ -230,16 +230,16 @@ state("DOOMEternalx64vk", "6.66 Rev 2 (Steam)")
 	byte canMove: 0x68C83D1;
 }
 
-state("DOOMEternalx64vk", "6.66 Rev 2 (Gamepass)")
-{
-	bool isLoading : 0x52ADE98;
-	byte isLoading2: 0x6A16410;
-	bool isInGame : 0x69CA7D0;
-	string31 levelName : 0x6BED920; 
-	byte levelID : 0x0;
-	int cutsceneID: 0x5249548;
-	byte canMove: 0x6C37E91;
-}
+// state("DOOMEternalx64vk", "6.66 Rev 2 (Gamepass)")
+// {
+// 	bool isLoading : 0x52ADE98;
+// 	byte isLoading2: 0x6A16410;
+// 	bool isInGame : 0x69CA7D0;
+// 	string31 levelName : 0x6BED920; 
+// 	byte levelID : 0x0;
+// 	int cutsceneID: 0x5249548;
+// 	byte canMove: 0x6C37E91;
+// }
 
 state("DOOMEternalx64vk", "6.66 Rev 2.2 (Steam)")
 {
@@ -250,6 +250,17 @@ state("DOOMEternalx64vk", "6.66 Rev 2.2 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x5163A48;
 	byte canMove: 0x6B52321;
+}
+
+state("DOOMEternalx64vk", "6.66 Rev 2.2 (Gamepass)")
+{
+	bool isLoading : 0x5284098;
+	byte isLoading2: 0x69EC610;
+	bool isInGame : 0x699F810;
+	string31 levelName : 0x6BC3BE0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x521F748;
+	byte canMove: 0x6C0E161;
 }
 
 
@@ -425,12 +436,16 @@ init
 			version = "6.66 Rev 2 (Steam)";
 			vars.gameVersion = 69;
 			break;
-		case 445820928:
-			version = "6.66 Rev 2 (Gamepass)";
-			vars.gameVersion = 69;
-			break;
+		// case 445820928:
+		// 	version = "6.66 Rev 2 (Gamepass)";
+		// 	vars.gameVersion = 69;
+		// 	break;
 		case 121769984:
 			version = "6.66 Rev 2.2 (Steam)";
+			vars.gameVersion = 70;
+			break;
+		case 122580992:
+			version = "6.66 Rev 2.2 (Gamepass)";
 			vars.gameVersion = 70;
 			break;
 		default:
