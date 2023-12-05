@@ -11,6 +11,8 @@ state("DOOMEternalx64vk", "Release 1.0 (Steam)") // Release Version (Slopeboosts
 	byte canMove: 0x339BA01;
 	string31 levelName : 0x612A850;
 	byte rampJumps : 0x6126430;
+	float posX : 0x5F787C0;
+	float posY : 0x5F787C4;
 }
 
 state("DOOMEternalx64vk", "May Patch Steam")
@@ -42,6 +44,8 @@ state("DOOMEternalx64vk", "1.1 (Steam)")
 	int cutsceneID: 0x4C6B984;
 	byte canMove: 0x3402A41;
 	string31 levelName : 0x611C4F0;
+	float posX : 0x5F6A050;
+	float posY : 0x5F6A054;
 }
 
 state("DOOMEternalx64vk", "2.0 (Steam)")
@@ -52,6 +56,8 @@ state("DOOMEternalx64vk", "2.0 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x0;
 	byte canMove: 0x0;
+	float posX : 0x0;
+	float posY : 0x0;
 }
 
 state("DOOMEternalx64vk", "2.1 (Steam)")
@@ -63,6 +69,8 @@ state("DOOMEternalx64vk", "2.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FED4C4;
 	byte canMove: 0x64EA631;
+	float posX : 0x0;
+	float posY : 0x0;
 }
 
 state("DOOMEternalx64vk", "3.0 (Steam)")
@@ -74,6 +82,8 @@ state("DOOMEternalx64vk", "3.0 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x6581140;
 	byte canMove: 0x67BDA41;
+	float posX : 0x0;
+	float posY : 0x0;
 }
 
 state("DOOMEternalx64vk", "3.1 (Steam)")
@@ -85,6 +95,8 @@ state("DOOMEternalx64vk", "3.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x632A8A0;
 	byte canMove: 0x67BDAC1;
+	float posX : 0x6581150;
+	float posY : 0x6581154;
 }
 
 state("DOOMEternalx64vk", "4.0 (Steam)")
@@ -96,6 +108,8 @@ state("DOOMEternalx64vk", "4.0 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x62E89D0;
 	byte canMove: 0x67D8B91;
+	float posX : 0x0;
+	float posY : 0x0;
 }
 
 state("DOOMEternalx64vk", "4.1 (Steam)")
@@ -107,6 +121,8 @@ state("DOOMEternalx64vk", "4.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x62E89D0;
 	byte canMove: 0x67D9791;
+	float posX : 0x655E2D0;
+	float posY : 0x655E2D4;
 }
 
 state("DOOMEternalx64vk", "5.0 (Steam)")
@@ -118,6 +134,8 @@ state("DOOMEternalx64vk", "5.0 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4EA1F78;
 	byte canMove: 0x65CCEE1;
+	float posX : 0x5EBA960;
+	float posY : 0x5EBA964;
 }
 
 state("DOOMEternalx64vk", "5.1 (Steam)")
@@ -129,6 +147,8 @@ state("DOOMEternalx64vk", "5.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4EA1F78;
 	byte canMove: 0x65CCEE1;
+	float posX : 0x5EBA960;
+	float posY : 0x5EBA964;
 }
 
 state("DOOMEternalx64vk", "6.0 (Steam)")
@@ -140,6 +160,8 @@ state("DOOMEternalx64vk", "6.0 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA7548;
 	byte canMove: 0x69A4D81;
+	float posX : 0x0;
+	float posY : 0x0;
 }
 
 state("DOOMEternalx64vk", "6.1 (Steam)")
@@ -151,6 +173,8 @@ state("DOOMEternalx64vk", "6.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA7548;
 	byte canMove: 0x69A4D81;
+	float posX : 0x0;
+	float posY : 0x0;
 }
 
 state("DOOMEternalx64vk", "6.2 (Steam)")
@@ -162,6 +186,8 @@ state("DOOMEternalx64vk", "6.2 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA85A8;
 	byte canMove: 0x69A7301;
+	float posX : 0x629C7A0;
+	float posY : 0x629C7A4;
 }
 
 state("DOOMEternalx64vk", "6.3 (Steam)")
@@ -173,6 +199,8 @@ state("DOOMEternalx64vk", "6.3 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA85A8;
 	byte canMove: 0x69A7301;
+	float posX : 0x629C7A0;
+	float posY : 0x629C7A4;
 }
 
 state("DOOMEternalx64vk", "6.4 (Steam)")
@@ -184,6 +212,8 @@ state("DOOMEternalx64vk", "6.4 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x4FA85A8;
 	byte canMove: 0x69A7301;
+	float posX : 0x629C7A0;
+	float posY : 0x629C7A4;
 }
 
 state("DOOMEternalx64vk", "6.66 (Steam)")
@@ -195,6 +225,8 @@ state("DOOMEternalx64vk", "6.66 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x512EFA8;
 	byte canMove: 0x6B1E7C1;
+	float posX : 0x0;
+	float posY : 0x0;
 }
 
 state("DOOMEternalx64vk", "6.66 Rev 1 (Steam)")
@@ -206,6 +238,8 @@ state("DOOMEternalx64vk", "6.66 Rev 1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x5153B48;
 	byte canMove: 0x6B41ED1;
+	float posX : 0x0;
+	float posY : 0x0;
 }
 
 state("DOOMEternalx64vk", "6.66 Rev 1.1 (Steam)")
@@ -217,6 +251,8 @@ state("DOOMEternalx64vk", "6.66 Rev 1.1 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x5154F48;
 	byte canMove: 0x6B432D1;
+	float posX : 0x0;
+	float posY : 0x0;
 }
 
 state("DOOMEternalx64vk", "6.66 Rev 2 (Steam)")
@@ -228,6 +264,8 @@ state("DOOMEternalx64vk", "6.66 Rev 2 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x518FAC8;
 	byte canMove: 0x68C83D1;
+	float posX : 0x6472C60;
+	float posY : 0x6472C64;
 }
 
 // state("DOOMEternalx64vk", "6.66 Rev 2 (Gamepass)")
@@ -250,6 +288,8 @@ state("DOOMEternalx64vk", "6.66 Rev 2.2 (Steam)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x5163A48;
 	byte canMove: 0x6B52321;
+	float posX : 0x6446BE0;
+	float posY : 0x6446BE4;
 }
 
 state("DOOMEternalx64vk", "6.66 Rev 2.2 (Gamepass)")
@@ -261,6 +301,8 @@ state("DOOMEternalx64vk", "6.66 Rev 2.2 (Gamepass)")
 	byte levelID : 0x0;
 	int cutsceneID: 0x521F748;
 	byte canMove: 0x6C0E161;
+	float posX : 0x6502DE0;
+	float posY : 0x6502DE4;
 }
 
 
@@ -274,9 +316,10 @@ startup
 	vars.startAfterCutscene = false;
 	vars.highestLevelSplit = 5;
 	vars.disableRJSupport = false;
-
-	// Var to store Offset of "pauseMenu_delayUNPrompt" command
-	vars.unDelayOffset = 0x0;
+	vars.doNotResetViaPos = false;
+	vars.playerInResetPos = false;
+	vars.loadscreen = false;
+	vars.hoePosResetSupport = true;
 
 	vars.hasSplitFS = false;
 	vars.hasSplitHolt = false;
@@ -311,6 +354,11 @@ startup
 			timer.CurrentTimingMethod = TimingMethod.GameTime;
         	}
 	}
+	
+	// Setting to allow resetting the timer in Hell on Earth based on the player's current position
+	//  Allows automatic resetting for those using Reset Mission instead of creating a new save file
+	settings.Add("hoeResetPos", true, "Positional Timer Reset in Hell on Earth");
+	settings.SetToolTip("hoeResetPos", "Enables resetting the timer in Hell on Earth via the player's position.\nDisable this if you run into issues with reloading during the spawn room.");
 
 	// Setting to allow automatically disabling Ramp Jumping on the Steam Release version
 	settings.Add("disableRJ", false, "Disable Ramp Jumping (Release Version Only)");
@@ -356,11 +404,13 @@ init
     		version = "May Patch Steam";
 			vars.gameVersion = 10;
 			vars.newSplitMethod = false;
+			vars.hoePosResetSupport = false;
 			break;
 		case 546783232: //steam may hotfix
     		version = "May Hotfix Steam";
 			vars.gameVersion = 10;
 			vars.newSplitMethod = false;
+			vars.hoePosResetSupport = false;
 			break;
 		case 492113920:
 			version = "1.1 (Steam)";
@@ -370,15 +420,18 @@ init
         	version = "2.0 (Steam)";
 			vars.gameVersion = 20;
 			vars.newSplitMethod = false;
+			vars.hoePosResetSupport = false;
         	MessageBox.Show("This game version is only partially supported.\nAuto start and splitting are not available.", "LiveSplit - Warning");
 			break;
 		case 505344000:
 			version = "2.1 (Steam)";
 			vars.gameVersion = 21;
+			vars.hoePosResetSupport = false;
 			break;
 		case 475557888:
 			version = "3.0 (Steam)";
 			vars.gameVersion = 30;
+			vars.hoePosResetSupport = false;
 			break;
 		case 504107008:
 			version = "3.1 (Steam)";
@@ -387,6 +440,7 @@ init
         case 478056448:
             version = "4.0 (Steam)";
 			vars.gameVersion = 40;
+			vars.hoePosResetSupport = false;
             break;
 		case 472821760:
 			version = "4.1 (Steam)";
@@ -403,10 +457,12 @@ init
 		case 481435648:
 			version = "6.0 (Steam)";
 			vars.gameVersion = 60;
+			vars.hoePosResetSupport = false;
 			break;
 		case 465915904:
 			version = "6.1 (Steam)";
 			vars.gameVersion = 61;
+			vars.hoePosResetSupport = false;
 			break;
 		case 464543744:
 			version = "6.2 (Steam)";
@@ -423,14 +479,17 @@ init
 		case 508350464:
 			version = "6.66 (Steam)";
 			vars.gameVersion = 66;
+			vars.hoePosResetSupport = false;
 			break;
 		case 478367744:
 			version = "6.66 Rev 1 (Steam)";
 			vars.gameVersion = 67;
+			vars.hoePosResetSupport = false;
 			break;
 		case 475570176:
 			version = "6.66 Rev 1.1 (Steam)";
 			vars.gameVersion = 68;
+			vars.hoePosResetSupport = false;
 			break;
 		case 510251008:
 			version = "6.66 Rev 2 (Steam)";
@@ -453,6 +512,7 @@ init
 			// Display popup if version is incorrect
     		MessageBox.Show("This game version is currently not supported.", "LiveSplit Auto Splitter - Unsupported Game Version");
 			vars.disableRJSupport = false;
+			vars.hoePosResetSupport = false;
 			break;
     }
 
@@ -517,10 +577,22 @@ update
 	if (version.Contains("Unsupported"))
 		return false;
 
+	if(vars.hoePosResetSupport)
+	{
+		vars.playerInResetPos = (current.posX < 37 && current.posX > 35) &&
+			    				(current.posY < -1603 && current.posY > -1605);
+	}
+
 	// Sets "pm_allowRampJumping" to 0 if version 1.0 is detected and the user has enabled the option in the settings
 	if(vars.disableRJSupport && current.rampJumps == 1)
 	{
 		if(settings["disableRJ"]) game.WriteBytes(modules.First().BaseAddress + 0x6126430, new byte[] { 0x0 });
+	}
+
+	// Checks if the player is no longer in the HoE timer reset position of x=36 y=-1604
+	if((vars.doNotResetViaPos && vars.loadscreen))
+	{
+		vars.doNotResetViaPos = false;
 	}
 }
 
@@ -556,9 +628,11 @@ isLoading
 	if(vars.gameVersion >= 30)
 	{
 		// 3.0 - isLoading2 now has a value of 2 if loading into a new level for the first time
-		return (current.isLoading || current.isLoading2 > 0 || !current.isInGame);
+		vars.loadscreen = (current.isLoading || current.isLoading2 > 0 || !current.isInGame);
+		return vars.loadscreen;
 	}
-	return (current.isLoading || current.isLoading2 || !current.isInGame);
+	vars.loadscreen = (current.isLoading || current.isLoading2 || !current.isInGame);
+	return vars.loadscreen;
 }
 
 split
@@ -706,6 +780,7 @@ start
 	    {
 	    	vars.timeToRemove = 0;
 	    	vars.setGameTime = true;
+			vars.doNotResetViaPos = true;
 	    	return true;
 	    }
 	    
@@ -713,6 +788,7 @@ start
 	    {
 	    	vars.timeToRemove = 3;
 	    	vars.startAfterCutscene = true;
+			vars.doNotResetViaPos = true;
 	    }
 
 		// TAG1 Start
@@ -771,7 +847,15 @@ reset
 	{
 		if(vars.openingCutsceneIDs.Contains(current.cutsceneID))
 		{
+			vars.doNotResetViaPos = true;
 			return true;
+		}else if(vars.hoePosResetSupport && (current.cutsceneID == 1 && !vars.doNotResetViaPos))
+		{
+			if(settings["hoeResetPos"] && vars.playerInResetPos && !vars.loadscreen)
+			{
+				vars.doNotResetViaPos = true;
+				return true;
+			}
 		}
 	}else if(!settings["sequentialSplitting"] && current.levelName.Contains("e4m1_rig"))
 	{
