@@ -334,6 +334,9 @@ startup
 	vars.openingDLC2CutsceneIDs = new List<int> { 3499, 3532 };
 	vars.endingDLC2CutsceneID = 499;
 
+	// ** SPEEDRUN MOD ** \\
+	vars.srmodEndingCutsceneID = 3240;
+
 	// Cutscene IDs can change across versions
 	// Opening Cutscene has 4 IDs that change by +2 +3 +14
 	// See the README in this ASL's repository for more detailed instructions on how to find the pointer
@@ -386,6 +389,10 @@ startup
 	settings.SetToolTip("sequentialSplitting", "Enables support for sequential playthroughs of the Base Campaign and DLCs.");
 	settings.Add("sequentialLevelSplit", true, "Split on Icon/Samur death cutscenes", "sequentialSplitting");
 	settings.SetToolTip("sequentialLevelSplit", "Disabling this changes split method to next level splitting.\ne.g. Will no longer split on Icon's death cutscene, but will instead split when you load into UACA.");
+
+	// ** SPEEDRUN MOD SETTINGS ** \\
+	settings.Add("srmod", false, "Speedrun Mod Mode");
+	settings.SetToolTip("srmod", "Enables support for splitting when playing the Speedrun Mod by DrLa.");
 }
 
 init
@@ -698,7 +705,7 @@ split
 			vars.prevLevel = current.levelName;
 
 		// Split on Icon of Sin death cutscene
-		if(current.levelName.Contains("e3m4_boss") && current.cutsceneID == vars.endingCutsceneID)
+		if(current.levelName.Contains("e3m4_boss") && (current.cutsceneID == vars.endingCutsceneID || (settings["srmod"] && current.cutsceneID == vars.srmodEndingCutsceneID)))
 		{
 			if(settings["sequentialSplitting"])
 			{
