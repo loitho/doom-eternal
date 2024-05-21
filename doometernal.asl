@@ -323,6 +323,8 @@ startup
 
 	vars.hasSplitFS = false;
 	vars.hasSplitHolt = false;
+	
+	vars.completedLevels = new List<string>();
 
 	// Vanilla Cutscene IDs
 	vars.openingCutsceneIDs = new List<int> { 3266, 3268, 3271, 3285 };
