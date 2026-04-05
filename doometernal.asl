@@ -318,6 +318,19 @@ state("DOOMEternalx64vk", "6.66 Rev 3 (Steam)")
 	float posY : 0x66E3444;
 }
 
+state("DOOMEternalx64vk", "6.66 Rev 3.1 (Steam)")
+{
+	bool isLoading : 0x5471E18;
+	byte isLoading2: 0x440D2A0;
+	bool isInGame : 0x6B8DA98;
+	string31 levelName : 0x45E53F0; 
+	byte levelID : 0x0;
+	int cutsceneID: 0x540D4C8;
+	byte canMove: 0x462F9E1;
+	float posX : 0x66F0400;
+	float posY : 0x66F0404;
+}
+
 
 startup
 {
@@ -528,6 +541,10 @@ init
 		case 121950208:
 			version = "6.66 Rev 3 (Steam)";
 			vars.gameVersion = 71;
+			break;
+		case 121806848:
+			version = "6.66 Rev 3.1 (Steam)";
+			vars.gameVersion = 72;
 			break;
 		default:
 			version = "Unsupported: " + moduleSize.ToString();
